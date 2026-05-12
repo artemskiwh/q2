@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Корзина — TYAG МОСКВА</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="container">
+    <nav class="breadcrumbs">
+      <a href="/index.html">Главная</a>
+      <span class="sep">/</span>
+      <span class="current">Корзина</span>
+    </nav>
+    <h1 style="font-family:'Oswald',sans-serif;font-size:32px;letter-spacing:1px;text-transform:uppercase;margin:8px 0 18px;">Корзина</h1>
+    <div id="cart-root"></div>
+  </main>
+
+  <div id="site-footer"></div>
+  <div id="site-modal"></div>
+
+  <script src="/js/products.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    initLayout({ page: 'cart', activeTab: 'catalog' });
+
+    function render() {
+      const cart = getCart();
+      const ids = Object.keys(cart).filter(id => findProduct(id));
+      const root = document.getElementById('cart-root');
+
+      if (ids.length === 0) {
+        root.innerHTML = `
+          <div class="cart-empty">
+            ${ICON.cart}
+            <h2>Корзина пуста</h2>
+            <p>Добавьте товары из каталога</p>
+            <a class="btn btn-primary" href="/catalog.html">К каталогу</a>
+          </div>
+        `;
+        return;
+      }
+
+      const items = ids.map(id => {
+        const p = findProduct(id);
+        const qty = cart[id];
+        return `
+          <div class="cart-item" data-id="${id}">
+            <a href="/product.html?id=${id}" class="cart-item-img">${vapeSvg(p)}</a>
+            <div class="cart-item-main">
+              <h4>${p.name}</h4>
+              <p>${p.flavor}</p>
+            </div>
+            <div class="qty">
+              <button onclick="changeQty('${id}', -1)" aria-label="-">${ICON.minus}</button>
+              <span class="val">${qty}</span>
+              <button onclick="changeQty('${id}', 1)" aria-label="+">${ICON.plus}</button>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div class="cart-item-price">${formatPrice(p.price * qty)}</div>
+              <button class="cart-item-remove" onclick="removeItem('${id}')" aria-label="Удалить">${ICON.trash}</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const subtotal = cartTotal();
+      const delivery = subtotal >= 3000 ? 0 : 350;
+      const total = subtotal + delivery;
+
+      root.innerHTML = `
+        <div class="cart-layout">
+          <div class="cart-list">${items}</div>
+          <aside class="cart-summary">
+            <h3>Ваш заказ</h3>
+            <div class="row"><span>Товары (${cartCount()})</span><span>${formatPrice(subtotal)}</span></div>
+            <div class="row"><span>Доставка</span><span>${delivery === 0 ? 'Бесплатно' : formatPrice(delivery)}</span></div>
+            ${delivery > 0 ? `<div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">Бесплатная доставка от ${formatPrice(3000)}</div>` : ''}
+            <div class="row total"><span>Итого</span><span>${formatPrice(total)}</span></div>
+            <button class="btn btn-primary btn-block btn-lg" style="margin-top:14px;" onclick="checkout()">Оформить заказ</button>
+            <a class="btn btn-ghost btn-block" style="margin-top:8px;" href="/catalog.html">Продолжить покупки</a>
+          </aside>
+        </div>
+      `;
+    }
+
+    function changeQty(id, d) {
+      const c = getCart();
+      const next = (c[id] || 0) + d;
+      setCartQty(id, next);
+      render();
+    }
+    function removeItem(id) {
+      removeFromCart(id);
+      render();
+      toast('Удалено из корзины');
+    }
+    function checkout() {
+      toast('Заказ оформлен — менеджер свяжется с вами в Telegram');
+      setTimeout(() => {
+        localStorage.removeItem('tyag_cart');
+        updateBadges();
+        render();
+      }, 1200);
+    }
+
+    render();
+  </script>
+</body>
+</html>

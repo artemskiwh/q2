@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Товар — TYAG МОСКВА</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="container">
+    <nav class="breadcrumbs">
+      <a href="/index.html">Главная</a>
+      <span class="sep">/</span>
+      <a href="/catalog.html">Каталог</a>
+      <span class="sep">/</span>
+      <span class="current" id="bc-current">Товар</span>
+    </nav>
+
+    <div id="product-content"></div>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">Похожие товары</h2>
+      </div>
+      <div class="products" id="related"></div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <div id="site-modal"></div>
+
+  <script src="/js/products.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    initLayout({ page: 'catalog', activeTab: 'catalog' });
+
+    const id = new URLSearchParams(location.search).get('id');
+    const p = findProduct(id);
+
+    if (!p) {
+      document.getElementById('product-content').innerHTML = `
+        <div class="empty-state">
+          <h2>Товар не найден</h2>
+          <p>Возможно, его убрали из каталога.</p>
+          <a class="btn btn-primary" href="/catalog.html">Вернуться в каталог</a>
+        </div>
+      `;
+    } else {
+      const cat = CATEGORIES.find(c => c.id === p.category);
+      document.title = p.name + ' — TYAG МОСКВА';
+      document.getElementById('page-title').textContent = document.title;
+      document.getElementById('bc-current').textContent = p.name;
+
+      const specs = [];
+      if (p.brand)  specs.push(['Бренд',         p.brand]);
+      if (cat)      specs.push(['Категория',     cat.title]);
+      if (p.puffs)  specs.push(['Затяжек',       p.puffs.toLocaleString('ru-RU')]);
+      if (p.volume) specs.push(['Объём',         p.volume + ' мл']);
+      if (p.flavor) specs.push(['Описание',      p.flavor]);
+      specs.push(['Никотин', '20 мг/мл (солевой)']);
+      specs.push(['Гарантия', '14 дней']);
+
+      const flavorPicker = (p.flavors && p.flavors.length) ? `
+        <div class="flavor-picker">
+          <div class="title">Доступные вкусы (${p.flavors.length})</div>
+          <div class="flavor-grid">
+            ${p.flavors.map((f, i) => `
+              <button type="button" class="flavor-chip ${i===0?'active':''}" data-flavor="${f.id}" onclick="selectFlavor(this)">
+                <span class="dot" style="background: linear-gradient(135deg, hsl(${f.hue},80%,55%), hsl(${f.hue2},75%,45%));"></span>
+                ${f.ru || f.name}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      ` : '';
+
+      document.getElementById('product-content').innerHTML = `
+        <div class="product-layout">
+          <div class="product-gallery">${vapeSvg(p)}</div>
+          <div class="product-info">
+            <h1>${p.name}</h1>
+            <div class="flavor">${p.flavor}</div>
+            <div class="price-row">
+              <span class="price">${formatPrice(p.price)}</span>
+              <span class="stock">В наличии</span>
+            </div>
+            <div class="spec-list">
+              ${specs.map(([k,v]) => `<div class="spec"><span class="k">${k}</span><span class="v">${v}</span></div>`).join('')}
+            </div>
+            <div class="product-actions">
+              <button class="btn btn-primary btn-lg" onclick="onAddToCart('${p.id}')">В корзину · ${formatPrice(p.price)}</button>
+              <button class="btn btn-secondary icon-only" id="fav-btn" onclick="onFavMain()" aria-label="В избранное"></button>
+            </div>
+            ${flavorPicker}
+            <div class="product-description">
+              <h3>Описание</h3>
+              <p>${p.name} — ${p.flavor.toLowerCase()}. Электронная сигарета с насыщенным вкусом и стабильной парогенерацией. Готова к использованию — заряжать или заправлять не нужно${p.puffs ? `, до ${p.puffs.toLocaleString('ru-RU')} затяжек` : ''}.</p>
+              <p>Только оригинальная продукция от ${p.brand}. Доставка по Москве в день заказа, по России — транспортной компанией.</p>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Fav button main
+      const favBtn = document.getElementById('fav-btn');
+      function paintFav() { favBtn.innerHTML = isFav(p.id) ? ICON.heartFill : ICON.heart; favBtn.style.color = isFav(p.id) ? '#EF4444' : ''; }
+      paintFav();
+      window.onFavMain = () => { toggleFav(p.id); paintFav(); toast(isFav(p.id) ? 'В избранном' : 'Удалено из избранного'); };
+
+      // Related products: same category, exclude self
+      const related = PRODUCTS.filter(x => x.category === p.category && x.id !== p.id).slice(0, 4);
+      document.getElementById('related').innerHTML = related.map(productCard).join('');
+    }
+
+    function onAddToCart(id) {
+      addToCart(id, 1);
+      toast('Добавлено в корзину');
+    }
+
+    function selectFlavor(btn) {
+      document.querySelectorAll('.flavor-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>

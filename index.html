@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TYAG МОСКВА — Оптовый магазин вейпов в Москве</title>
+  <meta name="description" content="TYAG МОСКВА — оптовый магазин электронных сигарет: одноразки, многоразовые pod-системы, жидкости и аксессуары. Прямые поставки, доставка по Москве.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h1>Вейп-магазин <span class="accent">оптом и в розницу</span> в Москве</h1>
+        <p>Прямые поставки от производителей. Только оригинал. Доставка по Москве в день заказа, по России — транспортной компанией. Огромный выбор одноразок, pod-систем и жидкостей.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href="/catalog.html">К каталогу</a>
+          <a class="btn btn-secondary btn-lg" href="https://t.me/tyagmoskva" target="_blank" rel="noopener">Telegram канал</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="v">500+</div><div class="k">товаров в наличии</div></div>
+          <div class="stat"><div class="v">24/7</div><div class="k">приём заказов</div></div>
+          <div class="stat"><div class="v">2 ч</div><div class="k">доставка по Москве</div></div>
+        </div>
+      </div>
+      <div class="hero-art" id="hero-art"></div>
+    </div>
+  </section>
+
+  <main class="container">
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">Категории</h2>
+        <a class="section-link" href="/catalog.html">Смотреть все <span id="arrow1"></span></a>
+      </div>
+      <div class="categories" id="categories"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">Каталог</h2>
+        <a class="section-link" href="/catalog.html">Смотреть все <span id="arrow2"></span></a>
+      </div>
+      <div class="products" id="products-home"></div>
+    </section>
+
+    <div class="tg-banner">
+      <div class="left">
+        <div class="ico" id="tg-icon"></div>
+        <div>
+          <h3>Новинки и акции — в Telegram</h3>
+          <p>Подпишись на канал, чтобы первым узнавать о поступлениях и скидках</p>
+        </div>
+      </div>
+      <a class="btn btn-primary" href="https://t.me/tyagmoskva" target="_blank" rel="noopener">Подписаться</a>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+  <div id="site-modal"></div>
+
+  <script src="/js/products.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    initLayout({ page: 'home', activeTab: 'catalog' });
+
+    // Categories
+    document.getElementById('categories').innerHTML = CATEGORIES.map(categoryCard).join('');
+
+    // Featured products: popular + first by category
+    const featured = PRODUCTS.filter(p => p.popular).slice(0, 8);
+    if (featured.length < 8) {
+      const more = PRODUCTS.filter(p => !p.popular).slice(0, 8 - featured.length);
+      featured.push(...more);
+    }
+    document.getElementById('products-home').innerHTML = featured.slice(0, 8).map(productCard).join('');
+
+    // Arrows
+    document.getElementById('arrow1').innerHTML = ICON.arrow;
+    document.getElementById('arrow2').innerHTML = ICON.arrow;
+    document.getElementById('tg-icon').innerHTML = ICON.tg;
+
+    // Hero art: pick a popular product visual
+    const heroPick = PRODUCTS.find(p => p.id === 'puffmi-9000') || PRODUCTS[0];
+    document.getElementById('hero-art').innerHTML = vapeSvg(heroPick);
+  </script>
+</body>
+</html>

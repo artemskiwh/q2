@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>О нас — TYAG МОСКВА</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="container">
+    <nav class="breadcrumbs">
+      <a href="/index.html">Главная</a>
+      <span class="sep">/</span>
+      <span class="current">О нас</span>
+    </nav>
+
+    <article class="text-page">
+      <h1>О магазине TYAG МОСКВА</h1>
+      <p>TYAG МОСКВА — оптовый и розничный магазин электронных сигарет и аксессуаров в Москве. Мы работаем напрямую с производителями и официальными дистрибьюторами, поэтому в нашем каталоге только оригинальная продукция по прозрачным ценам.</p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="ico" id="ic-shield"></div>
+          <h3>Только оригинал</h3>
+          <p>Каждое устройство — с фирменной защитой и проверкой подлинности по QR-коду.</p>
+        </div>
+        <div class="info-card">
+          <div class="ico" id="ic-truck"></div>
+          <h3>Доставка от 2 часов</h3>
+          <p>По Москве — день в день. По России — транспортными компаниями и СДЭК.</p>
+        </div>
+        <div class="info-card">
+          <div class="ico" id="ic-package"></div>
+          <h3>Опт от 10 штук</h3>
+          <p>Спец-цены для магазинов и партнёров. Свяжитесь с менеджером.</p>
+        </div>
+      </div>
+
+      <h2>Почему выбирают нас</h2>
+      <ul>
+        <li>Большой ассортимент: одноразовые системы, pod-моды, жидкости, расходники.</li>
+        <li>Быстрая доставка курьером и в постаматы по всей Москве.</li>
+        <li>Гарантия 14 дней на всю продукцию: при браке — обмен или возврат.</li>
+        <li>Поддержка в Telegram 24/7: <a href="https://t.me/tyagmoskva" target="_blank" rel="noopener">@tyagmoskva</a>.</li>
+        <li>Постоянные акции, бонусные программы и скидки для оптовиков.</li>
+      </ul>
+
+      <h2>Как сделать заказ</h2>
+      <ul>
+        <li>Выберите товары в каталоге и добавьте в корзину.</li>
+        <li>Оформите заказ — менеджер свяжется с вами для подтверждения.</li>
+        <li>Получите заказ курьером, в пункте выдачи или транспортной компанией.</li>
+      </ul>
+
+      <h2>Связь с нами</h2>
+      <ul>
+        <li>Telegram: <a href="https://t.me/tyagmoskva" target="_blank" rel="noopener">@tyagmoskva</a></li>
+        <li>Телефон: <a href="tel:+79991234567">+7 (999) 123-45-67</a></li>
+        <li>Почта: <a href="mailto:info@tyagmoskva.ru">info@tyagmoskva.ru</a></li>
+        <li>Москва, ежедневно с 10:00 до 22:00</li>
+      </ul>
+    </article>
+  </main>
+
+  <div id="site-footer"></div>
+  <div id="site-modal"></div>
+
+  <script src="/js/products.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    initLayout({ page: 'about', activeTab: 'about' });
+    document.getElementById('ic-shield').innerHTML  = ICON.shield;
+    document.getElementById('ic-truck').innerHTML   = ICON.truck;
+    document.getElementById('ic-package').innerHTML = ICON.package;
+  </script>
+</body>
+</html>
