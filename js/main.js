@@ -161,6 +161,34 @@ function vapeSvg(p) {
     </svg>`;
   }
 
+  if (style === 'pod-stick') {
+    return `<svg viewBox="0 0 200 220" class="vape-svg" xmlns="http://www.w3.org/2000/svg">${aura}
+      <g>
+        <rect x="74" y="14" width="52" height="190" rx="14" fill="url(#shell-${p.id})" stroke="${accent}" stroke-opacity="0.4"/>
+        <rect x="82" y="26" width="36" height="76" rx="4" fill="#000"/>
+        <rect x="86" y="30" width="28" height="68" rx="2" fill="url(#screen-${p.id})" opacity="0.4"/>
+        <rect x="82" y="112" width="36" height="78" rx="4" fill="#fff" opacity="0.06"/>
+        <circle cx="100" cy="196" r="3" fill="${accent}" opacity="0.7"/>
+        <rect x="74" y="22" width="52" height="6" rx="3" fill="url(#hl-${p.id})"/>
+      </g>
+    </svg>`;
+  }
+
+  if (style === 'liquid-bottle') {
+    return `<svg viewBox="0 0 200 220" class="vape-svg" xmlns="http://www.w3.org/2000/svg">${aura}
+      <g>
+        <rect x="86" y="14" width="28" height="20" rx="3" fill="${shell}" stroke="${accent}" stroke-opacity="0.4"/>
+        <rect x="80" y="34" width="40" height="14" rx="3" fill="${shell}" stroke="${accent}" stroke-opacity="0.4"/>
+        <path d="M70 56 L130 56 L138 76 L138 192 Q138 204 126 204 L74 204 Q62 204 62 192 L62 76 Z" fill="url(#shell-${p.id})" stroke="${accent}" stroke-opacity="0.5"/>
+        <rect x="70" y="100" width="60" height="80" rx="4" fill="${accent}" opacity="0.12"/>
+        <text x="100" y="130" text-anchor="middle" font-family="Oswald, sans-serif" font-size="14" font-weight="700" fill="${accent}" opacity="0.9">${(p.brand || '').slice(0,8)}</text>
+        <text x="100" y="152" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="${accent}" opacity="0.7">${p.volume ? p.volume+' ML' : ''}</text>
+        <text x="100" y="172" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="${accent}" opacity="0.7">SALT</text>
+        <rect x="70" y="62" width="60" height="6" rx="3" fill="url(#hl-${p.id})"/>
+      </g>
+    </svg>`;
+  }
+
   if (style === 'accessory') {
     return `<svg viewBox="0 0 200 220" class="vape-svg" xmlns="http://www.w3.org/2000/svg">${aura}
       <g stroke="${accent}" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
