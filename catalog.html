@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0d0d0d">
+    <title>Каталог — TYAG MOSKVA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div data-partial="age-gate"></div>
+    <div data-partial="header" data-active="catalog"></div>
+
+    <main class="page">
+        <div class="container">
+            <div class="breadcrumbs">
+                <a href="index.html">Главная</a><span>/</span>
+                <span id="bc-cat">Каталог</span>
+            </div>
+
+            <div class="catalog-head">
+                <div>
+                    <h1 id="catalog-title">Каталог</h1>
+                    <div class="catalog-meta" id="catalog-meta">Все товары</div>
+                </div>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <button class="btn btn-secondary filter-toggle" id="filter-toggle" style="display:none;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+                        Фильтры
+                    </button>
+                    <select class="sort-select" id="sort">
+                        <option value="default">По популярности</option>
+                        <option value="price-asc">Цена ↑</option>
+                        <option value="price-desc">Цена ↓</option>
+                        <option value="name">По названию</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="catalog-layout">
+                <aside class="filters" id="filters">
+                    <h3>Фильтры</h3>
+
+                    <div class="filter-group">
+                        <h4>Категория</h4>
+                        <div id="cat-filters"></div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Бренд</h4>
+                        <div id="brand-filters" style="max-height:220px; overflow:auto;"></div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Цена, ₽</h4>
+                        <div class="price-range">
+                            <input type="number" id="price-min" placeholder="от" min="0"/>
+                            <input type="number" id="price-max" placeholder="до" min="0"/>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-ghost btn-block" id="reset-filters" style="margin-top:8px;">Сбросить</button>
+                </aside>
+
+                <section>
+                    <div class="products-grid" id="products"></div>
+                    <div class="empty-state" id="empty" style="display:none;">
+                        <h3>Ничего не найдено</h3>
+                        <p>Попробуйте изменить фильтры или поисковый запрос.</p>
+                        <a class="btn btn-primary" href="catalog.html">Сбросить</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div data-partial="footer"></div>
+    <div data-partial="mobile-nav" data-active="catalog"></div>
+
+    <script src="js/products.js"></script>
+    <script src="js/partials.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+    (function() {
+        const params = new URLSearchParams(window.location.search);
+        const initialCat = params.get('cat') || '';
+        const initialQuery = params.get('q') || '';
+        const state = {
+            cat: initialCat,
+            brands: new Set(),
+            min: null,
+            max: null,
+            sort: 'default',
+            query: initialQuery
+        };
+
+        function getFiltered() {
+            let arr = state.query ? searchProducts(state.query) : PRODUCTS.slice();
+            if (state.cat) arr = arr.filter(p => p.cat === state.cat);
+            if (state.brands.size > 0) arr = arr.filter(p => state.brands.has(p.brand));
+            if (state.min != null) arr = arr.filter(p => p.price >= state.min);
+            if (state.max != null) arr = arr.filter(p => p.price <= state.max);
+            switch (state.sort) {
+                case 'price-asc': arr.sort((a, b) => a.price - b.price); break;
+                case 'price-desc': arr.sort((a, b) => b.price - a.price); break;
+                case 'name': arr.sort((a, b) => a.name.localeCompare(b.name)); break;
+                default: arr.sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
+            }
+            return arr;
+        }
+
+        function render() {
+            const list = getFiltered();
+            const grid = document.getElementById('products');
+            const empty = document.getElementById('empty');
+            if (list.length === 0) {
+                grid.style.display = 'none';
+                empty.style.display = 'block';
+            } else {
+                grid.style.display = '';
+                empty.style.display = 'none';
+                grid.innerHTML = list.map(renderProductCard).join('');
+            }
+            document.getElementById('catalog-meta').textContent = list.length + ' товаров';
+
+            // title
+            if (state.query) {
+                document.getElementById('catalog-title').textContent = 'Поиск: «' + state.query + '»';
+                document.getElementById('bc-cat').textContent = 'Поиск';
+            } else if (state.cat) {
+                const c = CATEGORIES.find(c => c.id === state.cat);
+                document.getElementById('catalog-title').textContent = c ? c.name : 'Каталог';
+                document.getElementById('bc-cat').textContent = c ? c.name : 'Каталог';
+            } else {
+                document.getElementById('catalog-title').textContent = 'Каталог';
+                document.getElementById('bc-cat').textContent = 'Каталог';
+            }
+        }
+
+        function renderCatFilters() {
+            const el = document.getElementById('cat-filters');
+            el.innerHTML = `
+                <label class="filter-option">
+                    <input type="radio" name="cat" value="" ${state.cat === '' ? 'checked' : ''}>
+                    Все
+                    <span class="filter-count">${PRODUCTS.length}</span>
+                </label>
+                ${CATEGORIES.map(c => `
+                    <label class="filter-option">
+                        <input type="radio" name="cat" value="${c.id}" ${state.cat === c.id ? 'checked' : ''}>
+                        ${c.name}
+                        <span class="filter-count">${getCategoryCount(c.id)}</span>
+                    </label>
+                `).join('')}
+            `;
+            el.querySelectorAll('input[name="cat"]').forEach(input => {
+                input.addEventListener('change', () => {
+                    state.cat = input.value;
+                    state.brands.clear();
+                    renderBrandFilters();
+                    render();
+                });
+            });
+        }
+
+        function renderBrandFilters() {
+            const el = document.getElementById('brand-filters');
+            const filteredByCat = state.cat ? PRODUCTS.filter(p => p.cat === state.cat) : PRODUCTS;
+            const brands = Array.from(new Set(filteredByCat.map(p => p.brand))).sort();
+            el.innerHTML = brands.map(b => {
+                const count = filteredByCat.filter(p => p.brand === b).length;
+                return `
+                    <label class="filter-option">
+                        <input type="checkbox" value="${b}" ${state.brands.has(b) ? 'checked' : ''}>
+                        ${b}
+                        <span class="filter-count">${count}</span>
+                    </label>
+                `;
+            }).join('');
+            el.querySelectorAll('input[type="checkbox"]').forEach(input => {
+                input.addEventListener('change', () => {
+                    if (input.checked) state.brands.add(input.value);
+                    else state.brands.delete(input.value);
+                    render();
+                });
+            });
+        }
+
+        function bindOther() {
+            document.getElementById('sort').addEventListener('change', e => {
+                state.sort = e.target.value;
+                render();
+            });
+            document.getElementById('price-min').addEventListener('input', e => {
+                state.min = e.target.value ? +e.target.value : null;
+                render();
+            });
+            document.getElementById('price-max').addEventListener('input', e => {
+                state.max = e.target.value ? +e.target.value : null;
+                render();
+            });
+            document.getElementById('reset-filters').addEventListener('click', () => {
+                state.cat = '';
+                state.brands.clear();
+                state.min = null;
+                state.max = null;
+                state.query = '';
+                document.getElementById('price-min').value = '';
+                document.getElementById('price-max').value = '';
+                renderCatFilters();
+                renderBrandFilters();
+                render();
+            });
+            const ft = document.getElementById('filter-toggle');
+            if (window.innerWidth <= 900) ft.style.display = 'inline-flex';
+            ft.addEventListener('click', () => {
+                document.getElementById('filters').classList.toggle('open');
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCatFilters();
+            renderBrandFilters();
+            bindOther();
+            render();
+        });
+    })();
+    </script>
+</body>
+</html>

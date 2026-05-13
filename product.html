@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0d0d0d">
+    <title>Товар — TYAG MOSKVA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div data-partial="age-gate"></div>
+    <div data-partial="header" data-active="catalog"></div>
+
+    <main class="page">
+        <div class="container">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <a href="index.html">Главная</a><span>/</span>
+                <a href="catalog.html">Каталог</a>
+            </div>
+
+            <div id="product-root"></div>
+
+            <section class="section">
+                <div class="section-head">
+                    <h2 class="section-title">Похожее</h2>
+                    <a class="section-more" href="catalog.html">Смотреть всё →</a>
+                </div>
+                <div class="products-grid" id="related"></div>
+            </section>
+        </div>
+    </main>
+
+    <div data-partial="footer"></div>
+    <div data-partial="mobile-nav" data-active="catalog"></div>
+
+    <script src="js/products.js"></script>
+    <script src="js/partials.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const id = new URLSearchParams(window.location.search).get('id');
+        const product = getProductById(id);
+        const root = document.getElementById('product-root');
+        if (!product) {
+            root.innerHTML = `
+                <div class="empty-state">
+                    <h3>Товар не найден</h3>
+                    <p>Возможно, его больше нет в наличии или ссылка устарела.</p>
+                    <a class="btn btn-primary" href="catalog.html">В каталог</a>
+                </div>`;
+            return;
+        }
+        const cat = CATEGORIES.find(c => c.id === product.cat);
+
+        const bc = document.getElementById('breadcrumbs');
+        bc.insertAdjacentHTML('beforeend', `<span>/</span><a href="catalog.html?cat=${product.cat}">${cat.name}</a><span>/</span><span>${product.name}</span>`);
+
+        const inCart = Cart.has(product.id);
+        const inFav = Favorites.has(product.id);
+
+        const attrs = [];
+        if (product.puffs) attrs.push(['Затяжек', product.puffs.toLocaleString('ru-RU')]);
+        if (product.nic) attrs.push(['Никотин', product.nic]);
+        if (product.volume) attrs.push(['Объём', product.volume]);
+        if (product.power) attrs.push(['Мощность', product.power]);
+        if (product.battery) attrs.push(['Батарея', product.battery]);
+        attrs.push(['Бренд', product.brand]);
+        attrs.push(['Категория', cat.name]);
+        if (product.stock) attrs.push(['Наличие', product.stock === 'много' ? 'В наличии' : product.stock === 'есть' ? 'Есть в наличии' : 'Заканчивается']);
+
+        root.innerHTML = `
+            <div class="product-page">
+                <div class="product-gallery">${productSVG(product)}</div>
+                <div class="product-info">
+                    <h1>${escapeXml(product.name)}</h1>
+                    <p class="desc">${escapeXml(product.flavor || '')} · ${escapeXml(product.brand)}</p>
+                    <div class="price">${formatPrice(product.price)}${product.oldPrice ? `<small>${formatPrice(product.oldPrice)}</small>` : ''}</div>
+                    <div class="wholesale">Опт от 10 шт. — индивидуальные условия</div>
+
+                    <div class="product-cta">
+                        <div class="qty" aria-label="Количество">
+                            <button id="qty-minus" aria-label="Меньше">−</button>
+                            <input id="qty-input" type="number" value="1" min="1" max="999">
+                            <button id="qty-plus" aria-label="Больше">+</button>
+                        </div>
+                        <button class="btn btn-primary" id="add-to-cart-btn" style="flex:1;">
+                            ${inCart ? 'В корзине' : 'В корзину'}
+                        </button>
+                        <button class="icon-btn ${inFav ? 'active' : ''}" id="fav-toggle" aria-label="Избранное" style="width:50px; height:50px;">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="${inFav ? '#FFD645' : 'none'}" stroke="${inFav ? '#FFD645' : 'currentColor'}" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </div>
+
+                    <div class="product-attrs">
+                        ${attrs.map(([k, v]) => `<div class="attr-card"><span>${k}</span><strong>${escapeXml(v)}</strong></div>`).join('')}
+                    </div>
+
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="desc">Описание</button>
+                        <button class="tab-btn" data-tab="delivery">Доставка</button>
+                        <button class="tab-btn" data-tab="payment">Оплата</button>
+                    </div>
+                    <div class="tab-content active" id="tab-desc">
+                        <p>${escapeXml(product.desc || 'Качественный товар от проверенного бренда.')}</p>
+                    </div>
+                    <div class="tab-content" id="tab-delivery">
+                        <p>Доставка по Москве курьером в день заказа при оформлении до 18:00. По России — СДЭК или Почтой России 2–5 дней. Бесплатная доставка по Москве при заказе от 5 000 ₽.</p>
+                    </div>
+                    <div class="tab-content" id="tab-payment">
+                        <p>Принимаем наличные, карты, переводы на карту/расчётный счёт. Для оптовых клиентов — оплата по счёту с НДС/без НДС.</p>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Qty
+        const qtyInput = document.getElementById('qty-input');
+        document.getElementById('qty-minus').addEventListener('click', () => {
+            qtyInput.value = Math.max(1, (+qtyInput.value || 1) - 1);
+        });
+        document.getElementById('qty-plus').addEventListener('click', () => {
+            qtyInput.value = Math.min(999, (+qtyInput.value || 1) + 1);
+        });
+
+        // Add to cart
+        document.getElementById('add-to-cart-btn').addEventListener('click', (e) => {
+            const qty = Math.max(1, +qtyInput.value || 1);
+            if (Cart.has(product.id)) {
+                Cart.remove(product.id);
+                e.currentTarget.textContent = 'В корзину';
+                toast('Убрано из корзины');
+            } else {
+                Cart.add(product.id, qty);
+                e.currentTarget.textContent = 'В корзине';
+                toast('Добавлено в корзину');
+            }
+        });
+
+        // Fav toggle
+        document.getElementById('fav-toggle').addEventListener('click', (e) => {
+            const added = Favorites.toggle(product.id);
+            const btn = e.currentTarget;
+            btn.classList.toggle('active', added);
+            const svg = btn.querySelector('svg');
+            svg.setAttribute('fill', added ? '#FFD645' : 'none');
+            svg.setAttribute('stroke', added ? '#FFD645' : 'currentColor');
+            toast(added ? 'Добавлено в избранное' : 'Убрано из избранного');
+        });
+
+        // Related products: same category, other items
+        const related = PRODUCTS.filter(p => p.cat === product.cat && p.id !== product.id).slice(0, 4);
+        document.getElementById('related').innerHTML = related.map(renderProductCard).join('');
+    });
+    </script>
+</body>
+</html>
