@@ -73,21 +73,7 @@ input, button, select, textarea { font-family: inherit; }
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
     flex-shrink: 0;
-}
-.logo-mark {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, var(--accent) 0%, #ff9d2b 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #0d0d0d;
-    font-weight: 800;
-    font-size: 20px;
-    box-shadow: 0 4px 20px rgba(255, 214, 69, 0.15);
 }
 .logo-text {
     display: flex;
@@ -95,15 +81,16 @@ input, button, select, textarea { font-family: inherit; }
     line-height: 1;
 }
 .logo-text strong {
-    font-size: 18px;
-    letter-spacing: 0.5px;
+    font-size: 22px;
+    letter-spacing: 1px;
     font-weight: 800;
+    color: #fff;
 }
 .logo-text span {
     font-size: 10px;
     color: var(--muted);
-    letter-spacing: 2px;
-    margin-top: 3px;
+    letter-spacing: 3px;
+    margin-top: 4px;
     text-transform: uppercase;
 }
 
@@ -153,9 +140,42 @@ input, button, select, textarea { font-family: inherit; }
 
 .header-actions {
     display: flex;
-    gap: 8px;
+    gap: 20px;
     align-items: center;
 }
+.icon-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #d2d2d2;
+    font-size: 14px;
+    transition: color 0.15s;
+}
+.icon-link:hover { color: var(--accent); }
+.icon-link .icon-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon-link .badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: var(--accent);
+    color: #0d0d0d;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+.icon-link .badge:empty { display: none; }
 .icon-btn {
     width: 44px;
     height: 44px;
@@ -242,8 +262,9 @@ input, button, select, textarea { font-family: inherit; }
     background: var(--card-hover);
 }
 .category-icon {
-    width: 76px;
-    height: 76px;
+    width: 100%;
+    max-width: 110px;
+    aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
     justify-content: center;

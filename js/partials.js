@@ -10,7 +10,6 @@ function renderHeader(active) {
 <header class="header">
     <div class="container header-inner">
         <a href="index.html" class="logo" aria-label="TYAG MOSKVA">
-            <span class="logo-mark">T</span>
             <span class="logo-text">
                 <strong>TYAG</strong>
                 <span>MOSKVA</span>
@@ -23,18 +22,23 @@ function renderHeader(active) {
             <input type="text" data-search placeholder="Поиск по каталогу"/>
         </div>
         <nav class="nav-links">
-            <a href="catalog.html" class="${active === 'catalog' ? 'active' : ''}">Каталог</a>
             <a href="about.html" class="${active === 'about' ? 'active' : ''}">О нас</a>
             <a href="delivery.html" class="${active === 'delivery' ? 'active' : ''}">Оплата и доставка</a>
         </nav>
         <div class="header-actions">
-            <a href="favorites.html" class="icon-btn" aria-label="Избранное" title="Избранное">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                <span class="badge" data-fav-count>${favCount > 0 ? favCount : ''}</span>
+            <a href="favorites.html" class="icon-link" aria-label="Избранное" title="Избранное">
+                <span class="icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span class="badge" data-fav-count>${favCount > 0 ? favCount : ''}</span>
+                </span>
+                <span class="icon-label">Избранное</span>
             </a>
-            <a href="cart.html" class="icon-btn" aria-label="Корзина" title="Корзина">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                <span class="badge" data-cart-count>${cartCount > 0 ? cartCount : ''}</span>
+            <a href="cart.html" class="icon-link" aria-label="Корзина" title="Корзина">
+                <span class="icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    <span class="badge" data-cart-count>${cartCount > 0 ? cartCount : ''}</span>
+                </span>
+                <span class="icon-label">Корзина</span>
             </a>
         </div>
     </div>

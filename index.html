@@ -56,10 +56,29 @@
                 </a>
             `).join('');
 
-            // Render preview - 8 popular products matching reference layout
+            // Render preview - 8 popular products with diverse brands AND palettes
             const previewEl = document.getElementById('catalog-preview');
-            const featuredIds = ['d01', 'd05', 'd10', 'd14', 'd07', 'd08', 'd03', 'd12'];
-            const preview = featuredIds.map(id => getProductById(id)).filter(Boolean);
+            const wantedBrandModels = [
+                ['WAKA', '8000'],
+                ['ELFBAR', 'Monnight 25000'],
+                ['GEEKBAR', '50000'],
+                ['FIZZY', 'Great 10000'],
+                ['Vozol', 'Shisha 25000'],
+                ['Bubble Mon', '30000'],
+                ['GEEKBAR', '32000'],
+                ['Puffmi', 'Pure 12000']
+            ];
+            const palettesUsed = new Set();
+            const preview = [];
+            for (const [brand, modelPart] of wantedBrandModels) {
+                const candidates = PRODUCTS.filter(p =>
+                    p.brand === brand && p.name.includes(modelPart) && !palettesUsed.has(p.palette));
+                const pick = candidates[0] || PRODUCTS.find(p => p.brand === brand && p.name.includes(modelPart));
+                if (pick) {
+                    palettesUsed.add(pick.palette);
+                    preview.push(pick);
+                }
+            }
             previewEl.innerHTML = preview.map(renderProductCard).join('');
         });
     </script>
