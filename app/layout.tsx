@@ -47,7 +47,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0c",
+  themeColor: "#07070a",
   width: "device-width",
   initialScale: 1,
 };
@@ -59,7 +59,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru" className={inter.variable}>
-      <body className="min-h-screen font-sans antialiased">
+      <body className="min-h-screen pb-20 font-sans antialiased lg:pb-0">
         <CartProvider>
           <Header />
           <main>{children}</main>

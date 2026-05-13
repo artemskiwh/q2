@@ -119,4 +119,49 @@ export const Icon = {
       <path d="M12 3s4 4 4 8a4 4 0 0 1-8 0c0-1 .5-2 1-3 1 1 2 1 2 0 0-2-1-3 1-5z" />
     </svg>
   ),
+  Bolt: (p: SVGProps<SVGSVGElement>) => (
+    <svg {...base} {...p}>
+      <path d="M13 3 4 14h6l-1 7 9-11h-6l1-7z" />
+    </svg>
+  ),
+  Handshake: (p: SVGProps<SVGSVGElement>) => (
+    <svg {...base} {...p}>
+      <path d="M11 14 7 10l2-3h5l3 2 4-2v8l-4 4-3-3-2 1-2-3" />
+      <path d="m2 12 4-4 3 2" />
+    </svg>
+  ),
+  Box: (p: SVGProps<SVGSVGElement>) => (
+    <svg {...base} {...p}>
+      <path d="M3 7 12 3l9 4-9 4-9-4z" />
+      <path d="M3 7v10l9 4 9-4V7" />
+      <path d="M12 11v10" />
+    </svg>
+  ),
+  Star: (p: SVGProps<SVGSVGElement>) => (
+    <svg {...base} {...p}>
+      <path d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.9l1.1-6.5L2.6 9.8l6.5-.9L12 3z" />
+    </svg>
+  ),
+  Coin: (p: SVGProps<SVGSVGElement>) => (
+    <svg {...base} {...p}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9 11h6M9 14h6M12 8v8" />
+    </svg>
+  ),
+  Headphones: (p: SVGProps<SVGSVGElement>) => (
+    <svg {...base} {...p}>
+      <path d="M4 13a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2v-7h4" />
+      <path d="M4 13v5a2 2 0 0 0 2 2h2v-7H4" />
+    </svg>
+  ),
+  Arrow: (p: SVGProps<SVGSVGElement>) => (
+    <svg {...base} {...p}>
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  ),
+  Check: (p: SVGProps<SVGSVGElement>) => (
+    <svg {...base} {...p}>
+      <path d="m5 12 5 5 9-12" />
+    </svg>
+  ),
 };
