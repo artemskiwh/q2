@@ -31,6 +31,9 @@ export interface Product {
   puffs?: number;
   strength?: string;
   features?: string[];
+  /** Real product photo path under /public, e.g. /products/elfbar.jpg.
+   *  When set, takes precedence over the generated visual. */
+  image?: string;
   /** Tailwind classes used to render the gradient card image */
   imageStyle: {
     from: string;
@@ -38,6 +41,8 @@ export interface Product {
     to: string;
     accent?: string;
   };
+  /** Visual shape hint to render generated SVG */
+  shape?: "stick" | "box" | "pod" | "cart";
 }
 
 export interface CartLine {
