@@ -13,6 +13,17 @@ export interface ProductVariant {
   note?: string;
 }
 
+export interface ProductSpecs {
+  weight?: string;
+  power?: string;
+  tankVolume?: string;
+  chargePort?: string;
+  dimensions?: string;
+  resistance?: string;
+  color?: string;
+  battery?: string;
+}
+
 export interface Product {
   slug: string;
   brand: string;
@@ -23,6 +34,7 @@ export interface Product {
   isNew?: boolean;
   isHot?: boolean;
   isSale?: boolean;
+  inStock?: boolean;
   shortDesc?: string;
   description?: string;
   tags?: string[];
@@ -31,6 +43,7 @@ export interface Product {
   puffs?: number;
   strength?: string;
   features?: string[];
+  specs?: ProductSpecs;
   /** Real product photo path under /public, e.g. /products/elfbar.jpg.
    *  When set, takes precedence over the generated visual. */
   image?: string;

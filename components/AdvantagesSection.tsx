@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Icon } from "./Icons";
 
 const ITEMS = [
@@ -44,39 +41,38 @@ const ITEMS = [
 
 export function AdvantagesSection() {
   return (
-    <section className="space-y-6">
+    <section className="space-y-5 md:space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-[11px] uppercase tracking-[0.3em] text-brand">Почему мы</p>
-          <h2 className="mt-2 text-2xl font-black text-white md:text-3xl">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-brand md:text-[11px]">
+            Почему мы
+          </p>
+          <h2 className="mt-1.5 text-xl font-black text-white md:mt-2 md:text-3xl">
             Партнёрам — лучшие условия
           </h2>
         </div>
-        <p className="max-w-md text-sm text-muted">
+        <p className="max-w-md text-[13px] text-muted md:text-sm">
           Десятки оптовых клиентов в Москве, СПб и регионах. Прозрачные условия и стабильные
-          поставки даже для крупных сетей.
+          поставки.
         </p>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {ITEMS.map((it, i) => (
-          <motion.div
+        {ITEMS.map((it) => (
+          <div
             key={it.title}
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.35, delay: (i % 3) * 0.05, ease: "easeOut" }}
-            className="surface group relative overflow-hidden p-5 transition-all hover:-translate-y-0.5 hover:border-brand/30"
+            className="surface group relative overflow-hidden p-4 transition-colors hover:border-brand/30 md:p-5"
           >
             <div
-              className={`grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br ${it.accent} text-white shadow-lg`}
+              className={`grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br ${it.accent} text-white md:h-12 md:w-12`}
             >
               {it.icon}
             </div>
-            <h3 className="mt-4 text-base font-bold text-white">{it.title}</h3>
-            <p className="mt-1 text-sm leading-relaxed text-muted">{it.text}</p>
-            <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-brand/[0.04] blur-3xl transition-opacity group-hover:bg-brand/[0.08]" />
-          </motion.div>
+            <h3 className="mt-3 text-[15px] font-bold text-white md:mt-4 md:text-base">
+              {it.title}
+            </h3>
+            <p className="mt-1 text-[13px] leading-relaxed text-muted md:text-sm">{it.text}</p>
+          </div>
         ))}
       </div>
     </section>

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { Icon } from "./Icons";
 import { useCart } from "./CartProvider";
+import { useFavorites } from "./FavoritesProvider";
 
 const ITEMS = [
   { href: "/", label: "Главная", icon: Icon.Home },
@@ -17,6 +18,7 @@ const ITEMS = [
 export function MobileBottomNav() {
   const pathname = usePathname();
   const { totalQty } = useCart();
+  const { count: favCount } = useFavorites();
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-bg-line bg-bg/95 backdrop-blur-lg lg:hidden">
@@ -25,6 +27,9 @@ export function MobileBottomNav() {
           const active = pathname === it.href;
           const Comp = it.icon;
           const isCart = it.href === "/cart";
+          const isFav = it.href === "/favorites";
+          const badgeQty = isCart ? totalQty : isFav ? favCount : 0;
+          const badgeColor = isCart ? "bg-brand text-white" : "bg-accent text-bg";
           return (
             <Link
               key={it.href}
@@ -36,9 +41,14 @@ export function MobileBottomNav() {
             >
               <span className="relative">
                 <Comp className="h-5 w-5" />
-                {isCart && totalQty > 0 && (
-                  <span className="absolute -right-2 -top-1.5 grid h-4 min-w-4 place-items-center rounded-full bg-brand px-1 text-[9px] font-bold text-white">
-                    {totalQty}
+                {badgeQty > 0 && (
+                  <span
+                    className={clsx(
+                      "absolute -right-2 -top-1.5 grid h-4 min-w-4 place-items-center rounded-full px-1 text-[9px] font-bold",
+                      badgeColor,
+                    )}
+                  >
+                    {badgeQty}
                   </span>
                 )}
               </span>

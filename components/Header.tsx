@@ -8,6 +8,7 @@ import { Icon } from "./Icons";
 import { Logo } from "./Logo";
 import { SearchBar } from "./SearchBar";
 import { useCart } from "./CartProvider";
+import { useFavorites } from "./FavoritesProvider";
 import { MobileMenu } from "./MobileMenu";
 
 const NAV = [
@@ -20,6 +21,7 @@ const NAV = [
 export function Header() {
   const pathname = usePathname();
   const { totalQty } = useCart();
+  const { count: favCount } = useFavorites();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -85,10 +87,15 @@ export function Header() {
           <div className="ml-auto flex items-center gap-1.5 lg:ml-2">
             <Link
               href="/favorites"
-              className="hidden h-10 w-10 place-items-center rounded-xl border border-bg-line bg-bg-soft text-white/90 hover:bg-bg-elev md:grid"
+              className="relative hidden h-10 w-10 place-items-center rounded-xl border border-bg-line bg-bg-soft text-white/90 hover:bg-bg-elev md:grid"
               aria-label="Избранное"
             >
               <Icon.Heart className="h-5 w-5" />
+              {favCount > 0 && (
+                <span className="absolute -right-1.5 -top-1.5 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-bg">
+                  {favCount}
+                </span>
+              )}
             </Link>
             <Link
               href="/cart"

@@ -2,10 +2,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { PRODUCTS, getProduct, getRelated, CATEGORY_LABEL } from "@/lib/products";
-import { ProductVisual } from "@/components/ProductVisual";
+import { computeSpecs } from "@/lib/specs";
 import { ProductCard } from "@/components/ProductCard";
 import { SectionHeader } from "@/components/SectionHeader";
-import { AddToCartPanel } from "@/components/AddToCartPanel";
+import { ProductGallery } from "@/components/ProductGallery";
+import { ProductBuyPanel } from "@/components/ProductBuyPanel";
+import { SpecsTable } from "@/components/SpecsTable";
 import { Icon } from "@/components/Icons";
 
 export function generateStaticParams() {
@@ -30,117 +32,76 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   if (!product) return notFound();
 
   const related = getRelated(product.slug);
+  const specs = computeSpecs(product);
 
   return (
-    <div className="container-page py-6 md:py-10">
-      <nav className="mb-6 flex items-center gap-2 text-xs text-muted">
-        <Link href="/" className="hover:text-white">Главная</Link>
+    <div className="container-page py-5 md:py-10">
+      <nav className="mb-4 flex flex-wrap items-center gap-1.5 text-[11px] text-muted md:mb-6 md:text-xs">
+        <Link href="/" className="hover:text-white">
+          Главная
+        </Link>
         <Icon.Chevron className="h-3 w-3" />
-        <Link href="/catalog" className="hover:text-white">Каталог</Link>
+        <Link href="/catalog" className="hover:text-white">
+          Каталог
+        </Link>
         <Icon.Chevron className="h-3 w-3" />
-        <Link
-          href={`/catalog?category=${product.category}`}
-          className="hover:text-white"
-        >
+        <Link href={`/catalog?category=${product.category}`} className="hover:text-white">
           {CATEGORY_LABEL[product.category]}
         </Link>
         <Icon.Chevron className="h-3 w-3" />
         <span className="truncate text-white/70">{product.name}</span>
       </nav>
 
-      <div className="grid gap-6 md:grid-cols-2 md:gap-10">
-        <div className="relative">
-          <div className="aspect-square w-full overflow-hidden rounded-3xl border border-bg-line bg-bg-card p-4">
-            <ProductVisual product={product} variant="hero" />
-          </div>
-          <div className="absolute left-6 top-6 flex flex-wrap gap-2">
-            {product.isHot && <span className="chip chip-brand">Хит</span>}
-            {product.isNew && <span className="chip chip-accent">Новинка</span>}
-            {product.isSale && product.oldPrice && (
-              <span className="chip chip-brand">
-                −{Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
-              </span>
-            )}
-          </div>
-        </div>
+      <div className="grid gap-5 md:grid-cols-2 md:gap-10">
+        <ProductGallery product={product} />
 
         <div>
-          <span className="text-[11px] uppercase tracking-[0.22em] text-muted">
+          <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-muted">
             {product.brand}
           </span>
-          <h1 className="mt-2 text-3xl font-bold leading-tight tracking-tight md:text-4xl">
+          <h1 className="mt-1.5 text-[22px] font-black leading-[1.15] tracking-tight text-white md:mt-2 md:text-[36px] lg:text-[40px]">
             {product.name}
           </h1>
-          {product.shortDesc && (
-            <p className="mt-3 text-base text-muted">{product.shortDesc}</p>
-          )}
 
-          {(product.tags?.length || product.strength) && (
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {product.strength && (
-                <span className="chip chip-neutral">Никотин {product.strength}</span>
-              )}
-              {product.puffs && (
-                <span className="chip chip-neutral">
-                  {product.puffs.toLocaleString("ru-RU")} затяжек
-                </span>
-              )}
-              {product.tags?.map((t) => (
-                <span key={t} className="chip chip-neutral">{t}</span>
-              ))}
-            </div>
-          )}
-
-          {product.features?.length && (
-            <ul className="mt-5 grid gap-2 sm:grid-cols-2">
-              {product.features.map((f) => (
-                <li key={f} className="flex items-center gap-2 text-sm">
-                  <span className="grid h-6 w-6 place-items-center rounded-full bg-accent/15 text-accent">
-                    <Icon.Spark className="h-3.5 w-3.5" />
-                  </span>
-                  {f}
-                </li>
-              ))}
-            </ul>
-          )}
-
-          <div className="mt-6">
-            <AddToCartPanel product={product} />
+          <div className="mt-5 md:mt-6">
+            <ProductBuyPanel product={product} />
           </div>
         </div>
       </div>
 
-      {product.description && (
-        <section className="mt-12 rounded-2xl border border-bg-line bg-bg-card p-6 md:p-8">
-          <h2 className="text-lg font-bold">Описание</h2>
-          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-white/80 md:text-base">
-            {product.description}
-          </p>
-        </section>
-      )}
+      <div className="mt-8 grid gap-5 md:mt-12 md:grid-cols-[1.2fr_1fr] md:gap-6">
+        {product.description ? (
+          <section className="surface p-5 md:p-6">
+            <h2 className="text-lg font-black text-white md:text-xl">Описание</h2>
+            <p className="mt-3 text-[13px] leading-relaxed text-white/80 md:text-[15px]">
+              {product.description}
+            </p>
+            {product.features?.length && (
+              <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+                {product.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-[13px] md:text-sm">
+                    <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent/15 text-accent">
+                      <Icon.Check className="h-3 w-3" />
+                    </span>
+                    <span className="text-white/85">{f}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ) : (
+          <div />
+        )}
 
-      {product.flavors && product.flavors.length > 0 && (
-        <section className="mt-8">
-          <SectionHeader title={`Вкусы (${product.flavors.length})`} />
-          <div className="flex flex-wrap gap-2">
-            {product.flavors.map((f) => (
-              <span
-                key={f}
-                className="rounded-full border border-bg-line bg-bg-card px-3 py-1.5 text-sm"
-              >
-                {f}
-              </span>
-            ))}
-          </div>
-        </section>
-      )}
+        <SpecsTable specs={specs} />
+      </div>
 
       {related.length > 0 && (
-        <section className="mt-12">
-          <SectionHeader title="Похожие товары" href="/catalog" />
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
-            {related.map((p, i) => (
-              <ProductCard key={p.slug} product={p} index={i} />
+        <section className="mt-10 md:mt-14">
+          <SectionHeader title="ПОХОЖИЕ ТОВАРЫ" href="/catalog" cta="Весь каталог" />
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4">
+            {related.map((p) => (
+              <ProductCard key={p.slug} product={p} />
             ))}
           </div>
         </section>

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/components/CartProvider";
+import { FavoritesProvider } from "@/components/FavoritesProvider";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
@@ -60,12 +61,14 @@ export default function RootLayout({
   return (
     <html lang="ru" className={inter.variable}>
       <body className="min-h-screen pb-20 font-sans antialiased lg:pb-0">
-        <CartProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <MobileBottomNav />
-        </CartProvider>
+        <FavoritesProvider>
+          <CartProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <MobileBottomNav />
+          </CartProvider>
+        </FavoritesProvider>
       </body>
     </html>
   );
