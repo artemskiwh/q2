@@ -1,4 +1,4 @@
-name: Fetch product images from Unsplash
+name: Fetch product images
 
 # Manual trigger only — click "Run workflow" in the Actions tab.
 on:
@@ -28,6 +28,12 @@ jobs:
 
       - name: Download images
         env:
+          # Primary source — brand-specific photos from Google image search.
+          # Optional — script falls back to Unsplash if these aren't set.
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          GOOGLE_CSE_ID: ${{ secrets.GOOGLE_CSE_ID }}
+          # Fallback — generic vape stock photos. Always required so the
+          # workflow doesn't fail if Google secrets aren't configured.
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: |
           if [ "${{ inputs.force }}" = "true" ]; then
@@ -45,5 +51,5 @@ jobs:
             echo "No changes to commit."
             exit 0
           fi
-          git commit -m "chore: refresh product images from Unsplash"
+          git commit -m "chore: refresh product images"
           git push origin HEAD:${{ github.ref_name }}

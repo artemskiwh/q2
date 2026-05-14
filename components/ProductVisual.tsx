@@ -13,7 +13,7 @@ export function ProductVisual({
   product: Product;
   variant?: "card" | "hero";
 }) {
-  const photo = product.image ?? PRODUCT_IMAGES[product.slug];
+  const photo = product.image ?? PRODUCT_IMAGES[product.slug]?.[0];
   if (photo) {
     return (
       <div
