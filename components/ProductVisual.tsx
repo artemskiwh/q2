@@ -1,4 +1,5 @@
 import type { Product } from "@/lib/types";
+import { PRODUCT_IMAGES } from "@/lib/product-images";
 
 /**
  * Lightweight device illustration. Renders an SVG of the device with
@@ -12,12 +13,13 @@ export function ProductVisual({
   product: Product;
   variant?: "card" | "hero";
 }) {
-  if (product.image) {
+  const photo = product.image ?? PRODUCT_IMAGES[product.slug];
+  if (photo) {
     return (
       <div
         className="h-full w-full overflow-hidden rounded-2xl bg-bg-soft"
         style={{
-          backgroundImage: `url(${product.image})`,
+          backgroundImage: `url(${photo})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
