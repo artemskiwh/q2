@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { BRANDS, CATEGORIES, PRODUCTS, CATEGORY_LABEL } from "@/lib/products";
 import type { Category } from "@/lib/types";
 import { Icon } from "./Icons";
+import { CategoryIcons } from "./CategoryIcons";
 import { ProductCard } from "./ProductCard";
 
 type Sort = "popular" | "price-asc" | "price-desc" | "new";
@@ -125,16 +126,19 @@ export function CatalogView() {
         <CatTab active={activeCat === "all"} onClick={() => setActiveCat("all")}>
           Все
         </CatTab>
-        {CATEGORIES.map((c) => (
-          <CatTab
-            key={c.id}
-            active={activeCat === c.id}
-            onClick={() => setActiveCat(c.id)}
-          >
-            <span className="mr-1.5 text-base">{c.icon}</span>
-            {c.label}
-          </CatTab>
-        ))}
+        {CATEGORIES.map((c) => {
+          const Cat = CategoryIcons[c.id];
+          return (
+            <CatTab
+              key={c.id}
+              active={activeCat === c.id}
+              onClick={() => setActiveCat(c.id)}
+            >
+              <Cat className="mr-1.5 h-4 w-4" />
+              {c.label}
+            </CatTab>
+          );
+        })}
       </div>
 
       <div className="mt-6 grid gap-6 md:grid-cols-[260px_1fr]">
@@ -212,7 +216,7 @@ function CatTab({
       type="button"
       onClick={onClick}
       className={clsx(
-        "shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition",
+        "inline-flex shrink-0 items-center rounded-full border px-4 py-2 text-sm font-medium transition",
         active
           ? "border-brand/60 bg-brand/15 text-white"
           : "border-bg-line bg-bg-card text-muted hover:border-bg-line/80 hover:text-white",

@@ -26,15 +26,9 @@ export default function HomePage() {
           cta="Все категории"
         />
         <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-2 scrollbar-hide md:mx-0 md:grid md:grid-cols-3 md:gap-4 md:px-0 md:pb-0 lg:grid-cols-6">
-          {CATEGORIES.map((c, i) => (
+          {CATEGORIES.map((c) => (
             <div key={c.id} className="w-[42%] shrink-0 md:w-auto">
-              <CategoryCard
-                id={c.id}
-                label={c.label}
-                subtitle={c.subtitle}
-                icon={c.icon}
-                index={i}
-              />
+              <CategoryCard id={c.id} label={c.label} subtitle={c.subtitle} />
             </div>
           ))}
         </div>

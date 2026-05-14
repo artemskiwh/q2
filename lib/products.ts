@@ -1,12 +1,12 @@
 import type { Category, Product } from "./types";
 
-export const CATEGORIES: { id: Category; label: string; subtitle: string; icon: string }[] = [
-  { id: "disposable", label: "Одноразки", subtitle: "120+ позиций", icon: "🚀" },
-  { id: "pod", label: "Многоразки", subtitle: "15 моделей", icon: "🔋" },
-  { id: "liquid", label: "Жидкости", subtitle: "Соль и фри-база", icon: "🧪" },
-  { id: "accessory", label: "Аксессуары", subtitle: "Зарядки, чехлы", icon: "🎯" },
-  { id: "sale", label: "Распродажа", subtitle: "До −40%", icon: "🔥" },
-  { id: "cartridge", label: "Картриджи", subtitle: "Сменные блоки", icon: "💧" },
+export const CATEGORIES: { id: Category; label: string; subtitle: string }[] = [
+  { id: "disposable", label: "Одноразки", subtitle: "120+ позиций" },
+  { id: "pod", label: "Многоразки", subtitle: "15 моделей" },
+  { id: "liquid", label: "Жидкости", subtitle: "Соль и фри-база" },
+  { id: "accessory", label: "Аксессуары", subtitle: "Зарядки, чехлы" },
+  { id: "sale", label: "Распродажа", subtitle: "До −40%" },
+  { id: "cartridge", label: "Картриджи", subtitle: "Сменные блоки" },
 ];
 
 export const CATEGORY_LABEL: Record<Category, string> = {

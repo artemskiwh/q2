@@ -51,8 +51,6 @@ export function CategoryCard({
   id: Category;
   label: string;
   subtitle: string;
-  icon?: string;
-  index?: number;
 }) {
   const s = STYLES[id];
   return (

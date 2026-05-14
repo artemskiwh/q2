@@ -4,6 +4,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { CATEGORIES } from "@/lib/products";
 import { Icon } from "./Icons";
+import { CategoryIcons } from "./CategoryIcons";
 import { Logo } from "./Logo";
 
 const NAV = [
@@ -63,17 +64,20 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
             <div className="border-t border-bg-line p-4">
               <p className="mb-2 text-xs uppercase tracking-wider text-muted">Категории</p>
               <div className="grid grid-cols-2 gap-2">
-                {CATEGORIES.map((c) => (
-                  <Link
-                    key={c.id}
-                    onClick={onClose}
-                    href={`/catalog?category=${c.id}`}
-                    className="flex items-center gap-2 rounded-lg border border-bg-line bg-bg-card px-3 py-2 text-sm"
-                  >
-                    <span className="text-base">{c.icon}</span>
-                    {c.label}
-                  </Link>
-                ))}
+                {CATEGORIES.map((c) => {
+                  const Cat = CategoryIcons[c.id];
+                  return (
+                    <Link
+                      key={c.id}
+                      onClick={onClose}
+                      href={`/catalog?category=${c.id}`}
+                      className="flex items-center gap-2 rounded-lg border border-bg-line bg-bg-card px-3 py-2 text-sm"
+                    >
+                      <Cat className="h-4 w-4 text-brand" />
+                      {c.label}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
 
