@@ -1,111 +1,82 @@
 #!/usr/bin/env node
 /**
- * Fetches BRAND-SPECIFIC product photos and saves them under public/products/.
- * Also writes lib/product-images.ts mapping each slug -> array of paths
- * (so ProductGallery can show 1-3 different angles for popular items).
+ * Fetches BRAND-SPECIFIC vape product photos using public web image search.
  *
- * Two-tier strategy:
- *  1. If GOOGLE_API_KEY + GOOGLE_CSE_ID are set, use Google Custom Search
- *     (image search) — returns actual brand product photos from retailers.
- *  2. If those aren't set OR a Google query fails / returns nothing, fall
- *     back to Unsplash (UNSPLASH_ACCESS_KEY) — generic vape photos, but
- *     keeps the workflow from failing.
+ * Sources (no API keys needed):
+ *   1. Bing Images web scrape — primary, very high hit rate
+ *   2. DuckDuckGo Images — fallback when Bing finds nothing
+ *
+ * Designed to run on a GitHub Actions runner where outbound network is open.
+ *Смотри, ты не так понял, нужны сами фото товаров. К каждым вейпам нужны фотографии именно этих вейпов, если вейп популярный можешь добавить несколько разных визуалов, тойсть разных кадров этого товара (под разным углом, как это делают обычно)
+И так тебе нужно подбирать изображения ко всем вейпам, которые тут находятся.
+ * Popular products (isHot or isNew) get 3 different angles via three slightly
+ * different queries (front / side / packaging). Others get a single photo.
  *
  * Run locally:
- *   GOOGLE_API_KEY=xxx GOOGLE_CSE_ID=yyy UNSPLASH_ACCESS_KEY=zzz \
- *     node scripts/fetch-product-images.mjs
- *
- * Quotas: Google CSE free tier = 100 queries/day. We do 1 query per product
- *   (36 queries), plenty of headroom. Unsplash demo = 50 req/h.
+ *   node scripts/fetch-product-images.mjs           # only missing
+ *   node scripts/fetch-product-images.mjs --force   # re-download all
  */
 
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-
+Смотри, ты не так понял, нужны сами фото товаров. К каждым вейпам нужны фотографии именно этих вейпов, если вейп популярный можешь добавить несколько разных визуалов, тойсть разных кадров этого товара (под разным углом, как это делают обычно)
+И так тебе нужно подбирать изображения ко всем вейпам, которые тут находятся.
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const OUT_DIR = join(ROOT, "public", "products");
 const MAP_FILE = join(ROOT, "lib", "product-images.ts");
 
-const GOOGLE_KEY = process.env.GOOGLE_API_KEY;
-const GOOGLE_CSE = process.env.GOOGLE_CSE_ID;
-const UNSPLASH_KEY = process.env.UNSPLASH_ACCESS_KEY;
-const HAS_GOOGLE = !!(GOOGLE_KEY && GOOGLE_CSE);
-const HAS_UNSPLASH = !!UNSPLASH_KEY;
-
-if (!HAS_GOOGLE && !HAS_UNSPLASH) {
-  console.error(
-    "ERROR: need at least one of (GOOGLE_API_KEY+GOOGLE_CSE_ID) or UNSPLASH_ACCESS_KEY.",
-  );
-  process.exit(1);
-}
-
-console.log(
-  `Sources enabled: ${[
-    HAS_GOOGLE ? "google-cse" : null,
-    HAS_UNSPLASH ? "unsplash" : null,
-  ]
-    .filter(Boolean)
-    .join(", ")}`,
-);
-
 const FORCE = process.argv.includes("--force");
 
-// Brand-specific query per product. Used by both Google CSE and Unsplash.
-const QUERY_OVERRIDES = {
-  "duall-salt":             "Duall Salt disposable vape device",
-  "waka-8000":              "WAKA 8000 puffs disposable vape",
-  "waka-20000":             "WAKA 20000 puffs disposable vape",
-  "waka-25000":             "WAKA 25000 puffs disposable vape",
-  "waka-60000":             "WAKA 60000 puffs disposable vape",
-  "elfbar-monnight-25000":  "Elf Bar Moonnight 25000 disposable",
-  "geekbar-32000":          "Geek Bar 32000 puffs disposable",
-  "geekbar-40000":          "Geek Bar 40000 puffs disposable",
-  "geekbar-50000":          "Geek Bar 50000 puffs disposable",
-  "vozol-shisha-25000":     "Vozol Shisha 25000 disposable vape",
-  "bubble-mon-30000":       "Bubble Mon 30000 disposable vape",
-  "puffmi-pure-12000":      "Puffmi Pure 12000 disposable vape",
-  "laiska-queen-10000":     "Laiska Queen 10000 disposable vape",
-  "fizzy-great-10000":      "Fizzy Great 10000 disposable vape",
-  "vaporesso-xros-mini":    "Vaporesso XROS Mini pod kit",
-  "vaporesso-xros-3-mini":  "Vaporesso XROS 3 Mini pod kit",
-  "vaporesso-xros-4":       "Vaporesso XROS 4 pod kit",
-  "vaporesso-xros-4-mini":  "Vaporesso XROS 4 Mini pod kit",
-  "vaporesso-xros-5":       "Vaporesso XROS 5 pod kit",
-  "vaporesso-xros-5-mini":  "Vaporesso XROS 5 Mini pod kit",
-  "geekvape-hero-1-rte":    "GeekVape Hero 1 RTE pod kit",
-  "geekvape-boost-le":      "GeekVape Aegis Boost LE pod",
-  "geekvape-hero-3-classic":"GeekVape Hero 3 Classic pod kit",
-  "geekvape-hero-2-crystal":"GeekVape Hero 2 Crystal pod kit",
-  "geekvape-hero-2-new":    "GeekVape Hero 2 pod kit",
-  "geekvape-hero-2-rte":    "GeekVape Hero 2 RTE pod",
-  "geekvape-hero-5":        "GeekVape Hero 5 pod kit",
-  "geekvape-boost-2":       "GeekVape Aegis Boost 2 B60 pod mod",
-  "geekvape-boost-3":       "GeekVape Aegis Boost 3 pod mod",
-  "xros-cart-04-2":         "Vaporesso XROS cartridge 0.4 ohm 2ml",
-  "xros-cart-04-3":         "Vaporesso XROS cartridge 0.4 ohm 3ml",
-  "xros-cart-06-2":         "Vaporesso XROS cartridge 0.6 ohm 2ml",
-  "xros-cart-06-3":         "Vaporesso XROS cartridge 0.6 ohm 3ml",
-  "xros-cart-08-2":         "Vaporesso XROS cartridge 0.8 ohm 2ml",
-  "xros-cart-08-3":         "Vaporesso XROS cartridge 0.8 ohm 3ml",
-  "xros-cart-10-2":         "Vaporesso XROS cartridge 1.0 ohm 2ml",
-};
+const UA =
+  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 
-const CATEGORY_FALLBACK = {
-  disposable: "disposable vape device",
-  pod:        "pod system vape",
-  cartridge:  "vape cartridge replacement",
-  sale:       "disposable vape",
-  liquid:     "e-liquid bottle vape",
-  accessory:  "vape accessory",
+// Brand-specific queries per product slug. For popular products multiple
+// queries are listed (one per angle); each is run separately to maximise
+// the chance of getting visually distinct photos.
+const QUERY_OVERRIDES = {
+  "duall-salt":             ["Duall Salt одноразка вейп", "Duall Salt disposable vape", "Duall Salt vape device side"],
+  "waka-8000":              ["WAKA 8000 puffs disposable vape", "WAKA 8000 vape side view", "WAKA 8000 puffs box packaging"],
+  "waka-20000":             ["WAKA 20000 puffs disposable vape"],
+  "waka-25000":             ["WAKA 25000 puffs disposable vape"],
+  "waka-60000":             ["WAKA 60000 puffs disposable vape", "WAKA 60000 vape side view", "WAKA 60000 puffs packaging"],
+  "elfbar-monnight-25000":  ["Elf Bar Moonnight 25000 disposable", "Elf Bar Moonnight 25000 vape side", "Elf Bar Moonnight 25000 box"],
+  "geekbar-32000":          ["Geek Bar Pulse 32000 disposable vape"],
+  "geekbar-40000":          ["Geek Bar 40000 puffs disposable vape"],
+  "geekbar-50000":          ["Geek Bar Pulse X 50000 disposable", "Geek Bar Pulse X 50K vape side", "Geek Bar Pulse X 50K box"],
+  "vozol-shisha-25000":     ["Vozol Shisha 25000 disposable vape"],
+  "bubble-mon-30000":       ["Bubble Mon 30000 disposable vape", "Bubble Mon 30000 vape side", "Bubble Mon 30000 packaging"],
+  "puffmi-pure-12000":      ["Puffmi Pure 12000 disposable vape"],
+  "laiska-queen-10000":     ["Laiska Queen 10000 одноразка вейп"],
+  "fizzy-great-10000":      ["Fizzy Great 10000 disposable vape"],
+  "vaporesso-xros-mini":    ["Vaporesso XROS Mini pod kit"],
+  "vaporesso-xros-3-mini":  ["Vaporesso XROS 3 Mini pod kit"],
+  "vaporesso-xros-4":       ["Vaporesso XROS 4 pod kit", "Vaporesso XROS 4 side view", "Vaporesso XROS 4 colors"],
+  "vaporesso-xros-4-mini":  ["Vaporesso XROS 4 Mini pod kit"],
+  "vaporesso-xros-5":       ["Vaporesso XROS 5 pod kit", "Vaporesso XROS 5 OLED display", "Vaporesso XROS 5 colors"],
+  "vaporesso-xros-5-mini":  ["Vaporesso XROS 5 Mini pod kit"],
+  "geekvape-hero-1-rte":    ["GeekVape Aegis Hero pod kit"],
+  "geekvape-boost-le":      ["GeekVape Aegis Boost LE pod kit"],
+  "geekvape-hero-3-classic":["GeekVape Aegis Hero 3 Classic pod kit"],
+  "geekvape-hero-2-crystal":["GeekVape Aegis Hero 2 Crystal pod kit"],
+  "geekvape-hero-2-new":    ["GeekVape Aegis Hero 2 pod kit", "GeekVape Hero 2 side view", "GeekVape Hero 2 colors"],
+  "geekvape-hero-2-rte":    ["GeekVape Aegis Hero 2 RTE pod"],
+  "geekvape-hero-5":        ["GeekVape Aegis Hero 5 pod kit", "GeekVape Hero 5 OLED", "GeekVape Hero 5 colors"],
+  "geekvape-boost-2":       ["GeekVape Aegis Boost 2 B60 pod mod"],
+  "geekvape-boost-3":       ["GeekVape Aegis Boost 3 pod mod", "GeekVape Boost 3 OLED screen", "GeekVape Boost 3 colors"],
+  "xros-cart-04-2":         ["Vaporesso XROS cartridge 0.4 ohm 2ml"],
+  "xros-cart-04-3":         ["Vaporesso XROS cartridge 0.4 ohm 3ml"],
+  "xros-cart-06-2":         ["Vaporesso XROS cartridge 0.6 ohm 2ml"],
+  "xros-cart-06-3":         ["Vaporesso XROS cartridge 0.6 ohm 3ml"],
+  "xros-cart-08-2":         ["Vaporesso XROS cartridge 0.8 ohm 2ml"],
+  "xros-cart-08-3":         ["Vaporesso XROS cartridge 0.8 ohm 3ml"],
+  "xros-cart-10-2":         ["Vaporesso XROS cartridge 1.0 ohm 2ml"],
 };
 
 async function loadProducts() {
-  const src = await import("node:fs").then((m) =>
-    m.promises.readFile(join(ROOT, "lib", "products.ts"), "utf8"),
-  );
+  const src = await readFile(join(ROOT, "lib", "products.ts"), "utf8");
   const items = [];
   const re =
     /\{\s*slug:\s*"([^"]+)",\s*brand:\s*"([^"]+)",\s*name:\s*"[^"]+",\s*category:\s*"([^"]+)"([\s\S]*?)\n\s{2}\},/g;
@@ -122,89 +93,116 @@ async function loadProducts() {
   return items;
 }
 
-function buildQuery(product) {
-  if (QUERY_OVERRIDES[product.slug]) return QUERY_OVERRIDES[product.slug];
-  const cat = CATEGORY_FALLBACK[product.category] ?? "vape device";
-  return `${product.brand} ${cat}`;
-}
-
-// ── Source 1: Google Custom Search Engine (image search) ──────────────────
-async function searchGoogle(query, n) {
-  const url = new URL("https://www.googleapis.com/customsearch/v1");
-  url.searchParams.set("key", GOOGLE_KEY);
-  url.searchParams.set("cx", GOOGLE_CSE);
-  url.searchParams.set("q", query);
-  url.searchParams.set("searchType", "image");
-  url.searchParams.set("imgSize", "large");
-  url.searchParams.set("safe", "active");
-  url.searchParams.set("num", String(Math.min(n, 10)));
-  const res = await fetch(url);
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`Google CSE ${res.status}: ${body.slice(0, 200)}`);
-  }
-  const json = await res.json();
-  return (json.items ?? []).map((i) => ({ link: i.link, source: "google" }));
-}
-
-// ── Source 2: Unsplash (fallback) ─────────────────────────────────────────
-async function searchUnsplash(query, n) {
-  const url = new URL("https://api.unsplash.com/search/photos");
-  url.searchParams.set("query", query);
-  url.searchParams.set("orientation", "portrait");
-  url.searchParams.set("per_page", String(Math.min(n, 10)));
-  url.searchParams.set("content_filter", "high");
+// ── Bing Images (HTML scrape, no API key) ────────────────────────────────
+// Bing embeds each result's metadata as a JSON-escaped string in the
+// m="..." attribute of class="iusc" anchors. We extract `murl` from each.
+async function searchBing(query) {
+  const url = `https://www.bing.com/images/search?q=${encodeURIComponent(
+    query,
+  )}&form=HDRSC2&first=1&tsc=ImageBasicHover`;
   const res = await fetch(url, {
-    headers: { Authorization: `Client-ID ${UNSPLASH_KEY}` },
+    headers: {
+      "User-Agent": UA,
+      "Accept-Language": "en-US,en;q=0.9",
+      Accept: "text/html,application/xhtml+xml",
+    },
+    signal: AbortSignal.timeout(15000),
   });
-  if (!res.ok) {
-    throw new Error(`Unsplash ${res.status} ${res.statusText}`);
-  }
-  const json = await res.json();
-  return (json.results ?? []).map((p) => ({
-    link: p.urls.regular,
-    source: "unsplash",
-  }));
-}
-
-async function findCandidates(query, n) {
-  const out = [];
-  if (HAS_GOOGLE) {
+  if (!res.ok) throw new Error(`Bing HTTP ${res.status}`);
+  const html = await res.text();
+  const urls = [];
+  const re = /m="([^"]+)"/g;
+  let m;
+  while ((m = re.exec(html)) !== null && urls.length < 30) {
+    const raw = m[1].replace(/&quot;/g, '"').replace(/&amp;/g, "&");
     try {
-      const r = await searchGoogle(query, n);
-      out.push(...r);
-    } catch (e) {
-      console.log(`  google-cse failed (${e.message.slice(0, 80)})`);
+      const json = JSON.parse(raw);
+      if (json.murl && typeof json.murl === "string" && json.murl.startsWith("http")) {
+        urls.push(json.murl);
+      }
+    } catch {
+      // not a JSON blob, skip
     }
   }
-  // Always also pull from Unsplash if available — used when Google
-  // candidates fail to download.
-  if (HAS_UNSPLASH && out.length < n) {
+  return urls;
+}
+
+// ── DuckDuckGo Images (no API key, two-step) ─────────────────────────────
+async function searchDuckDuckGo(query) {
+  const r1 = await fetch(
+    `https://duckduckgo.com/?q=${encodeURIComponent(query)}&iax=images&ia=images`,
+    { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(15000) },
+  );
+  if (!r1.ok) throw new Error(`DDG init HTTP ${r1.status}`);
+  const html = await r1.text();
+  const vqdMatch =
+    html.match(/vqd=['"]?([\d-]+)['"]?/) || html.match(/vqd=([0-9-]+)&/);
+  if (!vqdMatch) throw new Error("DDG: vqd token not found");
+  const vqd = vqdMatch[1];
+
+  const url = `https://duckduckgo.com/i.js?l=us-en&o=json&q=${encodeURIComponent(
+    query,
+  )}&vqd=${vqd}&f=,,,,,size:Large&p=1`;
+  const r2 = await fetch(url, {
+    headers: {
+      "User-Agent": UA,
+      Referer: "https://duckduckgo.com/",
+      Accept: "application/json",
+    },
+    signal: AbortSignal.timeout(15000),
+  });
+  if (!r2.ok) throw new Error(`DDG HTTP ${r2.status}`);
+  const text = await r2.text();
+  let json;
+  try {
+    json = JSON.parse(text);
+  } catch {
+    throw new Error("DDG: invalid JSON");
+  }
+  return (json.results ?? [])
+    .map((r) => r.image)
+    .filter((u) => typeof u === "string" && u.startsWith("http"));
+}
+
+async function findImageUrls(query) {
+  const seen = new Set();
+  const out = [];
+  for (const fn of [searchBing, searchDuckDuckGo]) {
     try {
-      const r = await searchUnsplash(query, n);
-      out.push(...r);
+      const urls = await fn(query);
+      for (const u of urls) {
+        if (!seen.has(u)) {
+          seen.add(u);
+          out.push(u);
+        }
+      }
+      if (out.length >= 15) break;
     } catch (e) {
-      console.log(`  unsplash failed (${e.message.slice(0, 80)})`);
+      console.log(`    ${fn.name} failed: ${e.message.slice(0, 80)}`);
     }
   }
   return out;
 }
 
 async function downloadTo(url, file) {
-  // Retailer CDNs often reject default Node UA; pretend to be a browser.
+  const u = new URL(url);
   const res = await fetch(url, {
     headers: {
-      "User-Agent":
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36",
+      "User-Agent": UA,
       Accept: "image/avif,image/webp,image/png,image/jpeg,*/*;q=0.8",
+      Referer: u.origin,
     },
     redirect: "follow",
+    signal: AbortSignal.timeout(20000),
   });
   if (!res.ok) throw new Error(`http ${res.status}`);
   const ct = res.headers.get("content-type") || "";
-  if (!ct.startsWith("image/")) throw new Error(`not an image (${ct})`);
+  if (!ct.startsWith("image/")) throw new Error(`not an image (${ct.slice(0, 30)})`);
   const buf = Buffer.from(await res.arrayBuffer());
-  if (buf.length < 2000) throw new Error(`too small (${buf.length} B)`);
+  if (buf.length < 3000) throw new Error(`too small (${buf.length} B)`);
+  if (buf.length > 4_000_000) {
+    throw new Error(`too big (${(buf.length / 1024 / 1024).toFixed(1)} MB)`);
+  }
   await writeFile(file, buf);
   return buf.length;
 }
@@ -224,62 +222,86 @@ ${body}
 `;
 }
 
+function shortUrl(u) {
+  try {
+    const x = new URL(u);
+    return x.hostname + x.pathname.slice(0, 40);
+  } catch {
+    return u.slice(0, 60);
+  }
+}
+
+async function fetchProductImages(p, queries, wantedCount) {
+  const targets = Array.from({ length: wantedCount }, (_, i) =>
+    i === 0
+      ? join(OUT_DIR, `${p.slug}.jpg`)
+      : join(OUT_DIR, `${p.slug}-${i + 1}.jpg`),
+  );
+  const publicPaths = Array.from({ length: wantedCount }, (_, i) =>
+    i === 0 ? `/products/${p.slug}.jpg` : `/products/${p.slug}-${i + 1}.jpg`,
+  );
+
+  if (!FORCE && targets.every((t) => existsSync(t))) {
+    console.log(`[skip] ${p.slug} (already on disk)`);
+    return publicPaths;
+  }
+
+  const downloaded = [];
+  const usedUrls = new Set();
+  for (let idx = 0; idx < wantedCount; idx++) {
+    const q = queries[idx] ?? queries[0];
+    console.log(`  [${idx + 1}/${wantedCount}] "${q}"`);
+    const urls = await findImageUrls(q);
+    let success = false;
+    for (const url of urls) {
+      if (usedUrls.has(url)) continue;
+      try {
+        const bytes = await downloadTo(url, targets[idx]);
+        usedUrls.add(url);
+        downloaded.push(publicPaths[idx]);
+        console.log(
+          `    ok <- ${shortUrl(url)} ${(bytes / 1024).toFixed(0)} KB`,
+        );
+        success = true;
+        break;
+      } catch {
+        // Try next candidate
+      }
+    }
+    if (!success) {
+      console.log(`    MISS for "${q}"`);
+      break; // don't keep adding angles if one fails
+    }
+    await new Promise((r) => setTimeout(r, 400));
+  }
+  return downloaded;
+}
+
 async function main() {
   await mkdir(OUT_DIR, { recursive: true });
   const products = await loadProducts();
-  console.log(`Loaded ${products.length} products`);
+  console.log(`Loaded ${products.length} products. FORCE=${FORCE}`);
 
   const map = {};
-  let downloaded = 0;
-  let skipped = 0;
+  let total = 0;
   let failed = 0;
 
   for (const p of products) {
     const wantedCount = p.isHot || p.isNew ? 3 : 1;
-    const targets = Array.from({ length: wantedCount }, (_, i) =>
-      i === 0
-        ? join(OUT_DIR, `${p.slug}.jpg`)
-        : join(OUT_DIR, `${p.slug}-${i + 1}.jpg`),
-    );
-    const publicPaths = Array.from({ length: wantedCount }, (_, i) =>
-      i === 0 ? `/products/${p.slug}.jpg` : `/products/${p.slug}-${i + 1}.jpg`,
-    );
-
-    if (!FORCE && targets.every((t) => existsSync(t))) {
-      map[p.slug] = publicPaths;
-      skipped++;
-      console.log(`[skip] ${p.slug} (already on disk)`);
-      continue;
-    }
-
-    const query = buildQuery(p);
+    const queries =
+      QUERY_OVERRIDES[p.slug] ??
+      [`${p.brand} ${p.category === "cartridge" ? "vape cartridge" : "vape"}`];
+    console.log(`\n→ ${p.slug}  (${wantedCount} angle${wantedCount > 1 ? "s" : ""})`);
     try {
-      // Fetch extra candidates to survive CDN bot-blocks.
-      const candidates = await findCandidates(query, wantedCount + 6);
-      const ok = [];
-      for (const c of candidates) {
-        if (ok.length >= wantedCount) break;
-        const idx = ok.length;
-        const target = targets[idx];
-        try {
-          const bytes = await downloadTo(c.link, target);
-          ok.push(publicPaths[idx]);
-          console.log(
-            `[ok]   ${p.slug}#${idx + 1} (${c.source}) <- ${shortUrl(c.link)} ${(bytes / 1024).toFixed(0)} KB`,
-          );
-        } catch (err) {
-          console.log(`[try]  ${p.slug}#${idx + 1} (${c.source}) skipped: ${err.message}`);
-        }
-      }
-      if (ok.length === 0) {
-        console.warn(`[miss] ${p.slug} — all candidates failed for "${query}"`);
-        failed++;
+      const result = await fetchProductImages(p, queries, wantedCount);
+      if (result.length > 0) {
+        map[p.slug] = result;
+        total += result.length;
       } else {
-        map[p.slug] = ok;
-        downloaded += ok.length;
+        failed++;
       }
     } catch (err) {
-      console.error(`[fail] ${p.slug}: ${err.message}`);
+      console.error(`[err] ${p.slug}: ${err.message}`);
       failed++;
     }
   }
@@ -288,21 +310,13 @@ async function main() {
   await writeFile(MAP_FILE, tsMap(entries));
 
   console.log(
-    `\nDone. downloaded=${downloaded} skipped=${skipped} failed=${failed} products=${products.length}`,
+    `\nDone. downloaded=${total} failed=${failed} products=${products.length}`,
   );
   console.log(`Map written to ${MAP_FILE}`);
-}
-
-function shortUrl(u) {
-  try {
-    const url = new URL(u);
-    return url.hostname + url.pathname.slice(0, 40);
-  } catch {
-    return u.slice(0, 60);
-  }
 }
 
 main().catch((e) => {
   console.error(e);
   process.exit(1);
 });
+
