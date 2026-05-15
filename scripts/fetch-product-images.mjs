@@ -7,8 +7,7 @@
  *   2. DuckDuckGo Images — fallback when Bing finds nothing
  *
  * Designed to run on a GitHub Actions runner where outbound network is open.
- *Смотри, ты не так понял, нужны сами фото товаров. К каждым вейпам нужны фотографии именно этих вейпов, если вейп популярный можешь добавить несколько разных визуалов, тойсть разных кадров этого товара (под разным углом, как это делают обычно)
-И так тебе нужно подбирать изображения ко всем вейпам, которые тут находятся.
+ *
  * Popular products (isHot or isNew) get 3 different angles via three slightly
  * different queries (front / side / packaging). Others get a single photo.
  *
@@ -21,8 +20,7 @@ import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-Смотри, ты не так понял, нужны сами фото товаров. К каждым вейпам нужны фотографии именно этих вейпов, если вейп популярный можешь добавить несколько разных визуалов, тойсть разных кадров этого товара (под разным углом, как это делают обычно)
-И так тебе нужно подбирать изображения ко всем вейпам, которые тут находятся.
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const OUT_DIR = join(ROOT, "public", "products");
