@@ -27,8 +27,6 @@ jobs:
 
       - name: Download images
         env:
-        GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-          GOOGLE_CSE_ID: ${{ secrets.GOOGLE_CSE_ID }}
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: |
           if [ "${{ inputs.force }}" = "true" ]; then
