@@ -15,7 +15,7 @@ const NAV = [
   { href: "/catalog", label: "Каталог" },
   { href: "/about", label: "О нас" },
   { href: "/wholesale", label: "Опт" },
-  { href: "/contacts", label: "Контакты" },
+  { href: "/profile", label: "Профиль" },
 ];
 
 export function Header() {

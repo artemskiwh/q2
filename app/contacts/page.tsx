@@ -9,8 +9,8 @@ const CHANNELS = [
   {
     icon: Icon.Telegram,
     label: "Telegram",
-    value: "@tyag_moskva",
-    href: "https://t.me/tyag_moskva",
+    value: "@Weyalzo",
+    href: "https://t.me/Weyalzo",
   },
   {
     icon: Icon.Whatsapp,

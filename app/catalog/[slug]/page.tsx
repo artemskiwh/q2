@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { PRODUCTS, getProduct, getRelated, CATEGORY_LABEL } from "@/lib/products";
+import { PRODUCTS, getProduct, getRelated } from "@/lib/products";
 import { computeSpecs } from "@/lib/specs";
 import { ProductCard } from "@/components/ProductCard";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -36,21 +36,13 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
   return (
     <div className="container-page py-5 md:py-10">
-      <nav className="mb-4 flex flex-wrap items-center gap-1.5 text-[11px] text-muted md:mb-6 md:text-xs">
-        <Link href="/" className="hover:text-white">
-          Главная
-        </Link>
-        <Icon.Chevron className="h-3 w-3" />
-        <Link href="/catalog" className="hover:text-white">
-          Каталог
-        </Link>
-        <Icon.Chevron className="h-3 w-3" />
-        <Link href={`/catalog?category=${product.category}`} className="hover:text-white">
-          {CATEGORY_LABEL[product.category]}
-        </Link>
-        <Icon.Chevron className="h-3 w-3" />
-        <span className="truncate text-white/70">{product.name}</span>
-      </nav>
+      <Link
+        href="/catalog"
+        className="mb-4 inline-flex items-center gap-1.5 rounded-lg border border-bg-line bg-bg-soft px-3 py-1.5 text-[12px] font-medium text-white/80 transition hover:border-white/20 hover:bg-bg-elev hover:text-white md:mb-6 md:text-sm"
+      >
+        <Icon.Chevron className="h-3.5 w-3.5 rotate-180" />
+        Назад в каталог
+      </Link>
 
       <div className="grid gap-5 md:grid-cols-2 md:gap-10">
         <ProductGallery product={product} />

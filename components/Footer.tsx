@@ -35,7 +35,7 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-2">
             <a
-              href="https://t.me/tyag_moskva"
+              href="https://t.me/Weyalzo"
               className="grid h-10 w-10 place-items-center rounded-xl border border-bg-line bg-bg-card hover:bg-bg-elev"
               aria-label="Telegram"
             >

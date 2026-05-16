@@ -12,7 +12,7 @@ const ITEMS = [
   { href: "/catalog", label: "Каталог", icon: Icon.Catalog },
   { href: "/favorites", label: "Избранное", icon: Icon.Heart },
   { href: "/cart", label: "Корзина", icon: Icon.Cart },
-  { href: "/contacts", label: "Контакты", icon: Icon.User },
+  { href: "/profile", label: "Профиль", icon: Icon.User },
 ];
 
 export function MobileBottomNav() {

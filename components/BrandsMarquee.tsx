@@ -1,3 +1,6 @@
+"use client";
+import { motion, useScroll, useTransform } from "framer-motion";
+
 const BRANDS = [
   "DUALL",
   "WAKA",
@@ -15,6 +18,9 @@ const BRANDS = [
 
 export function BrandsMarquee() {
   const loop = [...BRANDS, ...BRANDS];
+  const { scrollY } = useScroll();
+  // Scroll drives the strip forward — adds to the CSS marquee animation
+  const x = useTransform(scrollY, [0, 3000], [0, -180]);
 
   return (
     <section className="overflow-hidden rounded-2xl border border-bg-line bg-bg-card py-5">
@@ -34,16 +40,18 @@ export function BrandsMarquee() {
           className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-bg-card to-transparent"
           aria-hidden
         />
-        <div className="marquee gap-10 px-5 will-change-transform">
-          {loop.map((b, i) => (
-            <span
-              key={`${b}-${i}`}
-              className="select-none whitespace-nowrap text-[20px] font-black uppercase tracking-[0.16em] text-white/15 transition-colors hover:text-white/55 md:text-[28px]"
-            >
-              {b}
-            </span>
-          ))}
-        </div>
+        <motion.div style={{ x }}>
+          <div className="marquee gap-10 px-5 will-change-transform">
+            {loop.map((b, i) => (
+              <span
+                key={`${b}-${i}`}
+                className="select-none whitespace-nowrap text-[20px] font-black uppercase tracking-[0.16em] text-white/15 transition-colors hover:text-white/55 md:text-[28px]"
+              >
+                {b}
+              </span>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );

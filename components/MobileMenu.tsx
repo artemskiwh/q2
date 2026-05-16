@@ -12,7 +12,7 @@ const NAV = [
   { href: "/catalog", label: "Каталог" },
   { href: "/about", label: "О компании" },
   { href: "/wholesale", label: "Условия опта" },
-  { href: "/contacts", label: "Контакты" },
+  { href: "/profile", label: "Профиль" },
   { href: "/cart", label: "Корзина" },
 ];
 
