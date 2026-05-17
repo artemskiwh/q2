@@ -27,10 +27,10 @@ const exa = new Exa(process.env.EXA_API_KEY);
 // Catalogue mirrors lib/products.ts. For HOT/NEW products we want 3 distinct
 // angles, so the queries array has 3 entries; for the rest, one entry.
 const PRODUCTS = [
-  { slug: "duall-salt",            hero: true,  queries: ["DUALL SALT disposable vape product photo", "DUALL SALT vape side view", "DUALL SALT vape device close up"] },
+  { slug: "duall-salt",            hero: false, queries: ["DUALL SALT single disposable vape device isolated white background"] },
   { slug: "waka-8000",             hero: true,  queries: ["WAKA SMASH 8000 puffs disposable vape product photo", "WAKA SMASH 8000 vape side view", "WAKA SMASH 8000 vape device"] },
-  { slug: "waka-20000",            hero: true,  queries: ["WAKA soPro PA20000 disposable vape product photo", "WAKA soPro PA20000 vape side view", "WAKA 20000 puffs vape box"] },
-  { slug: "waka-25000",            hero: true,  queries: ["WAKA soPro PA25000 disposable vape product photo", "WAKA soPro PA25000 vape side view", "WAKA 25000 puffs vape device"] },
+  { slug: "waka-20000",            hero: false, queries: ["WAKA soPro PA20000 single device front view white background"] },
+  { slug: "waka-25000",            hero: false, queries: ["WAKA PA25000 single disposable vape one device white background"] },
   { slug: "waka-60000",            hero: true,  queries: ["WAKA soMatch MB60000 disposable vape product photo", "WAKA soMatch MB60000 vape side view", "WAKA 60000 puffs vape device"] },
   { slug: "fizzy-great-10000",     hero: false, queries: ["FIZZY Great 10000 disposable vape product photo"] },
   { slug: "elfbar-monnight-25000", hero: true,  queries: ["ELFBAR Moonnight 25000 puffs disposable vape", "ELFBAR Moonnight 25000 vape side view", "ELFBAR Moonnight vape screen"] },

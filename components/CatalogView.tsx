@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import clsx from "clsx";
 import { BRANDS, CATEGORIES, PRODUCTS, CATEGORY_LABEL } from "@/lib/products";
@@ -33,6 +33,19 @@ export function CatalogView() {
   const [priceMax, setPriceMax] = useState<number>(PRICE_MAX);
   const [sort, setSort] = useState<Sort>("popular");
   const [filtersOpen, setFiltersOpen] = useState(false);
+
+  // Restore scroll position when returning from a product page.
+  useEffect(() => {
+    try {
+      const key = `tyag_scroll:${window.location.pathname}${window.location.search}`;
+      const saved = sessionStorage.getItem(key);
+      if (!saved) return;
+      sessionStorage.removeItem(key);
+      const y = parseInt(saved, 10);
+      // Wait two frames so the grid has been rendered before scrolling.
+      requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo(0, y)));
+    } catch {}
+  }, []);
 
   const filtered = useMemo(() => {
     let list = PRODUCTS;

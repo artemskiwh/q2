@@ -54,16 +54,6 @@ export function ProductGallery({ product }: { product: Product }) {
             <ProductVisual product={product} variant="hero" />
           </div>
         )}
-
-        <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-1.5 md:left-6 md:top-6">
-          {product.isHot && <span className="chip chip-brand">Хит</span>}
-          {product.isNew && <span className="chip chip-accent">Новинка</span>}
-          {product.isSale && product.oldPrice && (
-            <span className="chip chip-gold">
-              −{Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
-            </span>
-          )}
-        </div>
       </div>
 
       <div className="grid grid-cols-3 gap-2 md:gap-3">

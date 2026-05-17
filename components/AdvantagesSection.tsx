@@ -26,12 +26,6 @@ const ITEMS = [
     accent: "from-[#a855f7] to-[#c084fc]",
   },
   {
-    icon: <Icon.Headphones className="h-6 w-6" />,
-    title: "Личный менеджер",
-    text: "Закреплённый партнёрский менеджер. Связь в Telegram, WhatsApp и по телефону.",
-    accent: "from-[#10b981] to-[#34d399]",
-  },
-  {
     icon: <Icon.Star className="h-6 w-6" />,
     title: "Программа лояльности",
     text: "Накопительные бонусы, эксклюзивные новинки и приоритетная отгрузка.",

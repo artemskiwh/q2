@@ -15,6 +15,14 @@ function inStock(p: Product) {
   return !p.tags?.includes("out-of-stock");
 }
 
+function rememberScroll() {
+  if (typeof window === "undefined") return;
+  try {
+    const path = window.location.pathname + window.location.search;
+    sessionStorage.setItem(`tyag_scroll:${path}`, String(window.scrollY));
+  } catch {}
+}
+
 export function ProductCard({ product }: { product: Product; index?: number }) {
   const { add } = useCart();
   const { isFav, toggle } = useFavorites();
@@ -25,19 +33,12 @@ export function ProductCard({ product }: { product: Product; index?: number }) {
     <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-bg-line bg-bg-card transition-colors duration-200 hover:border-brand/40">
       <Link
         href={`/catalog/${product.slug}`}
+        onClick={rememberScroll}
         className="relative block aspect-[4/5] overflow-hidden"
         aria-label={product.name}
       >
         <div className="absolute inset-2.5">
           <ProductVisual product={product} />
-        </div>
-
-        <div className="absolute left-3 top-3 z-10 flex flex-wrap items-start gap-1.5">
-          {product.isSale && product.oldPrice && (
-            <span className="chip chip-gold">
-              −{Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
-            </span>
-          )}
         </div>
 
         <button
@@ -69,6 +70,7 @@ export function ProductCard({ product }: { product: Product; index?: number }) {
         </span>
         <Link
           href={`/catalog/${product.slug}`}
+          onClick={rememberScroll}
           className="line-clamp-2 text-[14px] font-semibold leading-snug text-white transition hover:text-brand"
         >
           {product.name}

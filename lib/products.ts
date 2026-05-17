@@ -11,19 +11,19 @@ export const CATEGORIES: { id: Category; label: string; subtitle: string; image:
     id: "pod",
     label: "Многоразки",
     subtitle: "15 моделей",
-    image: "https://store.vaporesso.com/cdn/shop/files/XROSMINI_SakuraPink_2.png?v=1755742961",
+    image: "https://store.vaporesso.com/cdn/shop/files/XROS3_LemonYellow_2.png?v=1763950530",
   },
   {
     id: "liquid",
     label: "Жидкости",
     subtitle: "Соль и фри-база",
-    image: "https://static.tildacdn.com/stor3033-6463-4164-b135-646664633332/97183322.jpg",
+    image: "https://images.unsplash.com/photo-1567721913486-6585f069b332?w=600&q=80&auto=format",
   },
   {
     id: "accessory",
     label: "Аксессуары",
     subtitle: "Зарядки, чехлы",
-    image: "https://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021",
+    image: "https://images.unsplash.com/photo-1606136540942-39e95b9c87f8?w=600&q=80&auto=format",
   },
   {
     id: "sale",
