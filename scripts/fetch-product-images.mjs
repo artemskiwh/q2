@@ -1,113 +1,162 @@
-import exa from 'exa-js';
-import { v2 as cloudinary } from 'cloudinary';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+// Fetches real product photos via Exa Search and uploads them to Cloudinary.
+// Triggered from .github/workflows/exa-fetch.yml.
+//
+// Requires env vars:
+//   EXA_API_KEY     – Exa Search API key
+//   CLOUDINARY_URL  – cloudinary://api_key:api_secret@cloud_name
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import Exa from "exa-js";
+import { v2 as cloudinary } from "cloudinary";
+import { writeFile, readFile } from "node:fs/promises";
+import path from "node:path";
 
-const CLOUDINARY_URL = process.env.CLOUDINARY_URL;
-const EXA_API_KEY = process.env.EXA_API_KEY;
+const ROOT = process.cwd();
+const MAP_FILE = path.join(ROOT, "lib", "product-images.ts");
 
-if (!CLOUDINARY_URL || !EXA_API_KEY) {
-  console.error('Missing environment variables: CLOUDINARY_URL or EXA_API_KEY');
-  process.exit(1);
-}
+if (!process.env.EXA_API_KEY) throw new Error("Missing EXA_API_KEY");
+if (!process.env.CLOUDINARY_URL) throw new Error("Missing CLOUDINARY_URL");
 
-cloudinary.config(CLOUDINARY_URL);
+cloudinary.config(process.env.CLOUDINARY_URL);
+const exa = new Exa(process.env.EXA_API_KEY);
 
-const products = [
-  { name: 'Rincoe Jelly 1500', category: 'одноразовые' },
-  { name: 'Smoant Charon Baby', category: 'pod системы' },
-  { name: 'Vaporesso XROS 4', category: 'pod системы' },
-  { name: 'Lost Vape Orion Bar', category: 'одноразовые' },
-  { name: 'GeekVape Wenax H1', category: 'pod системы' },
-  { name: 'Elf Bar 600', category: 'одноразовые' },
-  { name: 'OXVA Xlim Pro 2', category: 'pod системы' },
-  { name: 'HQD Cuvie Plus', category: 'одноразовые' },
+// Catalogue mirrors lib/products.ts. For HOT/NEW products we want 3 distinct
+// angles, so the queries array has 3 entries; for the rest, one entry.
+const PRODUCTS = [
+  { slug: "duall-salt",            hero: true,  queries: ["DUALL SALT disposable vape product photo", "DUALL SALT vape side view", "DUALL SALT vape device close up"] },
+  { slug: "waka-8000",             hero: true,  queries: ["WAKA SMASH 8000 puffs disposable vape product photo", "WAKA SMASH 8000 vape side view", "WAKA SMASH 8000 vape device"] },
+  { slug: "waka-20000",            hero: true,  queries: ["WAKA soPro PA20000 disposable vape product photo", "WAKA soPro PA20000 vape side view", "WAKA 20000 puffs vape box"] },
+  { slug: "waka-25000",            hero: true,  queries: ["WAKA soPro PA25000 disposable vape product photo", "WAKA soPro PA25000 vape side view", "WAKA 25000 puffs vape device"] },
+  { slug: "waka-60000",            hero: true,  queries: ["WAKA soMatch MB60000 disposable vape product photo", "WAKA soMatch MB60000 vape side view", "WAKA 60000 puffs vape device"] },
+  { slug: "fizzy-great-10000",     hero: false, queries: ["FIZZY Great 10000 disposable vape product photo"] },
+  { slug: "elfbar-monnight-25000", hero: true,  queries: ["ELFBAR Moonnight 25000 puffs disposable vape", "ELFBAR Moonnight 25000 vape side view", "ELFBAR Moonnight vape screen"] },
+  { slug: "geekbar-32000",         hero: false, queries: ["Geek Bar Pulse 32000 puffs disposable vape product photo"] },
+  { slug: "geekbar-40000",         hero: false, queries: ["Geek Bar Pulse 40000 puffs disposable vape product photo"] },
+  { slug: "geekbar-50000",         hero: true,  queries: ["Geek Bar 50000 puffs disposable vape product photo", "Geek Bar 50000 vape side view", "Geek Bar 50000 vape device"] },
+  { slug: "vozol-shisha-25000",    hero: false, queries: ["VOZOL Shisha 25000 disposable vape product photo"] },
+  { slug: "bubble-mon-30000",      hero: true,  queries: ["Bubble Mon 30000 disposable vape product photo", "Bubble Mon 30K vape side view", "Bubble Mon 30000 puffs device"] },
+  { slug: "puffmi-pure-12000",     hero: false, queries: ["Puffmi Pure 12000 disposable vape product photo"] },
+  { slug: "laiska-queen-10000",    hero: false, queries: ["Laiska Queen 10000 disposable vape product"] },
+  { slug: "vaporesso-xros-mini",   hero: false, queries: ["Vaporesso XROS Mini pod system white background"] },
+  { slug: "vaporesso-xros-3-mini", hero: false, queries: ["Vaporesso XROS 3 Mini pod system white background"] },
+  { slug: "vaporesso-xros-4",      hero: true,  queries: ["Vaporesso XROS 4 pod kit white background", "Vaporesso XROS 4 side view", "Vaporesso XROS 4 colors"] },
+  { slug: "vaporesso-xros-4-mini", hero: false, queries: ["Vaporesso XROS 4 Mini pod system white background"] },
+  { slug: "vaporesso-xros-5",      hero: true,  queries: ["Vaporesso XROS 5 pod kit white background", "Vaporesso XROS 5 side view", "Vaporesso XROS 5 colors"] },
+  { slug: "vaporesso-xros-5-mini", hero: false, queries: ["Vaporesso XROS 5 Mini pod system white background"] },
+  { slug: "xros-cart-04-2",        hero: false, queries: ["Vaporesso XROS replacement pod cartridge 0.4 ohm 2ml"] },
+  { slug: "xros-cart-04-3",        hero: false, queries: ["Vaporesso XROS replacement pod cartridge 0.4 ohm 3ml"] },
+  { slug: "xros-cart-06-2",        hero: false, queries: ["Vaporesso XROS replacement pod cartridge 0.6 ohm 2ml"] },
+  { slug: "xros-cart-06-3",        hero: false, queries: ["Vaporesso XROS replacement pod cartridge 0.6 ohm 3ml"] },
+  { slug: "xros-cart-08-2",        hero: false, queries: ["Vaporesso XROS replacement pod cartridge 0.8 ohm 2ml"] },
+  { slug: "xros-cart-08-3",        hero: false, queries: ["Vaporesso XROS replacement pod cartridge 0.8 ohm 3ml"] },
+  { slug: "xros-cart-10-2",        hero: false, queries: ["Vaporesso XROS replacement pod cartridge 1.0 ohm 2ml"] },
+  { slug: "geekvape-hero-1-rte",   hero: false, queries: ["Geekvape Wenax Hero 1 RTE pod product photo"] },
+  { slug: "geekvape-boost-le",     hero: false, queries: ["Geekvape Aegis Boost LE pod mod product photo"] },
+  { slug: "geekvape-hero-3-classic", hero: false, queries: ["Geekvape Wenax Hero 3 Classic pod product photo"] },
+  { slug: "geekvape-hero-2-crystal", hero: false, queries: ["Geekvape Wenax Hero 2 Crystal pod product photo"] },
+  { slug: "geekvape-hero-2-new",   hero: true,  queries: ["Geekvape Wenax Hero 2 pod product photo", "Geekvape Wenax Hero 2 side view", "Geekvape Wenax Hero 2 colors"] },
+  { slug: "geekvape-hero-2-rte",   hero: false, queries: ["Geekvape Wenax Hero 2 RTE pod product photo"] },
+  { slug: "geekvape-hero-5",       hero: true,  queries: ["Geekvape Wenax Hero 5 pod product photo", "Geekvape Wenax Hero 5 side view", "Geekvape Wenax Hero 5 colors"] },
+  { slug: "geekvape-boost-2",      hero: false, queries: ["Geekvape Aegis Boost 2 B60 pod mod product photo"] },
+  { slug: "geekvape-boost-3",      hero: true,  queries: ["Geekvape Aegis Boost 3 pod mod product photo", "Geekvape Aegis Boost 3 side view", "Geekvape Aegis Boost 3 colors"] },
 ];
 
-async function searchImage(productName) {
-  const client = new exa(EXA_API_KEY);
-  const query = `${productName} vape product photo white background`;
-  
+// ───── Helpers ───────────────────────────────────────────────────────
+const looksLikeImage = (u) =>
+  typeof u === "string" &&
+  /^https?:\/\//.test(u) &&
+  !/logo|favicon|sprite|placeholder|icon-/i.test(u);
+
+async function searchImage(query) {
   try {
-    const result = await client.searchAndContents(query, {
-      type: 'auto',
-      numResults: 5,
+    const res = await exa.searchAndContents(query, {
+      type: "auto",
+      numResults: 8,
       text: false,
       highlights: false,
     });
-    
-    for (const item of result.results) {
-      if (item.image && item.image.url) {
-        return item.image.url;
-      }
+    for (const item of res.results ?? []) {
+      const candidate = typeof item.image === "string" ? item.image : item.image?.url;
+      if (candidate && looksLikeImage(candidate)) return candidate;
     }
     return null;
-  } catch (error) {
-    console.error(`Error searching for ${productName}:`, error.message);
+  } catch (e) {
+    console.error(`  exa error for "${query}":`, e.message);
     return null;
   }
 }
 
-async function uploadToCloudinary(imageUrl, productName) {
+async function uploadHosted(remoteUrl, slug, angle) {
+  const publicId = angle ? `tyag/${slug}_${angle}` : `tyag/${slug}`;
   try {
-    const result = await cloudinary.uploader.upload(imageUrl, {
-      public_id: `products/${productName.toLowerCase().replace(/ /g, '_')}`,
+    const result = await cloudinary.uploader.upload(remoteUrl, {
+      public_id: publicId,
       overwrite: true,
+      eager: [
+        { width: 900, height: 900, crop: "pad", background: "white", quality: "auto", fetch_format: "auto" },
+      ],
     });
-    return result.secure_url;
-  } catch (error) {
-    console.error(`Error uploading ${productName}:`, error.message);
+    return result.eager?.[0]?.secure_url ?? result.secure_url;
+  } catch (e) {
+    console.error(`  cloudinary error for ${publicId}:`, e.message);
     return null;
   }
 }
 
-async function main() {
-  console.log('Starting image fetch for products...\n');
-  
-  const results = [];
-  
-  for (const product of products) {
-    console.log(`Searching for: ${product.name}...`);
-    const imageUrl = await searchImage(product.name);
-    
-    if (imageUrl) {
-      console.log(`Found image, uploading to Cloudinary...`);
-      const cloudinaryUrl = await uploadToCloudinary(imageUrl, product.name);
-      
-      if (cloudinaryUrl) {
-        console.log(`Uploaded: ${cloudinaryUrl}`);
-        results.push({
-          name: product.name,
-          image: cloudinaryUrl,
-        });
-      } else {
-        console.log(`Upload failed for ${product.name}`);
-      }
-    } else {
-      console.log(`No image found for ${product.name}`);
-    }
-    
-    await new Promise(resolve => setTimeout(resolve, 1000));
+// ───── Preserve existing entries ─────────────────────────────────────
+async function loadExisting() {
+  try {
+    const src = await readFile(MAP_FILE, "utf8");
+    const m = src.match(/PRODUCT_IMAGES\s*:\s*Record<[^>]+>\s*=\s*(\{[\s\S]*?\});/);
+    if (!m) return {};
+    return new Function(`return ${m[1]}`)();
+  } catch {
+    return {};
   }
-  
-  const outputPath = path.join(__dirname, '..', 'lib', 'product-images.ts');
-  const outputContent = `// Auto-generated file. Do not edit manually.
-export const productImages: Record<string, string> = {
-${results.map(r => `  "${r.name}": "${r.image}",`).join('\n')}
-};
-
-export function getProductImage(productName: string): string {
-  return productImages[productName] || '/placeholder.jpg';
 }
+
+// ───── Main ──────────────────────────────────────────────────────────
+async function main() {
+  const force = process.argv.includes("--force");
+  const out = await loadExisting();
+
+  for (const p of PRODUCTS) {
+    const wantAngles = p.hero ? 3 : 1;
+    const existingUrls = Array.isArray(out[p.slug]) ? out[p.slug] : [];
+    if (!force && existingUrls.length >= wantAngles && existingUrls.every((u) => u.startsWith("https://"))) {
+      console.log(`✓ ${p.slug} (cached, ${existingUrls.length} angles)`);
+      continue;
+    }
+
+    console.log(`\n→ ${p.slug} (${wantAngles} angles)`);
+    const urls = [];
+    for (let i = 0; i < wantAngles; i++) {
+      const query = p.queries[i] ?? p.queries[0];
+      const img = await searchImage(query);
+      if (!img) {
+        console.log(`  [${i + 1}] no image for "${query}"`);
+        continue;
+      }
+      console.log(`  [${i + 1}] source: ${img.slice(0, 100)}${img.length > 100 ? "..." : ""}`);
+      const hosted = await uploadHosted(img, p.slug, i === 0 ? null : i + 1);
+      if (hosted) {
+        urls.push(hosted);
+        console.log(`  [${i + 1}] hosted: ${hosted}`);
+      }
+    }
+    if (urls.length > 0) out[p.slug] = urls;
+  }
+
+  const body = `// Auto-generated by scripts/fetch-product-images.mjs — do not edit by hand.
+// Maps product slug -> ordered array of Cloudinary URLs.
+// Run via: Actions → "Fetch product images (Exa + Cloudinary)" → Run workflow.
+
+export const PRODUCT_IMAGES: Record<string, string[]> = ${JSON.stringify(out, null, 2)};
 `;
-  
-  fs.writeFileSync(outputPath, outputContent);
-  console.log(`\nUpdated ${outputPath}`);
-  console.log(`Processed ${results.length}/${products.length} products`);
+  await writeFile(MAP_FILE, body);
+  console.log(`\nWrote ${Object.keys(out).length} mappings to ${MAP_FILE}`);
 }
 
-main().catch(console.error);
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
