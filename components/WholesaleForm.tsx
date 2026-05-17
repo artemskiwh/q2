@@ -5,18 +5,14 @@ import { Icon } from "./Icons";
 
 interface Fields {
   name: string;
-  company: string;
   phone: string;
-  city: string;
   channel: string;
   message: string;
 }
 
 const INITIAL: Fields = {
   name: "",
-  company: "",
   phone: "",
-  city: "",
   channel: "Telegram",
   message: "",
 };
@@ -93,14 +89,6 @@ export function WholesaleForm() {
             {...field("phone")}
           />
           {errors.phone && <span className="mt-1 block text-xs text-brand">{errors.phone}</span>}
-        </label>
-        <label className="block">
-          <span className="mb-1 block text-xs text-muted">Компания</span>
-          <input className="input" placeholder="ИП / ООО" {...field("company")} />
-        </label>
-        <label className="block">
-          <span className="mb-1 block text-xs text-muted">Город</span>
-          <input className="input" placeholder="Москва" {...field("city")} />
         </label>
         <label className="block md:col-span-2">
           <span className="mb-1 block text-xs text-muted">Удобный канал связи</span>

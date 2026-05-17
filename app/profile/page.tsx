@@ -20,7 +20,7 @@ export default function ProfilePage() {
     setTimeout(() => setSaved(false), 2500);
   };
 
-  const hasData = profile.name || profile.phone || profile.email || profile.company;
+  const hasData = profile.name || profile.email;
 
   return (
     <div className="container-page py-8 md:py-12">
@@ -35,8 +35,8 @@ export default function ProfilePage() {
             <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
               {profile.name || "Мой профиль"}
             </h1>
-            {profile.company && (
-              <p className="mt-0.5 text-sm text-muted">{profile.company}</p>
+            {profile.email && (
+              <p className="mt-0.5 text-sm text-muted">{profile.email}</p>
             )}
           </div>
         </div>
@@ -44,20 +44,13 @@ export default function ProfilePage() {
 
       <div className="mt-6 grid gap-6 md:grid-cols-2">
         <section className="rounded-2xl border border-bg-line bg-bg-card p-6">
-          <h2 className="mb-5 text-lg font-bold">Личные данные</h2>
+          <h2 className="mb-5 text-lg font-bold">Регистрация</h2>
           <form onSubmit={handleSave} className="flex flex-col gap-4">
             <ProfileField
-              label="Имя / Контактное лицо"
+              label="Имя"
               value={form.name}
               onChange={(v) => setForm({ ...form, name: v })}
               placeholder="Иван Иванов"
-            />
-            <ProfileField
-              label="Телефон"
-              value={form.phone}
-              onChange={(v) => setForm({ ...form, phone: v })}
-              placeholder="+7 (900) 000-00-00"
-              type="tel"
             />
             <ProfileField
               label="E-mail"
@@ -66,14 +59,8 @@ export default function ProfilePage() {
               placeholder="opt@example.ru"
               type="email"
             />
-            <ProfileField
-              label="Компания / ИП"
-              value={form.company}
-              onChange={(v) => setForm({ ...form, company: v })}
-              placeholder="ИП Иванов И.И."
-            />
             <button type="submit" className="btn-primary mt-1 justify-center">
-              {saved ? "Сохранено ✓" : "Сохранить данные"}
+              {saved ? "Сохранено ✓" : "Зарегистрироваться"}
             </button>
           </form>
         </section>
@@ -81,30 +68,18 @@ export default function ProfilePage() {
         <div className="flex flex-col gap-6">
           {hasData && (
             <section className="rounded-2xl border border-bg-line bg-bg-card p-6">
-              <h2 className="mb-4 text-lg font-bold">Сводка</h2>
+              <h2 className="mb-4 text-lg font-bold">Мои данные</h2>
               <ul className="space-y-3 text-sm">
-                {profile.phone && (
-                  <li className="flex items-center gap-3">
-                    <Icon.Phone className="h-4 w-4 shrink-0 text-brand" />
-                    <a href={`tel:${profile.phone}`} className="hover:text-brand">
-                      {profile.phone}
-                    </a>
-                  </li>
-                )}
-                {profile.email && (
-                  <li className="flex items-center gap-3">
-                    <Icon.User className="h-4 w-4 shrink-0 text-brand" />
-                    <a href={`mailto:${profile.email}`} className="hover:text-brand">
-                      {profile.email}
-                    </a>
-                  </li>
-                )}
-                {profile.company && (
-                  <li className="flex items-center gap-3">
-                    <Icon.Box className="h-4 w-4 shrink-0 text-brand" />
-                    <span className="text-white/80">{profile.company}</span>
-                  </li>
-                )}
+                <li className="flex items-center gap-3">
+                  <Icon.User className="h-4 w-4 shrink-0 text-brand" />
+                  <span className="text-white/80">{profile.name || "—"}</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Icon.Telegram className="h-4 w-4 shrink-0 text-brand" />
+                  <a href={`mailto:${profile.email}`} className="hover:text-brand">
+                    {profile.email || "—"}
+                  </a>
+                </li>
               </ul>
             </section>
           )}

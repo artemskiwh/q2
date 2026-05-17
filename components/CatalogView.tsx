@@ -26,9 +26,8 @@ export function CatalogView() {
   const params = useSearchParams();
 
   const category = (params.get("category") as Category | null) ?? null;
-  const initialQ = params.get("q") ?? "";
+  const query = params.get("q") ?? "";
 
-  const [query, setQuery] = useState(initialQ);
   const [activeCat, setActiveCat] = useState<Category | "all">(category ?? "all");
   const [brands, setBrands] = useState<string[]>([]);
   const [priceMax, setPriceMax] = useState<number>(PRICE_MAX);
@@ -72,7 +71,6 @@ export function CatalogView() {
     setBrands((prev) => (prev.includes(b) ? prev.filter((x) => x !== b) : [...prev, b]));
 
   const resetAll = () => {
-    setQuery("");
     setActiveCat("all");
     setBrands([]);
     setPriceMax(PRICE_MAX);
@@ -92,15 +90,6 @@ export function CatalogView() {
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="relative flex-1 md:w-72">
-            <Icon.Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Найти товар или вкус"
-              className="input pl-10"
-            />
-          </div>
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as Sort)}

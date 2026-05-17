@@ -3,12 +3,10 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 
 export interface Profile {
   name: string;
-  phone: string;
   email: string;
-  company: string;
 }
 
-const empty: Profile = { name: "", phone: "", email: "", company: "" };
+const empty: Profile = { name: "", email: "" };
 
 interface ProfileCtx {
   profile: Profile;
@@ -23,7 +21,10 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const raw = localStorage.getItem("tyag_profile");
-      if (raw) setProfileState(JSON.parse(raw));
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        setProfileState({ name: parsed.name ?? "", email: parsed.email ?? "" });
+      }
     } catch {}
   }, []);
 

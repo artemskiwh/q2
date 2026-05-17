@@ -33,12 +33,6 @@ export function ProductCard({ product }: { product: Product; index?: number }) {
         </div>
 
         <div className="absolute left-3 top-3 z-10 flex flex-wrap items-start gap-1.5">
-          {product.isHot && (
-            <span className="chip chip-brand">
-              <Icon.Fire className="h-3 w-3" /> Хит
-            </span>
-          )}
-          {product.isNew && <span className="chip chip-accent">Новинка</span>}
           {product.isSale && product.oldPrice && (
             <span className="chip chip-gold">
               −{Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
