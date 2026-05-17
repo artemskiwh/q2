@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Product } from "@/lib/types";
 import { PRODUCT_IMAGES } from "@/lib/product-images";
+import { withBasePath } from "@/lib/path";
 import { ProductVisual } from "./ProductVisual";
 
 /**
@@ -13,9 +14,9 @@ import { ProductVisual } from "./ProductVisual";
 export function ProductGallery({ product }: { product: Product }) {
   const [idx, setIdx] = useState(0);
 
-  const realPhotos = product.image
-    ? [product.image]
-    : PRODUCT_IMAGES[product.slug] ?? [];
+  const realPhotos = (
+    product.image ? [product.image] : PRODUCT_IMAGES[product.slug] ?? []
+  ).map((u) => withBasePath(u)!);
 
   // SVG fallback backdrops (used when there are no real photos).
   const tones = [

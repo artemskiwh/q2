@@ -1,6 +1,7 @@
 import type { Product } from "@/lib/types";
 import { PRODUCT_IMAGES } from "@/lib/product-images";
 import { BRAND_LOGOS } from "@/lib/brand-logos";
+import { withBasePath } from "@/lib/path";
 
 /**
  * Lightweight device illustration. Renders an SVG of the device with
@@ -14,7 +15,7 @@ export function ProductVisual({
   product: Product;
   variant?: "card" | "hero";
 }) {
-  const photo = product.image ?? PRODUCT_IMAGES[product.slug]?.[0];
+  const photo = withBasePath(product.image ?? PRODUCT_IMAGES[product.slug]?.[0]);
   if (photo) {
     return (
       <div
@@ -29,7 +30,7 @@ export function ProductVisual({
     );
   }
 
-  const logo = BRAND_LOGOS[product.brand];
+  const logo = withBasePath(BRAND_LOGOS[product.brand]);
   if (logo) {
     const { from, to } = product.imageStyle;
     return (

@@ -24,34 +24,36 @@ if (useCloudinary) {
 }
 const exa = new Exa(process.env.EXA_API_KEY);
 
-// Catalogue mirrors lib/products.ts. For HOT/NEW products we want 3 distinct
-// angles, so the queries array has 3 entries; for the rest, one entry.
+// Catalogue mirrors lib/products.ts. One photo per product — multi-angle
+// requests overwrote hand-curated single-photo selections, so we keep
+// `hero: false` for everything and let manual edits in product-images.ts
+// stick. Only products without a cached entry get refetched.
 const PRODUCTS = [
   { slug: "duall-salt",            hero: false, queries: ["DUALL SALT single disposable vape device isolated white background"] },
-  { slug: "waka-8000",             hero: true,  queries: ["WAKA SMASH 8000 puffs disposable vape product photo", "WAKA SMASH 8000 vape side view", "WAKA SMASH 8000 vape device"] },
+  { slug: "waka-8000",             hero: false, queries: ["WAKA SMASH 8000 puffs disposable vape product photo"] },
   { slug: "waka-20000",            hero: false, queries: ["WAKA soPro PA20000 single device front view white background"] },
   { slug: "waka-25000",            hero: false, queries: ["WAKA PA25000 single disposable vape one device white background"] },
-  { slug: "waka-60000",            hero: true,  queries: ["WAKA soMatch MB60000 disposable vape product photo", "WAKA soMatch MB60000 vape side view", "WAKA 60000 puffs vape device"] },
+  { slug: "waka-60000",            hero: false, queries: ["WAKA soMatch MB60000 disposable vape product photo"] },
   { slug: "fizzy-great-10000",     hero: false, queries: ["FIZZY Great 10000 disposable vape product photo"] },
-  { slug: "elfbar-monnight-25000", hero: true,  queries: ["ELFBAR Moonnight 25000 puffs disposable vape", "ELFBAR Moonnight 25000 vape side view", "ELFBAR Moonnight vape screen"] },
+  { slug: "elfbar-monnight-25000", hero: false, queries: ["ELFBAR Moonnight 25000 puffs disposable vape"] },
   { slug: "geekbar-40000",         hero: false, queries: ["Geek Bar Pulse 40000 puffs disposable vape product photo"] },
-  { slug: "geekbar-50000",         hero: true,  queries: ["Geek Bar 50000 puffs disposable vape product photo", "Geek Bar 50000 vape side view", "Geek Bar 50000 vape device"] },
+  { slug: "geekbar-50000",         hero: false, queries: ["Geek Bar 50000 puffs disposable vape product photo"] },
   { slug: "vozol-shisha-25000",    hero: false, queries: ["VOZOL Shisha 25000 disposable vape product photo"] },
-  { slug: "bubble-mon-30000",      hero: true,  queries: ["Bubble Mon 30000 disposable vape product photo", "Bubble Mon 30K vape side view", "Bubble Mon 30000 puffs device"] },
+  { slug: "bubble-mon-30000",      hero: false, queries: ["Bubble Mon 30000 disposable vape product photo"] },
   { slug: "puffmi-pure-12000",     hero: false, queries: ["Puffmi Pure 12000 disposable vape product photo"] },
   { slug: "laiska-queen-10000",    hero: false, queries: ["Laiska Queen 10000 disposable vape product"] },
   { slug: "vaporesso-xros-mini",   hero: false, queries: ["Vaporesso XROS Mini pod system white background"] },
   { slug: "vaporesso-xros-3-mini", hero: false, queries: ["Vaporesso XROS 3 Mini pod system white background"] },
-  { slug: "vaporesso-xros-4",      hero: true,  queries: ["Vaporesso XROS 4 pod kit white background", "Vaporesso XROS 4 side view", "Vaporesso XROS 4 colors"] },
+  { slug: "vaporesso-xros-4",      hero: false, queries: ["Vaporesso XROS 4 pod kit white background"] },
   { slug: "vaporesso-xros-4-mini", hero: false, queries: ["Vaporesso XROS 4 Mini pod system white background"] },
-  { slug: "vaporesso-xros-5",      hero: true,  queries: ["Vaporesso XROS 5 pod kit white background", "Vaporesso XROS 5 side view", "Vaporesso XROS 5 colors"] },
+  { slug: "vaporesso-xros-5",      hero: false, queries: ["Vaporesso XROS 5 pod kit white background"] },
   { slug: "vaporesso-xros-5-mini", hero: false, queries: ["Vaporesso XROS 5 Mini pod system white background"] },
   { slug: "geekvape-boost-le",     hero: false, queries: ["Geekvape Aegis Boost LE pod mod product photo"] },
   { slug: "geekvape-hero-3-classic", hero: false, queries: ["Geekvape Wenax Hero 3 Classic pod product photo"] },
-  { slug: "geekvape-hero-2-new",   hero: true,  queries: ["Geekvape Wenax Hero 2 pod product photo", "Geekvape Wenax Hero 2 side view", "Geekvape Wenax Hero 2 colors"] },
-  { slug: "geekvape-hero-5",       hero: true,  queries: ["Geekvape Wenax Hero 5 pod product photo", "Geekvape Wenax Hero 5 side view", "Geekvape Wenax Hero 5 colors"] },
+  { slug: "geekvape-hero-2-new",   hero: false, queries: ["Geekvape Wenax Hero 2 pod product photo"] },
+  { slug: "geekvape-hero-5",       hero: false, queries: ["Geekvape Wenax Hero 5 pod product photo"] },
   { slug: "geekvape-boost-2",      hero: false, queries: ["Geekvape Aegis Boost 2 B60 pod mod product photo"] },
-  { slug: "geekvape-boost-3",      hero: true,  queries: ["Geekvape Aegis Boost 3 pod mod product photo", "Geekvape Aegis Boost 3 side view", "Geekvape Aegis Boost 3 colors"] },
+  { slug: "geekvape-boost-3",      hero: false, queries: ["Geekvape Aegis Boost 3 pod mod product photo"] },
 ];
 
 // ───── Helpers ───────────────────────────────────────────────────────
