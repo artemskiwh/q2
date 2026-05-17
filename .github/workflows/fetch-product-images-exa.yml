@@ -1,0 +1,56 @@
+name: Fetch product images (Exa + Cloudinary)
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Re-fetch even if slug is already mapped"
+        required: false
+        default: "false"
+        type: choice
+        options: ["false", "true"]
+      only:
+        description: "Comma-separated slugs to fetch (empty = all)"
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch images
+        env:
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+        run: |
+          ARGS=""
+          [ "${{ inputs.force }}" = "true" ] && ARGS="$ARGS --force"
+          [ -n "${{ inputs.only }}" ] && ARGS="$ARGS --only=${{ inputs.only }}"
+          node scripts/fetch-product-images-exa.mjs $ARGS
+
+      - name: Commit and push
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib/product-images.ts || true
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: refresh product images via Exa + Cloudinary"
+          git push origin HEAD:${{ github.ref_name }}
