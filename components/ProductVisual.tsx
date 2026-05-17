@@ -1,5 +1,6 @@
 import type { Product } from "@/lib/types";
 import { PRODUCT_IMAGES } from "@/lib/product-images";
+import { BRAND_LOGOS } from "@/lib/brand-logos";
 
 /**
  * Lightweight device illustration. Renders an SVG of the device with
@@ -25,6 +26,35 @@ export function ProductVisual({
         }}
         aria-hidden
       />
+    );
+  }
+
+  const logo = BRAND_LOGOS[product.brand];
+  if (logo) {
+    const { from, to } = product.imageStyle;
+    return (
+      <div
+        className="relative h-full w-full overflow-hidden rounded-2xl"
+        style={{
+          background: `radial-gradient(120% 80% at 20% 0%, ${hexA(from, 0.18)} 0%, transparent 55%), linear-gradient(180deg, #181820 0%, #0a0a10 100%)`,
+        }}
+        aria-hidden
+      >
+        <img
+          src={logo}
+          alt=""
+          className="absolute inset-0 m-auto h-[55%] w-[70%] object-contain"
+          style={{ filter: "drop-shadow(0 10px 22px rgba(0,0,0,0.55))" }}
+        />
+        {variant === "hero" && (
+          <div className="absolute bottom-3 left-3 text-[10px] uppercase tracking-[0.3em] text-white/40">
+            {product.brand}
+          </div>
+        )}
+        <div className="absolute bottom-3 right-3 text-[10px] font-bold uppercase tracking-[0.2em] text-white/35">
+          {product.puffs ? `${(product.puffs / 1000).toFixed(0)}K` : (product.tags?.[0] ?? "")}
+        </div>
+      </div>
     );
   }
 
