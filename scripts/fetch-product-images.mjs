@@ -14,9 +14,14 @@ const ROOT = process.cwd();
 const MAP_FILE = path.join(ROOT, "lib", "product-images.ts");
 
 if (!process.env.EXA_API_KEY) throw new Error("Missing EXA_API_KEY");
-if (!process.env.CLOUDINARY_URL) throw new Error("Missing CLOUDINARY_URL");
 
-cloudinary.config(process.env.CLOUDINARY_URL);
+// Cloudinary is optional — if the URL is missing or cloud_name is invalid,
+// we fall back to storing the raw Exa URLs directly (they're already on
+// reliable e-commerce CDNs).
+const useCloudinary = !!process.env.CLOUDINARY_URL;
+if (useCloudinary) {
+  cloudinary.config(process.env.CLOUDINARY_URL);
+}
 const exa = new Exa(process.env.EXA_API_KEY);
 
 // Catalogue mirrors lib/products.ts. For HOT/NEW products we want 3 distinct
@@ -86,6 +91,9 @@ async function searchImage(query) {
 }
 
 async function uploadHosted(remoteUrl, slug, angle) {
+  if (!useCloudinary) {
+    return remoteUrl;
+  }
   const publicId = angle ? `tyag/${slug}_${angle}` : `tyag/${slug}`;
   try {
     const result = await cloudinary.uploader.upload(remoteUrl, {
@@ -97,8 +105,8 @@ async function uploadHosted(remoteUrl, slug, angle) {
     });
     return result.eager?.[0]?.secure_url ?? result.secure_url;
   } catch (e) {
-    console.error(`  cloudinary error for ${publicId}:`, e.message);
-    return null;
+    console.error(`  cloudinary error for ${publicId}, falling back to source:`, e.message);
+    return remoteUrl;
   }
 }
 
