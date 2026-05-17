@@ -37,9 +37,18 @@ jobs:
       - name: Commit updated product-images.ts
         if: always()
         run: |
+          echo "=== Files in tmp/ ==="
+          ls -la tmp/ || echo "tmp/ does not exist"
+          echo "=== Files in workspace ==="
+          ls -la
+          mkdir -p tmp
+          echo "Run #${{ github.run_number }} at $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> tmp/exa-fetch.log
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Sync with remote in case another workflow pushed first
+          git pull --rebase origin ${{ github.ref_name }} || true
           git add lib/product-images.ts tmp/exa-fetch.log
+          git status
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0
