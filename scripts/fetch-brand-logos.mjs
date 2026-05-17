@@ -1,5 +1,7 @@
-// Downloads brand logos from Clearbit and writes lib/brand-logos.ts.
+// Downloads brand favicons and writes lib/brand-logos.ts.
 // Runs in GitHub Actions (has internet) — the sandbox doesn't.
+// Clearbit's free /logo/ endpoint was retired; DuckDuckGo's ip3 CDN and
+// Google's s2/favicons service are reliable free replacements.
 
 import { writeFile, mkdir, readFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
@@ -27,8 +29,12 @@ const BRANDS = {
 const brandToSlug = (brand) =>
   brand.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-async function tryClearbit(domain) {
-  const url = `https://logo.clearbit.com/${domain}?size=512&format=png`;
+const SOURCES = [
+  (d) => `https://icons.duckduckgo.com/ip3/${d}.ico`,
+  (d) => `https://www.google.com/s2/favicons?domain=${d}&sz=256`,
+];
+
+async function tryFetch(url) {
   const res = await fetch(url, { redirect: "follow" });
   if (!res.ok) return null;
   const buf = Buffer.from(await res.arrayBuffer());
@@ -38,14 +44,17 @@ async function tryClearbit(domain) {
 
 async function fetchBrand(brand, domains) {
   for (const d of domains) {
-    try {
-      const buf = await tryClearbit(d);
-      if (buf) {
-        console.log(`  ${brand} <- ${d} (${(buf.length / 1024).toFixed(1)} KB)`);
-        return buf;
+    for (const src of SOURCES) {
+      const url = src(d);
+      try {
+        const buf = await tryFetch(url);
+        if (buf) {
+          console.log(`  ${brand} <- ${d} via ${new URL(url).host} (${(buf.length / 1024).toFixed(1)} KB)`);
+          return buf;
+        }
+      } catch (e) {
+        console.log(`  ${brand} ${d} ${new URL(url).host} error: ${e.message}`);
       }
-    } catch (e) {
-      console.log(`  ${brand} ${d} error: ${e.message}`);
     }
   }
   return null;
@@ -54,12 +63,12 @@ async function fetchBrand(brand, domains) {
 async function main() {
   await mkdir(OUT_DIR, { recursive: true });
   const mapping = {};
-  console.log("Fetching brand logos from Clearbit:");
+  console.log("Fetching brand favicons (DuckDuckGo / Google fallback):");
 
   for (const [brand, domains] of Object.entries(BRANDS)) {
     const slug = brandToSlug(brand);
-    const outPath = path.join(OUT_DIR, `${slug}.png`);
-    const publicPath = `/assets/logos/${slug}.png`;
+    const outPath = path.join(OUT_DIR, `${slug}.ico`);
+    const publicPath = `/assets/logos/${slug}.ico`;
 
     if (existsSync(outPath) && !process.argv.includes("--force")) {
       console.log(`  ${brand} (cached)`);
