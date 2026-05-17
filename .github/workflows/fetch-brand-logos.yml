@@ -9,6 +9,11 @@ on:
         default: "false"
         type: choice
         options: ["false", "true"]
+  push:
+    branches: [ claude/vape-shop-website-8Fk6I ]
+    paths:
+      - 'scripts/fetch-brand-logos.mjs'
+      - '.github/workflows/fetch-brand-logos.yml'
 
 permissions:
   contents: write
