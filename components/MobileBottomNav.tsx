@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion, useScroll } from "framer-motion";
 import clsx from "clsx";
 import { Icon } from "./Icons";
 import { useCart } from "./CartProvider";
@@ -19,9 +20,15 @@ export function MobileBottomNav() {
   const pathname = usePathname();
   const { totalQty } = useCart();
   const { count: favCount } = useFavorites();
+  const { scrollYProgress } = useScroll();
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-bg-line bg-bg/95 backdrop-blur-lg lg:hidden">
+      <motion.span
+        className="absolute left-0 top-0 h-0.5 origin-left bg-brand"
+        style={{ scaleX: scrollYProgress, width: "100%" }}
+        aria-hidden
+      />
       <div className="grid grid-cols-5">
         {ITEMS.map((it) => {
           const active = pathname === it.href;

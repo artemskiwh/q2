@@ -36,9 +36,6 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
     "https://shopelfbar.ca/cdn/shop/files/moonlight3pk.png?v=1755847149",
     "https://www.allbarvape.com/uploads/37317/news/n202506031732355e022.jpg"
   ],
-  "geekbar-32000": [
-    "https://image.vapesourcing.com/images/202605/geekbar-slimor-32k-0.jpg"
-  ],
   "geekbar-40000": [
     "https://vapordna.com/cdn/shop/files/GeekBarUSA40KGallery_23dd13f7-a91c-4f2a-9cdb-7619dad4fbdd.png?v=1766451542"
   ],
@@ -88,9 +85,6 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
   ],
   "geekvape-hero-3-classic": [
     "https://image.morevaping.com/images/202603/sakura-geekvape-h45-classic-kit.jpg"
-  ],
-  "geekvape-hero-2-crystal": [
-    "https://vapeguysinc.com/media/catalog/product/cache/6517c62f5899ad6aa0ba23ceb3eeff97/g/e/geekvape_aegis_hero_2_pod_kit_crystal_edition-2.jpg"
   ],
   "geekvape-hero-2-new": [
     "https://cdn11.bigcommerce.com/s-4hr592w/products/15871/images/58479/k1__45131.1741990570.386.513.png?c=2",

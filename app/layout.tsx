@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/components/CartProvider";
 import { FavoritesProvider } from "@/components/FavoritesProvider";
 import { ProfileProvider } from "@/components/ProfileProvider";
+import { AgeGate } from "@/components/AgeGate";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
@@ -69,6 +70,7 @@ export default function RootLayout({
               <main>{children}</main>
               <Footer />
               <MobileBottomNav />
+              <AgeGate />
             </CartProvider>
           </FavoritesProvider>
         </ProfileProvider>

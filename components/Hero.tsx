@@ -43,7 +43,7 @@ export function Hero() {
             </Link>
           </div>
 
-          <div className="mt-5 grid grid-cols-2 gap-3 border-t border-bg-line pt-4 md:mt-8 md:max-w-md md:gap-4 md:pt-6">
+          <div className="mt-5 flex gap-6 border-t border-bg-line pt-4 md:mt-8 md:gap-8 md:pt-6">
             {STATS.map((s) => (
               <div key={s.label}>
                 <div className="text-base font-black text-white md:text-2xl">{s.value}</div>

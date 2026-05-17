@@ -1,12 +1,42 @@
 import type { Category, Product } from "./types";
 
-export const CATEGORIES: { id: Category; label: string; subtitle: string }[] = [
-  { id: "disposable", label: "Одноразки", subtitle: "120+ позиций" },
-  { id: "pod", label: "Многоразки", subtitle: "15 моделей" },
-  { id: "liquid", label: "Жидкости", subtitle: "Соль и фри-база" },
-  { id: "accessory", label: "Аксессуары", subtitle: "Зарядки, чехлы" },
-  { id: "sale", label: "Распродажа", subtitle: "До −40%" },
-  { id: "cartridge", label: "Картриджи", subtitle: "Сменные блоки" },
+export const CATEGORIES: { id: Category; label: string; subtitle: string; image: string }[] = [
+  {
+    id: "disposable",
+    label: "Одноразки",
+    subtitle: "120+ позиций",
+    image: "https://vapesultan.com/wp-content/uploads/2025/02/Waka-SoPro-20000.jpg",
+  },
+  {
+    id: "pod",
+    label: "Многоразки",
+    subtitle: "15 моделей",
+    image: "https://store.vaporesso.com/cdn/shop/files/XROSMINI_SakuraPink_2.png?v=1755742961",
+  },
+  {
+    id: "liquid",
+    label: "Жидкости",
+    subtitle: "Соль и фри-база",
+    image: "https://static.tildacdn.com/stor3033-6463-4164-b135-646664633332/97183322.jpg",
+  },
+  {
+    id: "accessory",
+    label: "Аксессуары",
+    subtitle: "Зарядки, чехлы",
+    image: "https://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021",
+  },
+  {
+    id: "sale",
+    label: "Распродажа",
+    subtitle: "До −40%",
+    image: "https://img.staticdj.com/e9bbf41af2caed20549e73fdc6a18c1e.jpeg",
+  },
+  {
+    id: "cartridge",
+    label: "Картриджи",
+    subtitle: "Сменные блоки",
+    image: "https://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021",
+  },
 ];
 
 export const CATEGORY_LABEL: Record<Category, string> = {
@@ -191,20 +221,6 @@ export const PRODUCTS: Product[] = [
     imageStyle: { from: "#22c55e", via: "#11512a", to: "#05140c", accent: "#bdf5cf" },
   },
   {
-    slug: "geekbar-32000",
-    brand: "GEEKBAR",
-    name: "GEEKBAR 32 000",
-    category: "disposable",
-    price: 550,
-    shortDesc: "5% · Русский язык · Честный знак · 15 вкусов",
-    description:
-      "GEEKBAR 32 000 — одноразка нового поколения с честным знаком и русифицированным интерфейсом. Уверенный пар на весь ресурс.",
-    puffs: 32000,
-    strength: "5%",
-    tags: ["Честный знак", "15 вкусов"],
-    imageStyle: { from: "#0ea5e9", via: "#0c3b59", to: "#04131c", accent: "#bfe7ff" },
-  },
-  {
     slug: "geekbar-40000",
     brand: "GEEKBAR",
     name: "GEEKBAR 40 000",
@@ -378,17 +394,6 @@ export const PRODUCTS: Product[] = [
     description: "Классика Geek Vape Hero — теперь с улучшенным аккумулятором.",
     tags: ["Pod-система"],
     imageStyle: { from: "#1f2937", via: "#111827", to: "#030712", accent: "#9ca3af" },
-  },
-  {
-    slug: "geekvape-hero-2-crystal",
-    brand: "GEEK VAPE",
-    name: "Hero 2 Crystal",
-    category: "pod",
-    price: 1800,
-    shortDesc: "Прозрачный корпус Hero 2",
-    description: "Hero 2 Crystal — прозрачный поликарбонатный корпус, видна работа испарителя.",
-    tags: ["Crystal", "Pod"],
-    imageStyle: { from: "#0ea5e9", via: "#0c3b59", to: "#04131c", accent: "#bfe7ff" },
   },
   {
     slug: "geekvape-hero-2-new",

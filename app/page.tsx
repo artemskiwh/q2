@@ -10,7 +10,6 @@ import { CATEGORIES, PRODUCTS } from "@/lib/products";
 
 export default function HomePage() {
   const catalog = PRODUCTS.slice(0, 12);
-  const newArrivals = PRODUCTS.filter((p) => p.isNew).slice(0, 4);
 
   return (
     <div className="container-page space-y-8 py-4 md:space-y-14 md:py-8">
@@ -28,7 +27,12 @@ export default function HomePage() {
         <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-2 scrollbar-hide md:mx-0 md:grid md:grid-cols-3 md:gap-4 md:px-0 md:pb-0 lg:grid-cols-6">
           {CATEGORIES.map((c) => (
             <div key={c.id} className="w-[42%] shrink-0 md:w-auto">
-              <CategoryCard id={c.id} label={c.label} subtitle={c.subtitle} />
+              <CategoryCard
+                id={c.id}
+                label={c.label}
+                subtitle={c.subtitle}
+                image={c.image}
+              />
             </div>
           ))}
         </div>
@@ -51,22 +55,6 @@ export default function HomePage() {
       <BrandsMarquee />
 
       <AdvantagesSection />
-
-      {newArrivals.length > 0 && (
-        <section>
-          <SectionHeader
-            title="НОВИНКИ"
-            subtitle="Только что добавили на склад"
-            href="/catalog?sort=new"
-            cta="Все новинки"
-          />
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4">
-            {newArrivals.map((p) => (
-              <ProductCard key={p.slug} product={p} />
-            ))}
-          </div>
-        </section>
-      )}
 
       <CTABanner />
     </div>
