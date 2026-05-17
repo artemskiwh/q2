@@ -1,35 +1,14 @@
-Fetching brand logos from Clearbit:
-  ELFBAR elfbar.com error: fetch failed
-  ELFBAR elfbarvape.com error: fetch failed
-  ELFBAR — no logo found, skipping
-  GEEKBAR geekbarvape.com error: fetch failed
-  GEEKBAR geekbar.com error: fetch failed
-  GEEKBAR — no logo found, skipping
-  GEEK VAPE geekvape.com error: fetch failed
-  GEEK VAPE — no logo found, skipping
-  VAPORESSO vaporesso.com error: fetch failed
-  VAPORESSO — no logo found, skipping
-  VOZOL vozol.com error: fetch failed
-  VOZOL vozolworld.com error: fetch failed
-  VOZOL — no logo found, skipping
-  WAKA wakavapor.com error: fetch failed
-  WAKA wakavape.com error: fetch failed
-  WAKA — no logo found, skipping
-  PUFFMI puffmi.com error: fetch failed
-  PUFFMI puffmivape.com error: fetch failed
-  PUFFMI — no logo found, skipping
-  BUBBLE MON bubble-mon.com error: fetch failed
-  BUBBLE MON bubblemon.com error: fetch failed
+Fetching brand favicons (DuckDuckGo / Google fallback):
+  ELFBAR <- elfbar.com via www.google.com (12.6 KB)
+  GEEKBAR <- geekbarvape.com via www.google.com (2.1 KB)
+  GEEK VAPE <- geekvape.com via www.google.com (8.9 KB)
+  VAPORESSO <- vaporesso.com via icons.duckduckgo.com (4.2 KB)
+  VOZOL <- vozol.com via icons.duckduckgo.com (16.6 KB)
+  WAKA <- wakavape.com via www.google.com (1.4 KB)
+  PUFFMI <- puffmivape.com via www.google.com (5.7 KB)
   BUBBLE MON — no logo found, skipping
-  DUALL duallvape.com error: fetch failed
-  DUALL duall.com error: fetch failed
   DUALL — no logo found, skipping
-  FIZZY fizzyvape.com error: fetch failed
-  FIZZY fizzyworld.com error: fetch failed
-  FIZZY fizzyjuice.com error: fetch failed
-  FIZZY — no logo found, skipping
-  LAISKA laiska.shop error: fetch failed
-  LAISKA laiska.com error: fetch failed
+  FIZZY <- fizzyvape.com via icons.duckduckgo.com (0.9 KB)
   LAISKA — no logo found, skipping
 
-Wrote 0 brands to /home/runner/work/q2/q2/lib/brand-logos.ts
+Wrote 8 brands to /home/runner/work/q2/q2/lib/brand-logos.ts
