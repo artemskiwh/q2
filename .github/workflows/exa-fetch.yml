@@ -24,7 +24,9 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Fetch images via Exa and upload to Cloudinary
-        run: node scripts/fetch-product-images.mjs
+        run: |
+          mkdir -p tmp
+          node scripts/fetch-product-images.mjs 2>&1 | tee tmp/exa-fetch.log
         env:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
@@ -32,7 +34,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add lib/product-images.ts
+          git add lib/product-images.ts tmp/exa-fetch.log
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0
