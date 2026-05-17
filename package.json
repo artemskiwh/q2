@@ -6,14 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "fetch-images": "node scripts/fetch-product-images.mjs"
   },
   "dependencies": {
     "next": "14.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "framer-motion": "^11.3.8",
-    "clsx": "^2.1.1"
+    "clsex": "^2.1.1"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
