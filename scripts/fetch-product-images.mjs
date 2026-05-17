@@ -71,6 +71,9 @@ const looksLikeImage = (u) =>
   /^https?:\/\//.test(u) &&
   !/logo|favicon|sprite|placeholder|icon-/i.test(u);
 
+// GitHub Pages is https — rewrite any http:// source URLs to avoid mixed-content blocks.
+const toHttps = (u) => (typeof u === "string" ? u.replace(/^http:\/\//, "https://") : u);
+
 async function searchImage(query) {
   try {
     const res = await exa.searchAndContents(query, {
@@ -91,6 +94,7 @@ async function searchImage(query) {
 }
 
 async function uploadHosted(remoteUrl, slug, angle) {
+  remoteUrl = toHttps(remoteUrl);
   if (!useCloudinary) {
     return remoteUrl;
   }

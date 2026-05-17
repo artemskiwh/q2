@@ -9,12 +9,12 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
     "https://static.tildacdn.com/stor3033-6463-4164-b135-646664633332/97183322.jpg"
   ],
   "waka-8000": [
-    "http://bayvape.ca/cdn/shop/files/waka-sopro-dm8000i-strawberry-watermelon_800x.jpg?v=1699503246",
+    "https://bayvape.ca/cdn/shop/files/waka-sopro-dm8000i-strawberry-watermelon_800x.jpg?v=1699503246",
     "https://hoovape.com/wp-content/uploads/2025/09/wakasmash-1.jpg",
-    "http://24x7vapes.ca/cdn/shop/files/blueberry_splash_1.webp?v=1705521161"
+    "https://24x7vapes.ca/cdn/shop/files/blueberry_splash_1.webp?v=1705521161"
   ],
   "waka-20000": [
-    "http://www.wakavaping.com/cdn/shop/products/WatermelonChillCopy_9c84768e-3d03-4fc3-9fb9-8c1b1866ddb0.jpg?v=1677556508",
+    "https://www.wakavaping.com/cdn/shop/products/WatermelonChillCopy_9c84768e-3d03-4fc3-9fb9-8c1b1866ddb0.jpg?v=1677556508",
     "https://rpodsdubai.ae/wp-content/uploads/2024/11/Waka-SoPro-20000-Puffs-Disposable-Vape.webp",
     "https://vapesultan.com/wp-content/uploads/2025/02/Waka-SoPro-20000.jpg"
   ],
@@ -26,24 +26,24 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
   "waka-60000": [
     "https://www.bestvapes.ca/cdn/shop/products/relx-waka-6000-kit-pods-vape-blueberry-raspberry_1200x1200.png?v=1692110377",
     "https://www.bestvapes.ca/cdn/shop/products/relx-waka-6000-kit-pods-vape-blueberry-raspberry_1200x1200.png?v=1692110377",
-    "http://relxdisposable.com/cdn/shop/files/123123345.png?height=628&pad_color=ffffff&v=1723516560&width=1200"
+    "https://relxdisposable.com/cdn/shop/files/123123345.png?height=628&pad_color=ffffff&v=1723516560&width=1200"
   ],
   "fizzy-great-10000": [
-    "http://img.staticdj.com/e9bbf41af2caed20549e73fdc6a18c1e.jpeg"
+    "https://img.staticdj.com/e9bbf41af2caed20549e73fdc6a18c1e.jpeg"
   ],
   "elfbar-monnight-25000": [
-    "http://shopelfbar.ca/cdn/shop/files/moonlight3pk.png?v=1755847149",
-    "http://shopelfbar.ca/cdn/shop/files/moonlight3pk.png?v=1755847149",
+    "https://shopelfbar.ca/cdn/shop/files/moonlight3pk.png?v=1755847149",
+    "https://shopelfbar.ca/cdn/shop/files/moonlight3pk.png?v=1755847149",
     "https://www.allbarvape.com/uploads/37317/news/n202506031732355e022.jpg"
   ],
   "geekbar-32000": [
     "https://image.vapesourcing.com/images/202605/geekbar-slimor-32k-0.jpg"
   ],
   "geekbar-40000": [
-    "http://vapordna.com/cdn/shop/files/GeekBarUSA40KGallery_23dd13f7-a91c-4f2a-9cdb-7619dad4fbdd.png?v=1766451542"
+    "https://vapordna.com/cdn/shop/files/GeekBarUSA40KGallery_23dd13f7-a91c-4f2a-9cdb-7619dad4fbdd.png?v=1766451542"
   ],
   "geekbar-50000": [
-    "http://www.vapeshack.com/cdn/shop/files/GBCLRMain.jpg?v=1772907874",
+    "https://www.vapeshack.com/cdn/shop/files/GBCLRMain.jpg?v=1772907874",
     "https://www.ukvapepen.com/wp-content/uploads/2026/01/20260124_101860.webp",
     "https://www.ukvapepen.com/wp-content/uploads/2026/01/20260124_101860.webp"
   ],
@@ -52,8 +52,8 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
   ],
   "bubble-mon-30000": [
     "https://vapepu.com/wp-content/uploads/2026/01/Bubblemon-Graffiti-C-炫彩泡泡兽三代-30000-Puffs-2.jpg",
-    "http://vapelabuae.com/cdn/shop/files/1500-3.png?v=1758983922",
-    "http://vaping180.com/cdn/shop/files/bubblemon-35k-1.jpg?v=1764809837"
+    "https://vapelabuae.com/cdn/shop/files/1500-3.png?v=1758983922",
+    "https://vaping180.com/cdn/shop/files/bubblemon-35k-1.jpg?v=1764809837"
   ],
   "puffmi-pure-12000": [
     "https://www.igeekphone.com/wp-content/uploads/2024/03/20240306170920.png"
@@ -62,50 +62,50 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
     "https://papa-vape-opt.com/pictures/product/middle/14568_middle.png"
   ],
   "vaporesso-xros-mini": [
-    "http://store.vaporesso.com/cdn/shop/files/XROSMINI_SakuraPink_2.png?v=1755742961"
+    "https://store.vaporesso.com/cdn/shop/files/XROSMINI_SakuraPink_2.png?v=1755742961"
   ],
   "vaporesso-xros-3-mini": [
-    "http://store.vaporesso.com/cdn/shop/files/XROS3_LemonYellow_2.png?v=1763950530"
+    "https://store.vaporesso.com/cdn/shop/files/XROS3_LemonYellow_2.png?v=1763950530"
   ],
   "vaporesso-xros-4": [
     "https://whitevapenew1-20b04.kxcdn.com/wp-content/uploads/2024/05/2033-Vaporesso-XROS-4-Pod-Kit-Cover.jpg",
-    "http://www.shopvapour.co.uk/cdn/shop/files/vaporesso-xros-4-pod-vape-kit-black.webp?v=1759323850",
-    "http://ukvapesonline.co.uk/cdn/shop/collections/1_a6e3162e-8e8c-4401-810a-d24405fbf622.png?v=1750514798"
+    "https://www.shopvapour.co.uk/cdn/shop/files/vaporesso-xros-4-pod-vape-kit-black.webp?v=1759323850",
+    "https://ukvapesonline.co.uk/cdn/shop/collections/1_a6e3162e-8e8c-4401-810a-d24405fbf622.png?v=1750514798"
   ],
   "vaporesso-xros-4-mini": [
-    "http://www.vapebrothers.co.uk/cdn/shop/files/XROS4MiniMain.png?v=1715262179"
+    "https://www.vapebrothers.co.uk/cdn/shop/files/XROS4MiniMain.png?v=1715262179"
   ],
   "vaporesso-xros-5": [
-    "http://www.ukvapeworld.com/cdn/shop/files/opal_white_Vaporesso_Xros_5_Refillable_Pod_Vape_Kit.png?v=1749641584",
-    "http://www.vaporauthority.com/cdn/shop/files/Vaporesso-Xros-5-Pod-Mod-Kit-Main.jpg?v=1764951065",
-    "http://www.vaporauthority.com/cdn/shop/files/Vaporesso-Xros-5-Pod-Mod-Kit-Main.jpg?v=1764951065"
+    "https://www.ukvapeworld.com/cdn/shop/files/opal_white_Vaporesso_Xros_5_Refillable_Pod_Vape_Kit.png?v=1749641584",
+    "https://www.vaporauthority.com/cdn/shop/files/Vaporesso-Xros-5-Pod-Mod-Kit-Main.jpg?v=1764951065",
+    "https://www.vaporauthority.com/cdn/shop/files/Vaporesso-Xros-5-Pod-Mod-Kit-Main.jpg?v=1764951065"
   ],
   "vaporesso-xros-5-mini": [
     "https://vapebus.com/wp-content/uploads/2026/05/Vaporesso-Xros-5-Mini-Vape-Kit-ZZ1.webp"
   ],
   "xros-cart-04-2": [
-    "http://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021"
+    "https://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021"
   ],
   "xros-cart-04-3": [
-    "http://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021"
+    "https://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021"
   ],
   "xros-cart-06-2": [
-    "http://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021"
+    "https://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021"
   ],
   "xros-cart-06-3": [
-    "http://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021"
+    "https://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021"
   ],
   "xros-cart-08-2": [
-    "http://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021"
+    "https://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021"
   ],
   "xros-cart-08-3": [
-    "http://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021"
+    "https://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021"
   ],
   "xros-cart-10-2": [
-    "http://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021"
+    "https://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021"
   ],
   "geekvape-hero-1-rte": [
-    "http://www.puffinvapeshop.com/cdn/shop/products/wenax.jpg?v=1649908392"
+    "https://www.puffinvapeshop.com/cdn/shop/products/wenax.jpg?v=1649908392"
   ],
   "geekvape-boost-le": [
     "https://cdn11.bigcommerce.com/s-5zbebjcuob/products/4730/images/11524/Geekvape-Aegis-Boost-LE-Kit-5-Coil-Edition__43023.1696852732.386.513.png?c=2"
@@ -124,9 +124,9 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
     "https://www.vapezood.com/wp-content/uploads/2025/08/20250809_81010.webp"
   ],
   "geekvape-hero-5": [
-    "http://mipod.com/cdn/shop/files/Geek-Vape_Aegis-Hero-5_Blaze-Red_600x600_4b494c0e-7729-401b-a28c-c04057f3e730.png?v=1766589682&width=2048",
-    "http://store.geekvape.com/cdn/shop/files/Geekvape_Aegis_Hero_5_Pod_Kit_2000mAh_Speed_Red.png?v=1777341540",
-    "http://store.geekvape.com/cdn/shop/files/BlazeRed_Geekvape_Aegis_Hero_5_Pod_Kit_2000mAh.png?v=1753270666"
+    "https://mipod.com/cdn/shop/files/Geek-Vape_Aegis-Hero-5_Blaze-Red_600x600_4b494c0e-7729-401b-a28c-c04057f3e730.png?v=1766589682&width=2048",
+    "https://store.geekvape.com/cdn/shop/files/Geekvape_Aegis_Hero_5_Pod_Kit_2000mAh_Speed_Red.png?v=1777341540",
+    "https://store.geekvape.com/cdn/shop/files/BlazeRed_Geekvape_Aegis_Hero_5_Pod_Kit_2000mAh.png?v=1753270666"
   ],
   "geekvape-boost-2": [
     "https://www.geekvape.com/wp-content/uploads/2025/09/221024.webp"
@@ -134,6 +134,6 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
   "geekvape-boost-3": [
     "https://imagedelivery.net/OOg-oGRqRlSRq6kAyIkwWg/aegis_boost_3_pod_kit_sunset_red_1728422277/500x500",
     "https://images.planetofthevapes.co.uk/140955/conversions/header-og.jpg",
-    "http://store.geekvape.com/cdn/shop/files/Black_Geekvape_Aegis_Boost_3_Pod_Kit_3000mAh.png?v=1747100322"
+    "https://store.geekvape.com/cdn/shop/files/Black_Geekvape_Aegis_Boost_3_Pod_Kit_3000mAh.png?v=1747100322"
   ]
 };
