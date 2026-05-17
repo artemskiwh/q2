@@ -125,7 +125,8 @@ async function main() {
   for (const p of PRODUCTS) {
     const wantAngles = p.hero ? 3 : 1;
     const existingUrls = Array.isArray(out[p.slug]) ? out[p.slug] : [];
-    if (!force && existingUrls.length >= wantAngles && existingUrls.every((u) => u.startsWith("https://"))) {
+    // Treat local "/products/foo.jpg" entries as user-curated and never re-fetch them.
+    if (!force && existingUrls.length >= wantAngles && existingUrls.every((u) => u.startsWith("https://") || u.startsWith("/"))) {
       console.log(`✓ ${p.slug} (cached, ${existingUrls.length} angles)`);
       continue;
     }
