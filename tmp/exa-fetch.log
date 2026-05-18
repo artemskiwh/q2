@@ -24,6 +24,36 @@
 ✓ geekvape-boost-2 (cached, 1 angles)
 ✓ geekvape-boost-3 (cached, 1 angles)
 
-Wrote 25 mappings to /home/runner/work/q2/q2/lib/product-images.ts
+→ cat-disposable (1 angles)
+  [1] source: https://img.freepik.com/premium-photo/disposable-vape-pen-with-text-space-isolated-white-background-...
+  cloudinary error for tyag/cat-disposable, falling back to source: Invalid cloud_name dk5efhmmy
+  [1] hosted: https://img.freepik.com/premium-photo/disposable-vape-pen-with-text-space-isolated-white-background-with-black-tip_500307-382.jpg
+
+→ cat-pod (1 angles)
+  [1] source: https://www.freevap.ch/51262-pdt_540/refillable-kit-le-pod-slim-by-pulp.jpg
+  cloudinary error for tyag/cat-pod, falling back to source: Invalid cloud_name dk5efhmmy
+  [1] hosted: https://www.freevap.ch/51262-pdt_540/refillable-kit-le-pod-slim-by-pulp.jpg
+
+→ cat-cartridge (1 angles)
+  [1] source: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Empty_Juul_pod.png/960px-Empty_Juul_pod.pn...
+  cloudinary error for tyag/cat-cartridge, falling back to source: Invalid cloud_name dk5efhmmy
+  [1] hosted: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Empty_Juul_pod.png/960px-Empty_Juul_pod.png
+
+→ cat-liquid (1 angles)
+  [1] source: https://thumbs.dreamstime.com/b/glass-dropper-bottle-cosmetic-serum-amber-liquid-clear-container-ski...
+  cloudinary error for tyag/cat-liquid, falling back to source: Invalid cloud_name dk5efhmmy
+  [1] hosted: https://thumbs.dreamstime.com/b/glass-dropper-bottle-cosmetic-serum-amber-liquid-clear-container-skincare-product-isolated-white-realistic-render-glossy-shine-451567786.jpg
+
+→ cat-accessory (1 angles)
+  [1] source: https://splitted.space/wp-content/uploads/2025/11/white-coiled-type-c-cable-main.webp
+  cloudinary error for tyag/cat-accessory, falling back to source: Invalid cloud_name dk5efhmmy
+  [1] hosted: https://splitted.space/wp-content/uploads/2025/11/white-coiled-type-c-cable-main.webp
+
+→ cat-sale (1 angles)
+  [1] source: https://ai-previews.123rf.com/ai-txt2img/600nwm/e2a0da60-360f-4280-a011-189547dfc3d3.jpg
+  cloudinary error for tyag/cat-sale, falling back to source: Invalid cloud_name dk5efhmmy
+  [1] hosted: https://ai-previews.123rf.com/ai-txt2img/600nwm/e2a0da60-360f-4280-a011-189547dfc3d3.jpg
+
+Wrote 31 mappings to /home/runner/work/q2/q2/lib/product-images.ts
 EXIT_CODE=0
-Run #18 at 2026-05-17T21:04:20Z
+Run #19 at 2026-05-18T04:24:16Z
