@@ -8,7 +8,9 @@ reach most CDNs directly so this lives in CI.
 
 import os
 import sys
+import time
 import urllib.request
+import urllib.error
 from rembg import remove
 
 URLS = {
@@ -23,15 +25,40 @@ URLS = {
 OUT_DIR = "public/products"
 os.makedirs(OUT_DIR, exist_ok=True)
 
-ua = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+# Wikimedia requires a descriptive User-Agent identifying the app + contact.
+UA = "tyag-moskva-category-thumbs/1.0 (https://github.com/artemskiwh/q2; build via GitHub Actions) Python-urllib"
+
+
+def fetch(url: str, max_attempts: int = 4) -> bytes:
+    delay = 2
+    last_err: Exception | None = None
+    for attempt in range(max_attempts):
+        req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "image/*"})
+        try:
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                return resp.read()
+        except urllib.error.HTTPError as e:
+            last_err = e
+            if e.code == 429 or e.code >= 500:
+                print(f"    attempt {attempt + 1}: HTTP {e.code}, sleeping {delay}s")
+                time.sleep(delay)
+                delay *= 2
+                continue
+            raise
+        except Exception as e:
+            last_err = e
+            print(f"    attempt {attempt + 1}: {type(e).__name__}: {e}, sleeping {delay}s")
+            time.sleep(delay)
+            delay *= 2
+    raise RuntimeError(f"giving up after {max_attempts} attempts") from last_err
+
+
 failed: list[str] = []
 
 for slug, url in URLS.items():
     out_path = os.path.join(OUT_DIR, f"{slug}.png")
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": ua, "Accept": "image/*"})
-        with urllib.request.urlopen(req, timeout=60) as resp:
-            data = resp.read()
+        data = fetch(url)
         print(f"  {slug}: downloaded {len(data)} bytes")
         out_bytes = remove(data)
         with open(out_path, "wb") as f:
@@ -40,6 +67,8 @@ for slug, url in URLS.items():
     except Exception as e:
         print(f"  {slug}: FAILED {type(e).__name__}: {e}")
         failed.append(slug)
+    # Be polite to upstreams between downloads.
+    time.sleep(1)
 
 if failed:
     print(f"\n{len(failed)} failed: {failed}")
