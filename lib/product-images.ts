@@ -10,7 +10,7 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
     "/products/waka-8000.jpg"
   ],
   "waka-20000": [
-    "https://www.wakavaping.com/cdn/shop/products/WatermelonChillCopy_9c84768e-3d03-4fc3-9fb9-8c1b1866ddb0.jpg?v=1677556508"
+    "/products/waka-20000.webp"
   ],
   "waka-25000": [
     "/products/waka-25000.jpg"
@@ -34,7 +34,7 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
     "/products/vozol-shisha-25000.webp"
   ],
   "bubble-mon-30000": [
-    "https://vapepu.com/wp-content/uploads/2026/01/Bubblemon-Graffiti-C-炫彩泡泡兽三代-30000-Puffs-2.jpg"
+    "/products/bubble-mon-30000.webp"
   ],
   "puffmi-pure-12000": [
     "/products/puffmi-pure-12000.png"
