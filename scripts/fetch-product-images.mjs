@@ -55,24 +55,25 @@ const PRODUCTS = [
   { slug: "geekvape-boost-2",      hero: false, queries: ["Geekvape Aegis Boost 2 B60 pod mod product photo"] },
   { slug: "geekvape-boost-3",      hero: false, queries: ["Geekvape Aegis Boost 3 pod mod product photo"] },
   // Category thumbnails — minimalist, brand-free product photography.
-  { slug: "cat-disposable",        hero: false, queries: ["sleek disposable vape pen device isolated minimalist studio photography no brand"] },
-  { slug: "cat-pod",               hero: false, queries: ["refillable pod vape system minimalist product photography white background no logo"] },
+  { slug: "cat-disposable",        hero: false, queries: ["single black disposable vape pen device photo white background pexels OR pixabay OR unsplash"] },
+  { slug: "cat-pod",               hero: false, queries: ["pod mod vape device minimalist photo white background pexels OR pixabay OR unsplash"] },
   { slug: "cat-cartridge",         hero: false, queries: ["empty vape pod cartridge isolated minimalist studio photo white background"] },
-  { slug: "cat-liquid",            hero: false, queries: ["clear glass dropper bottle e-liquid amber minimalist isolated white background"] },
+  { slug: "cat-liquid",            hero: false, queries: ["amber dropper bottle macro photo minimalist white background pexels OR pixabay OR unsplash"] },
   { slug: "cat-accessory",         hero: false, queries: ["coiled usb-c charging cable minimalist product photography white background"] },
-  { slug: "cat-sale",              hero: false, queries: ["red sale tag price label minimalist product photography studio shot"] },
+  { slug: "cat-sale",              hero: false, queries: ["red percent off discount tag isolated pexels OR pixabay OR unsplash"] },
 ];
 
 // ───── Helpers ───────────────────────────────────────────────────────
-// Stock-photo sites that watermark preview images (freepik "Premium", dreamstime,
-// 123rf, etc.) — we never want their URLs as category thumbnails.
-const WATERMARKED = /(?:freepik\.|dreamstime\.|123rf\.|shutterstock\.|gettyimages\.|alamy\.|istockphoto\.|stock\.adobe\.|depositphotos\.)/i;
+// Stock-photo sites and watermark patterns we never want as a thumbnail.
+const WATERMARKED = /(?:freepik\.|dreamstime\.|123rf\.|shutterstock\.|gettyimages\.|alamy\.|istockphoto\.|stock\.adobe\.|depositphotos\.|vecteezy\.|envato|envatousercontent|colourbox|cbx-prod\.|stockcake\.|stockvault\.|stockunlimited\.|canstockphoto\.)/i;
 
 const looksLikeImage = (u) =>
   typeof u === "string" &&
   /^https?:\/\//.test(u) &&
   !/logo|favicon|sprite|placeholder|icon-/i.test(u) &&
-  !WATERMARKED.test(u);
+  !WATERMARKED.test(u) &&
+  !/[?&](mark|watermark)=/i.test(u) &&
+  !/\/previews?\//i.test(u);
 
 // GitHub Pages is https — rewrite any http:// source URLs to avoid mixed-content blocks.
 const toHttps = (u) => (typeof u === "string" ? u.replace(/^http:\/\//, "https://") : u);

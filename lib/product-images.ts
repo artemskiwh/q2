@@ -85,16 +85,4 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
   "cat-accessory": [
     "https://splitted.space/wp-content/uploads/2025/11/white-coiled-type-c-cable-main.webp"
   ],
-  "cat-disposable": [
-    "https://static.vecteezy.com/system/resources/previews/067/281/162/non_2x/collection-of-colorful-vape-pens-isolated-on-transparent-background-offering-a-modern-alternative-to-traditional-smoking-with-sleek-designs-and-vibrant-colors-png.png"
-  ],
-  "cat-pod": [
-    "https://www.freevap.ch/51262-pdt_540/refillable-kit-le-pod-slim-by-pulp.jpg"
-  ],
-  "cat-liquid": [
-    "https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/4e/3e/ea/80/f5/v1_E10/E104NUAC.jpg?w=1200&h=630&cf_fit=crop&q=85&format=jpeg&mark-alpha=18&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark4.png&s=9c18593a0989f76a17002d348357a2cf1187e77261a8d2823b2d8a5be6471b92"
-  ],
-  "cat-sale": [
-    "https://cbx-prod.b-cdn.net/COLOURBOX47749206.jpg?width=480&height=480&quality=70"
-  ]
 };
