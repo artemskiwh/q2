@@ -10,7 +10,7 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
     "/products/waka-8000.jpg"
   ],
   "waka-20000": [
-    "/products/waka-20000.webp"
+    "https://vapesultan.com/wp-content/uploads/2025/02/Waka-SoPro-20000.jpg"
   ],
   "waka-25000": [
     "/products/waka-25000.jpg"
