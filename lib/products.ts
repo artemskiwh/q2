@@ -5,37 +5,42 @@ export const CATEGORIES: { id: Category; label: string; subtitle: string; image:
     id: "disposable",
     label: "Одноразки",
     subtitle: "120+ позиций",
-    image: "https://vapesultan.com/wp-content/uploads/2025/02/Waka-SoPro-20000.jpg",
+    // User-supplied single-device photo, brand-clean on white.
+    image: "/products/waka-25000.jpg",
   },
   {
     id: "pod",
     label: "Многоразки",
     subtitle: "15 моделей",
+    // Clean studio shot of a refillable pod on white, minimal markings.
     image: "https://store.vaporesso.com/cdn/shop/files/XROS3_LemonYellow_2.png?v=1763950530",
   },
   {
     id: "liquid",
     label: "Жидкости",
     subtitle: "Соль и фри-база",
-    image: "https://images.unsplash.com/photo-1567721913486-6585f069b332?w=600&q=80&auto=format",
+    // Wikimedia Commons Special:FilePath redirects to the canonical upload URL.
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/CBD_Vape_Juice_(E-Liquid)_(24281909498).jpg?width=600",
   },
   {
     id: "accessory",
     label: "Аксессуары",
     subtitle: "Зарядки, чехлы",
-    image: "https://images.unsplash.com/photo-1606136540942-39e95b9c87f8?w=600&q=80&auto=format",
+    // Clean coiled USB-C cable on white.
+    image: "https://splitted.space/wp-content/uploads/2025/11/white-coiled-type-c-cable-main.webp",
   },
   {
     id: "sale",
     label: "Распродажа",
     subtitle: "До −40%",
-    image: "https://img.staticdj.com/e9bbf41af2caed20549e73fdc6a18c1e.jpeg",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Price_Tag.png?width=600",
   },
   {
     id: "cartridge",
     label: "Картриджи",
     subtitle: "Сменные блоки",
-    image: "https://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021",
+    // Same Wikimedia Juul pod — Empty_Juul_pod.png, brand text is minimal.
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Empty_Juul_pod.png/960px-Empty_Juul_pod.png",
   },
 ];
 
