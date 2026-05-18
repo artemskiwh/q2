@@ -50,13 +50,33 @@ def ext_from_url(url: str) -> str:
     return "jpg"
 
 
+def normalize_url(url: str) -> str:
+    """Ensure URL components (especially path) are percent-encoded so
+    urllib doesn't choke on non-ASCII characters."""
+    parts = urllib.parse.urlsplit(url)
+    encoded_path = urllib.parse.quote(parts.path, safe="/%")
+    encoded_query = urllib.parse.quote(parts.query, safe="=&%")
+    return urllib.parse.urlunsplit(
+        (parts.scheme, parts.netloc, encoded_path, encoded_query, parts.fragment)
+    )
+
+
 def download(url: str, max_attempts: int = 4) -> tuple[bytes, str]:
+    encoded = normalize_url(url)
     delay = 2
     last_err: Exception | None = None
     for attempt in range(max_attempts):
         req = urllib.request.Request(
-            url,
-            headers={"User-Agent": UA, "Accept": "image/*,*/*;q=0.8"},
+            encoded,
+            headers={
+                "User-Agent": UA,
+                "Accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+                "Accept-Language": "en-US,en;q=0.9,ru;q=0.8",
+                # Some hot-link-protected hosts only serve images when the
+                # Referer matches their own domain. Spoof the host's own
+                # origin as the referer to satisfy that check.
+                "Referer": f"{urllib.parse.urlsplit(encoded).scheme}://{urllib.parse.urlsplit(encoded).netloc}/",
+            },
         )
         try:
             with urllib.request.urlopen(req, timeout=60) as resp:

@@ -7,11 +7,10 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
     "/products/duall-salt.jpg"
   ],
   "waka-8000": [
-    "/products/waka-8000.jpg",
-    "https://hoovape.com/wp-content/uploads/2025/09/wakasmash-1.jpg"
+    "/products/waka-8000.jpg"
   ],
   "waka-20000": [
-    "https://vapesultan.com/wp-content/uploads/2025/02/Waka-SoPro-20000.jpg"
+    "https://www.wakavaping.com/cdn/shop/products/WatermelonChillCopy_9c84768e-3d03-4fc3-9fb9-8c1b1866ddb0.jpg?v=1677556508"
   ],
   "waka-25000": [
     "/products/waka-25000.jpg"
@@ -80,7 +79,7 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
     "/products/geekvape-boost-3.png"
   ],
   "cat-cartridge": [
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Empty_Juul_pod.png/960px-Empty_Juul_pod.png"
+    "/products/cat-cartridge.png"
   ],
   "cat-accessory": [
     "/products/cat-accessory.webp"

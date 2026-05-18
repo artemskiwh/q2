@@ -29,7 +29,8 @@ export const CATEGORIES: { id: Category; label: string; subtitle: string; image:
     id: "sale",
     label: "Распродажа",
     subtitle: "До −40%",
-    image: "/products/cat-sale.png",
+    // Hand-drawn vector tag — brand-free, deterministic, no external fetch.
+    image: "/products/cat-sale.svg",
   },
   {
     id: "cartridge",

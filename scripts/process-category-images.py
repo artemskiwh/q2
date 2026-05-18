@@ -19,7 +19,8 @@ URLS = {
     "cat-cartridge": "https://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021",
     "cat-liquid": "https://commons.wikimedia.org/wiki/Special:FilePath/CBD_Vape_Juice_(E-Liquid)_(24281909498).jpg?width=800",
     "cat-accessory": "https://splitted.space/wp-content/uploads/2025/11/white-coiled-type-c-cable-main.webp",
-    "cat-sale": "https://commons.wikimedia.org/wiki/Special:FilePath/Price_Tag.png?width=800",
+    # cat-sale is intentionally NOT fetched — public/products/cat-sale.svg
+    # is hand-written inline (deterministic, brand-free, no rembg needed).
 }
 
 OUT_DIR = "public/products"
