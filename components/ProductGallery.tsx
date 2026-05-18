@@ -25,20 +25,17 @@ export function ProductGallery({ product }: { product: Product }) {
     "radial-gradient(80% 60% at 50% 30%, rgba(34,211,238,0.16) 0%, #0a0a10 70%)",
   ];
 
-  // If we have <3 real photos, repeat the last one to keep the 3-thumb grid.
-  const slides =
-    realPhotos.length > 0
-      ? Array.from({ length: 3 }, (_, i) => realPhotos[i] ?? realPhotos[realPhotos.length - 1])
-      : null;
-
-  const safeIdx = slides ? Math.min(idx, slides.length - 1) : Math.min(idx, tones.length - 1);
+  // Use exactly as many thumbnails as there are real photos — no padding.
+  const slides = realPhotos.length > 0 ? realPhotos : null;
+  const thumbs: (string | null)[] = slides ?? tones;
+  const safeIdx = Math.min(idx, thumbs.length - 1);
 
   return (
     <div className="space-y-3">
       <div
         className="relative aspect-square w-full overflow-hidden rounded-2xl border border-bg-line md:rounded-3xl"
         style={{
-          background: slides ? "#0a0a10" : tones[safeIdx],
+          background: slides ? "#0a0a10" : (tones[safeIdx] as string),
         }}
       >
         {slides ? (
@@ -57,31 +54,36 @@ export function ProductGallery({ product }: { product: Product }) {
         )}
       </div>
 
-      <div className="grid grid-cols-3 gap-2 md:gap-3">
-        {(slides ?? tones).map((s, i) => (
-          <button
-            key={i}
-            type="button"
-            onClick={() => setIdx(i)}
-            aria-label={`Ракурс ${i + 1}`}
-            className={`relative aspect-square overflow-hidden rounded-xl border-2 transition ${
-              i === safeIdx ? "border-brand" : "border-bg-line hover:border-white/20"
-            }`}
-            style={{
-              background: slides ? "#0a0a10" : (s as string),
-              backgroundImage: slides ? `url(${s})` : undefined,
-              backgroundSize: slides ? "cover" : undefined,
-              backgroundPosition: slides ? "center" : undefined,
-            }}
-          >
-            {!slides && (
-              <div className="absolute inset-2">
-                <ProductVisual product={product} />
-              </div>
-            )}
-          </button>
-        ))}
-      </div>
+      {thumbs.length > 1 && (
+        <div
+          className="grid gap-2 md:gap-3"
+          style={{ gridTemplateColumns: `repeat(${thumbs.length}, minmax(0, 1fr))` }}
+        >
+          {thumbs.map((s, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setIdx(i)}
+              aria-label={`Ракурс ${i + 1}`}
+              className={`relative aspect-square overflow-hidden rounded-xl border-2 transition ${
+                i === safeIdx ? "border-brand" : "border-bg-line hover:border-white/20"
+              }`}
+              style={{
+                background: slides ? "#0a0a10" : (s as string),
+                backgroundImage: slides ? `url(${s})` : undefined,
+                backgroundSize: slides ? "cover" : undefined,
+                backgroundPosition: slides ? "center" : undefined,
+              }}
+            >
+              {!slides && (
+                <div className="absolute inset-2">
+                  <ProductVisual product={product} />
+                </div>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
