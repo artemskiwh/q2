@@ -27,13 +27,20 @@ jobs:
         run: pip install --quiet Pillow rembg onnxruntime
 
       - name: Remove backgrounds
-        run: python scripts/process-category-images.py
+        run: |
+          set -e
+          mkdir -p tmp
+          python scripts/process-category-images.py 2>&1 | tee tmp/process-category-images.log
+          echo "--- ls public/products/cat-*.png ---"
+          ls -la public/products/cat-*.png 2>&1 || echo "no cat-*.png files"
 
       - name: Commit and push
+        if: always()
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/products/cat-*.png
+          git add public/products/cat-*.png tmp/process-category-images.log 2>&1 || true
+          git status
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0
