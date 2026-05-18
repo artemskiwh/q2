@@ -103,17 +103,23 @@ export function CatalogView() {
         </div>
 
         <div className="flex items-center gap-2">
-          <select
-            value={sort}
-            onChange={(e) => setSort(e.target.value as Sort)}
-            className="input w-auto pr-8 text-sm"
-          >
-            {Object.entries(SORT_LABELS).map(([k, v]) => (
-              <option key={k} value={k}>
-                {v}
-              </option>
-            ))}
-          </select>
+          <div className="relative">
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value as Sort)}
+              className="input w-auto appearance-none pr-9 text-sm"
+            >
+              {Object.entries(SORT_LABELS).map(([k, v]) => (
+                <option key={k} value={k}>
+                  {v}
+                </option>
+              ))}
+            </select>
+            <Icon.Chevron
+              className="pointer-events-none absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 rotate-90 text-muted"
+              aria-hidden
+            />
+          </div>
           <button
             type="button"
             className="btn-secondary md:hidden"
