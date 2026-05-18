@@ -49,7 +49,7 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
     "/products/vaporesso-xros-3-mini.png"
   ],
   "vaporesso-xros-4": [
-    "/products/vaporesso-xros-4.jpg"
+    "https://whitevapenew1-20b04.kxcdn.com/wp-content/uploads/2024/05/2033-Vaporesso-XROS-4-Pod-Kit-Cover.jpg"
   ],
   "vaporesso-xros-4-mini": [
     "/products/vaporesso-xros-4-mini.png"
