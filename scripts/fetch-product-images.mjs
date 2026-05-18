@@ -54,6 +54,13 @@ const PRODUCTS = [
   { slug: "geekvape-hero-5",       hero: false, queries: ["Geekvape Wenax Hero 5 pod product photo"] },
   { slug: "geekvape-boost-2",      hero: false, queries: ["Geekvape Aegis Boost 2 B60 pod mod product photo"] },
   { slug: "geekvape-boost-3",      hero: false, queries: ["Geekvape Aegis Boost 3 pod mod product photo"] },
+  // Category thumbnails — minimalist, brand-free product photography.
+  { slug: "cat-disposable",        hero: false, queries: ["sleek disposable vape pen device isolated minimalist studio photography no brand"] },
+  { slug: "cat-pod",               hero: false, queries: ["refillable pod vape system minimalist product photography white background no logo"] },
+  { slug: "cat-cartridge",         hero: false, queries: ["empty vape pod cartridge isolated minimalist studio photo white background"] },
+  { slug: "cat-liquid",            hero: false, queries: ["clear glass dropper bottle e-liquid amber minimalist isolated white background"] },
+  { slug: "cat-accessory",         hero: false, queries: ["coiled usb-c charging cable minimalist product photography white background"] },
+  { slug: "cat-sale",              hero: false, queries: ["red sale tag price label minimalist product photography studio shot"] },
 ];
 
 // ───── Helpers ───────────────────────────────────────────────────────
