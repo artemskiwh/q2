@@ -5,42 +5,37 @@ export const CATEGORIES: { id: Category; label: string; subtitle: string; image:
     id: "disposable",
     label: "Одноразки",
     subtitle: "120+ позиций",
-    // Single-device disposable on white — bg killed by feColorMatrix filter.
-    image: "https://bayvape.ca/cdn/shop/files/waka-sopro-dm8000i-strawberry-watermelon_800x.jpg?v=1699503246",
+    image: "/products/cat-disposable.png",
   },
   {
     id: "pod",
     label: "Многоразки",
     subtitle: "15 моделей",
-    // Clean studio shot of a refillable pod on white, minimal markings.
-    image: "https://store.vaporesso.com/cdn/shop/files/XROS3_LemonYellow_2.png?v=1763950530",
+    image: "/products/cat-pod.png",
   },
   {
     id: "liquid",
     label: "Жидкости",
     subtitle: "Соль и фри-база",
-    // Wikimedia Commons Special:FilePath redirects to the canonical upload URL.
-    image: "https://commons.wikimedia.org/wiki/Special:FilePath/CBD_Vape_Juice_(E-Liquid)_(24281909498).jpg?width=600",
+    image: "/products/cat-liquid.png",
   },
   {
     id: "accessory",
     label: "Аксессуары",
     subtitle: "Зарядки, чехлы",
-    // Clean coiled USB-C cable on white.
-    image: "https://splitted.space/wp-content/uploads/2025/11/white-coiled-type-c-cable-main.webp",
+    image: "/products/cat-accessory.png",
   },
   {
     id: "sale",
     label: "Распродажа",
     subtitle: "До −40%",
-    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Price_Tag.png?width=600",
+    image: "/products/cat-sale.png",
   },
   {
     id: "cartridge",
     label: "Картриджи",
     subtitle: "Сменные блоки",
-    // Vaporesso XROS replacement pod cartridge — studio shot on white.
-    image: "https://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021",
+    image: "/products/cat-cartridge.png",
   },
 ];
 
