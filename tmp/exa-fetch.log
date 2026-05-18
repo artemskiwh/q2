@@ -1,5 +1,5 @@
 ✓ duall-salt (cached, 1 angles)
-✓ waka-8000 (cached, 2 angles)
+✓ waka-8000 (cached, 1 angles)
 ✓ waka-20000 (cached, 1 angles)
 ✓ waka-25000 (cached, 1 angles)
 ✓ waka-60000 (cached, 1 angles)
@@ -24,20 +24,6 @@
 ✓ geekvape-boost-2 (cached, 1 angles)
 ✓ geekvape-boost-3 (cached, 1 angles)
 
-→ cat-disposable (1 angles)
-  [1] no image for "single black disposable vape pen device photo white background pexels OR pixabay OR unsplash"
-
-→ cat-pod (1 angles)
-  [1] no image for "pod mod vape device minimalist photo white background pexels OR pixabay OR unsplash"
-✓ cat-cartridge (cached, 1 angles)
-
-→ cat-liquid (1 angles)
-  [1] no image for "amber dropper bottle macro photo minimalist white background pexels OR pixabay OR unsplash"
-✓ cat-accessory (cached, 1 angles)
-
-→ cat-sale (1 angles)
-  [1] no image for "red percent off discount tag isolated pexels OR pixabay OR unsplash"
-
-Wrote 27 mappings to /home/runner/work/q2/q2/lib/product-images.ts
+Wrote 25 mappings to /home/runner/work/q2/q2/lib/product-images.ts
 EXIT_CODE=0
-Run #21 at 2026-05-18T04:28:57Z
+Run #22 at 2026-05-18T09:29:32Z
