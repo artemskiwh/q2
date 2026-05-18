@@ -5,8 +5,8 @@ export const CATEGORIES: { id: Category; label: string; subtitle: string; image:
     id: "disposable",
     label: "Одноразки",
     subtitle: "120+ позиций",
-    // User-supplied single-device photo, brand-clean on white.
-    image: "/products/waka-25000.jpg",
+    // Single-device disposable on white — bg killed by feColorMatrix filter.
+    image: "https://bayvape.ca/cdn/shop/files/waka-sopro-dm8000i-strawberry-watermelon_800x.jpg?v=1699503246",
   },
   {
     id: "pod",
@@ -39,8 +39,8 @@ export const CATEGORIES: { id: Category; label: string; subtitle: string; image:
     id: "cartridge",
     label: "Картриджи",
     subtitle: "Сменные блоки",
-    // Same Wikimedia Juul pod — Empty_Juul_pod.png, brand text is minimal.
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Empty_Juul_pod.png/960px-Empty_Juul_pod.png",
+    // Vaporesso XROS replacement pod cartridge — studio shot on white.
+    image: "https://store.vaporesso.com/cdn/shop/files/XROS_0.8_MESH_Pod-3ml_new.png?v=1761554021",
   },
 ];
 

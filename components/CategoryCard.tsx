@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Category } from "@/lib/types";
+import { withBasePath } from "@/lib/path";
 
 const STYLES: Record<Category, { gradient: string; orb: string }> = {
   disposable: {
@@ -40,6 +41,7 @@ export function CategoryCard({
   image: string;
 }) {
   const s = STYLES[id];
+  const src = withBasePath(image) ?? image;
   return (
     <Link
       href={`/catalog?category=${id}`}
@@ -53,12 +55,27 @@ export function CategoryCard({
           className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full opacity-70"
           style={{ background: `radial-gradient(circle, ${s.orb}, transparent 70%)` }}
         />
+        {/* SVG filter "kill-white" turns near-white pixels in the photo
+            transparent so each photo sits cleanly on the card gradient. */}
+        <svg width="0" height="0" className="absolute" aria-hidden>
+          <filter id="cat-kill-white" colorInterpolationFilters="sRGB">
+            <feColorMatrix
+              type="matrix"
+              values="1 0 0 0 0
+                      0 1 0 0 0
+                      0 0 1 0 0
+                      -1 -1 -1 0 2.4"
+            />
+          </filter>
+        </svg>
         <img
-          src={image}
+          src={src}
           alt={label}
           loading="lazy"
           className="relative z-[1] h-[80%] w-[80%] object-contain transition-transform duration-300 group-hover:scale-105"
-          style={{ filter: "drop-shadow(0 12px 22px rgba(0,0,0,0.5))" }}
+          style={{
+            filter: "url(#cat-kill-white) drop-shadow(0 12px 22px rgba(0,0,0,0.5))",
+          }}
         />
       </div>
       <div className="px-0.5">
