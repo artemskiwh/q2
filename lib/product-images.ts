@@ -77,11 +77,5 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
   ],
   "geekvape-boost-3": [
     "/products/geekvape-boost-3.png"
-  ],
-  "cat-cartridge": [
-    "/products/cat-cartridge.png"
-  ],
-  "cat-accessory": [
-    "/products/cat-accessory.webp"
   ]
 };

@@ -54,13 +54,9 @@ const PRODUCTS = [
   { slug: "geekvape-hero-5",       hero: false, queries: ["Geekvape Wenax Hero 5 pod product photo"] },
   { slug: "geekvape-boost-2",      hero: false, queries: ["Geekvape Aegis Boost 2 B60 pod mod product photo"] },
   { slug: "geekvape-boost-3",      hero: false, queries: ["Geekvape Aegis Boost 3 pod mod product photo"] },
-  // Category thumbnails — minimalist, brand-free product photography.
-  { slug: "cat-disposable",        hero: false, queries: ["single black disposable vape pen device photo white background pexels OR pixabay OR unsplash"] },
-  { slug: "cat-pod",               hero: false, queries: ["pod mod vape device minimalist photo white background pexels OR pixabay OR unsplash"] },
-  { slug: "cat-cartridge",         hero: false, queries: ["empty vape pod cartridge isolated minimalist studio photo white background"] },
-  { slug: "cat-liquid",            hero: false, queries: ["amber dropper bottle macro photo minimalist white background pexels OR pixabay OR unsplash"] },
-  { slug: "cat-accessory",         hero: false, queries: ["coiled usb-c charging cable minimalist product photography white background"] },
-  { slug: "cat-sale",              hero: false, queries: ["red percent off discount tag isolated pexels OR pixabay OR unsplash"] },
+  // Category thumbnails live in public/products/cat-*.{png,svg} now —
+  // produced by scripts/process-category-images.py (rembg) and consumed
+  // via CATEGORIES.image in lib/products.ts. No longer routed through Exa.
 ];
 
 // ───── Helpers ───────────────────────────────────────────────────────
