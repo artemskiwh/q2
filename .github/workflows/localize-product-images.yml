@@ -1,0 +1,46 @@
+name: Localize product images
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ claude/vape-shop-website-8Fk6I ]
+    paths:
+      - 'scripts/localize-product-images.py'
+      - '.github/workflows/localize-product-images.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  localize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Download every external product image to public/products/
+        run: |
+          mkdir -p tmp
+          python scripts/localize-product-images.py 2>&1 | tee tmp/localize-product-images.log
+          echo "--- public/products/ ---"
+          ls -la public/products/
+
+      - name: Commit and push
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/products lib/product-images.ts tmp/localize-product-images.log 2>&1 || true
+          git status
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git pull --rebase origin ${{ github.ref_name }} || true
+          git commit -m "chore: localize product images to public/products/"
+          git push origin HEAD:${{ github.ref_name }}
