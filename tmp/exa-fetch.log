@@ -25,35 +25,27 @@
 ✓ geekvape-boost-3 (cached, 1 angles)
 
 → cat-disposable (1 angles)
-  [1] source: https://img.freepik.com/premium-photo/disposable-vape-pen-with-text-space-isolated-white-background-...
+  [1] source: https://static.vecteezy.com/system/resources/previews/067/281/162/non_2x/collection-of-colorful-vape...
   cloudinary error for tyag/cat-disposable, falling back to source: Invalid cloud_name dk5efhmmy
-  [1] hosted: https://img.freepik.com/premium-photo/disposable-vape-pen-with-text-space-isolated-white-background-with-black-tip_500307-382.jpg
+  [1] hosted: https://static.vecteezy.com/system/resources/previews/067/281/162/non_2x/collection-of-colorful-vape-pens-isolated-on-transparent-background-offering-a-modern-alternative-to-traditional-smoking-with-sleek-designs-and-vibrant-colors-png.png
 
 → cat-pod (1 angles)
   [1] source: https://www.freevap.ch/51262-pdt_540/refillable-kit-le-pod-slim-by-pulp.jpg
   cloudinary error for tyag/cat-pod, falling back to source: Invalid cloud_name dk5efhmmy
   [1] hosted: https://www.freevap.ch/51262-pdt_540/refillable-kit-le-pod-slim-by-pulp.jpg
-
-→ cat-cartridge (1 angles)
-  [1] source: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Empty_Juul_pod.png/960px-Empty_Juul_pod.pn...
-  cloudinary error for tyag/cat-cartridge, falling back to source: Invalid cloud_name dk5efhmmy
-  [1] hosted: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Empty_Juul_pod.png/960px-Empty_Juul_pod.png
+✓ cat-cartridge (cached, 1 angles)
 
 → cat-liquid (1 angles)
-  [1] source: https://thumbs.dreamstime.com/b/glass-dropper-bottle-cosmetic-serum-amber-liquid-clear-container-ski...
+  [1] source: https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/4e/3e/ea/80/f5/v...
   cloudinary error for tyag/cat-liquid, falling back to source: Invalid cloud_name dk5efhmmy
-  [1] hosted: https://thumbs.dreamstime.com/b/glass-dropper-bottle-cosmetic-serum-amber-liquid-clear-container-skincare-product-isolated-white-realistic-render-glossy-shine-451567786.jpg
-
-→ cat-accessory (1 angles)
-  [1] source: https://splitted.space/wp-content/uploads/2025/11/white-coiled-type-c-cable-main.webp
-  cloudinary error for tyag/cat-accessory, falling back to source: Invalid cloud_name dk5efhmmy
-  [1] hosted: https://splitted.space/wp-content/uploads/2025/11/white-coiled-type-c-cable-main.webp
+  [1] hosted: https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/4e/3e/ea/80/f5/v1_E10/E104NUAC.jpg?w=1200&h=630&cf_fit=crop&q=85&format=jpeg&mark-alpha=18&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark4.png&s=9c18593a0989f76a17002d348357a2cf1187e77261a8d2823b2d8a5be6471b92
+✓ cat-accessory (cached, 1 angles)
 
 → cat-sale (1 angles)
-  [1] source: https://ai-previews.123rf.com/ai-txt2img/600nwm/e2a0da60-360f-4280-a011-189547dfc3d3.jpg
+  [1] source: https://cbx-prod.b-cdn.net/COLOURBOX47749206.jpg?width=480&height=480&quality=70
   cloudinary error for tyag/cat-sale, falling back to source: Invalid cloud_name dk5efhmmy
-  [1] hosted: https://ai-previews.123rf.com/ai-txt2img/600nwm/e2a0da60-360f-4280-a011-189547dfc3d3.jpg
+  [1] hosted: https://cbx-prod.b-cdn.net/COLOURBOX47749206.jpg?width=480&height=480&quality=70
 
 Wrote 31 mappings to /home/runner/work/q2/q2/lib/product-images.ts
 EXIT_CODE=0
-Run #19 at 2026-05-18T04:24:16Z
+Run #20 at 2026-05-18T04:26:32Z
