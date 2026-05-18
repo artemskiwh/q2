@@ -4,28 +4,28 @@ import { withBasePath } from "@/lib/path";
 
 const STYLES: Record<Category, { gradient: string; orb: string }> = {
   disposable: {
-    gradient: "linear-gradient(135deg, #2a0d0d 0%, #441010 60%, #0c0608 100%)",
-    orb: "rgba(255,59,48,0.4)",
+    gradient: "linear-gradient(135deg, #ff5a4f 0%, #c41e1e 55%, #5c0d0d 100%)",
+    orb: "rgba(255,120,110,0.55)",
   },
   pod: {
-    gradient: "linear-gradient(135deg, #061a2a 0%, #0c2a44 55%, #050a14 100%)",
-    orb: "rgba(34,211,238,0.35)",
+    gradient: "linear-gradient(135deg, #45e0f5 0%, #0891b2 55%, #0c4a5b 100%)",
+    orb: "rgba(80,220,240,0.5)",
   },
   cartridge: {
-    gradient: "linear-gradient(135deg, #042018 0%, #053a2a 55%, #02100a 100%)",
-    orb: "rgba(16,185,129,0.35)",
+    gradient: "linear-gradient(135deg, #34d399 0%, #059669 55%, #053a2a 100%)",
+    orb: "rgba(80,230,170,0.5)",
   },
   liquid: {
-    gradient: "linear-gradient(135deg, #1c0830 0%, #3a0d54 55%, #0b0418 100%)",
-    orb: "rgba(168,85,247,0.35)",
+    gradient: "linear-gradient(135deg, #c084fc 0%, #7c3aed 55%, #3a0d54 100%)",
+    orb: "rgba(200,140,255,0.5)",
   },
   accessory: {
-    gradient: "linear-gradient(135deg, #2a1605 0%, #4d2806 55%, #100a04 100%)",
-    orb: "rgba(251,191,36,0.35)",
+    gradient: "linear-gradient(135deg, #fbbf24 0%, #d97706 55%, #4d2806 100%)",
+    orb: "rgba(255,210,100,0.55)",
   },
   sale: {
-    gradient: "linear-gradient(135deg, #34060a 0%, #5a0e16 55%, #14040a 100%)",
-    orb: "rgba(239,68,68,0.4)",
+    gradient: "linear-gradient(135deg, #ff7a92 0%, #be123c 55%, #4c0519 100%)",
+    orb: "rgba(255,140,160,0.55)",
   },
 };
 
