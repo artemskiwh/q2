@@ -84,5 +84,5 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
   ],
   "cat-accessory": [
     "https://splitted.space/wp-content/uploads/2025/11/white-coiled-type-c-cable-main.webp"
-  ],
+  ]
 };
