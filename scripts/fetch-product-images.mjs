@@ -64,10 +64,15 @@ const PRODUCTS = [
 ];
 
 // ───── Helpers ───────────────────────────────────────────────────────
+// Stock-photo sites that watermark preview images (freepik "Premium", dreamstime,
+// 123rf, etc.) — we never want their URLs as category thumbnails.
+const WATERMARKED = /(?:freepik\.|dreamstime\.|123rf\.|shutterstock\.|gettyimages\.|alamy\.|istockphoto\.|stock\.adobe\.|depositphotos\.)/i;
+
 const looksLikeImage = (u) =>
   typeof u === "string" &&
   /^https?:\/\//.test(u) &&
-  !/logo|favicon|sprite|placeholder|icon-/i.test(u);
+  !/logo|favicon|sprite|placeholder|icon-/i.test(u) &&
+  !WATERMARKED.test(u);
 
 // GitHub Pages is https — rewrite any http:// source URLs to avoid mixed-content blocks.
 const toHttps = (u) => (typeof u === "string" ? u.replace(/^http:\/\//, "https://") : u);

@@ -79,22 +79,10 @@ export const PRODUCT_IMAGES: Record<string, string[]> = {
   "geekvape-boost-3": [
     "https://store.geekvape.com/cdn/shop/files/Black_Geekvape_Aegis_Boost_3_Pod_Kit_3000mAh.png?v=1747100322"
   ],
-  "cat-disposable": [
-    "https://img.freepik.com/premium-photo/disposable-vape-pen-with-text-space-isolated-white-background-with-black-tip_500307-382.jpg"
-  ],
-  "cat-pod": [
-    "https://www.freevap.ch/51262-pdt_540/refillable-kit-le-pod-slim-by-pulp.jpg"
-  ],
   "cat-cartridge": [
     "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Empty_Juul_pod.png/960px-Empty_Juul_pod.png"
   ],
-  "cat-liquid": [
-    "https://thumbs.dreamstime.com/b/glass-dropper-bottle-cosmetic-serum-amber-liquid-clear-container-skincare-product-isolated-white-realistic-render-glossy-shine-451567786.jpg"
-  ],
   "cat-accessory": [
     "https://splitted.space/wp-content/uploads/2025/11/white-coiled-type-c-cable-main.webp"
-  ],
-  "cat-sale": [
-    "https://ai-previews.123rf.com/ai-txt2img/600nwm/e2a0da60-360f-4280-a011-189547dfc3d3.jpg"
   ]
 };
