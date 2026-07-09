@@ -1,71 +1,40 @@
-import { RESTAURANT } from "@/lib/icon-data";
 import { Reveal } from "./Reveal";
-
-const STATS = [
-  { value: "4.8", label: "рейтинг в 2ГИС" },
-  { value: "237", label: "оценок гостей" },
-  { value: "6:00", label: "поём до утра" },
-  { value: "№1", label: "звук в городе" },
-];
 
 export function About() {
   return (
-    <section id="about" className="relative py-24 md:py-32">
-      <div className="container-page">
-        <div className="grid gap-14 lg:grid-cols-2 lg:items-center lg:gap-20">
-          <Reveal>
-            <span className="eyebrow only-after mb-6">О ресторане</span>
-            <h2 className="font-display text-3xl leading-tight text-white md:text-5xl">
-              Место, где вечер
-              <br />
-              <span className="text-gold-gradient">становится сценой</span>
-            </h2>
-            <div className="mt-7 space-y-5 text-[15px] leading-relaxed text-muted md:text-base">
-              <p>
-                <span className="text-white">ICON</span> — это караоке-ресторан
-                нового формата в Ростове-на-Дону. Мы соединили безупречную
-                акустику профессиональной сцены, авторскую кухню и
-                интерьер, в котором хочется остаться до рассвета.
-              </p>
-              <p>
-                Здесь каждый гость — звезда. Возьмите микрофон и спойте любимую
-                песню, соберитесь большой компанией за плато и бокалом вина или
-                просто наслаждайтесь живой атмосферой. Вежливый персонал
-                позаботится о том, чтобы вечер прошёл идеально.
-              </p>
-              <p>
-                Нас выбирают за настоящий звук, вкусную еду и то самое
-                настроение, ради которого возвращаются снова и снова.
-              </p>
-            </div>
+    <section id="about" className="relative pb-24 pt-8 md:pb-32 md:pt-14">
+      {/* Full-width interior photo */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden md:aspect-[16/9]">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=80')",
+          }}
+        />
+      </div>
 
-            <div className="mt-9 flex flex-wrap gap-3">
-              <a href="#menu" className="btn-gold">Открыть меню</a>
-              <a href="#book" className="btn-outline">Забронировать</a>
-            </div>
-          </Reveal>
+      <div className="container-page mt-16 md:mt-24">
+        <Reveal>
+          <h2 className="section-title">О ресторане</h2>
+        </Reveal>
 
-          <Reveal delay={120}>
-            <div className="grid grid-cols-2 gap-4 md:gap-5">
-              {STATS.map((s, i) => (
-                <div
-                  key={s.label}
-                  className="gold-frame flex flex-col items-center justify-center gap-2 bg-ink-card/60 px-4 py-9 text-center"
-                >
-                  <span className="font-display text-4xl text-gold-gradient md:text-5xl">
-                    {s.value}
-                  </span>
-                  <span className="text-xs uppercase tracking-[0.16em] text-muted md:text-[13px]">
-                    {s.label}
-                  </span>
-                </div>
-              ))}
-              <p className="col-span-2 mt-1 text-center text-sm text-muted">
-                {RESTAURANT.address}, {RESTAURANT.city} · {RESTAURANT.hours}
-              </p>
-            </div>
-          </Reveal>
-        </div>
+        <Reveal delay={100}>
+          <div className="mx-auto mt-10 max-w-2xl space-y-6 text-[15px] leading-[1.85] text-white/80 md:text-base">
+            <p>
+              ICON — это караоке-ресторан нового формата в самом центре Ростова-на-Дону. Место, где встречаются
+              безупречная акустика, авторская кухня и атмосфера, ради которой хочется возвращаться. Вечер начинается
+              с бокала вина, продолжается любимой песней у микрофона и заканчивается сильным послевкусием — не только
+              от блюд, но и от того, как вас здесь встретили.
+            </p>
+            <p>
+              Мы верим, что вечер должен запоминаться каждой деталью: настройкой звука, светом, вкусом закуски и тем,
+              как звучит ваш голос со сцены. Наши гости — гости во всех смыслах: их встречают, о них заботятся, для них
+              подстраивают всё до мелочей. Приходите большой компанией на день рождения, вдвоём на свидание или одни —
+              просто выпить бокал и послушать город.
+            </p>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

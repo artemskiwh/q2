@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
-import { MobileMenu } from "./MobileMenu";
+import { SideMenu } from "./SideMenu";
+import { RESTAURANT } from "@/lib/icon-data";
 
 export const NAV = [
-  { href: "#about", label: "О ресторане" },
-  { href: "#menu", label: "Меню" },
+  { href: "/", label: "Главная" },
+  { href: "/menu/", label: "Меню" },
+  { href: "#about", label: "О нас" },
   { href: "#karaoke", label: "Караоке" },
-  { href: "#reviews", label: "Отзывы" },
   { href: "#contacts", label: "Контакты" },
 ];
 
@@ -27,44 +28,53 @@ export function Header() {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "border-b border-gold/15 bg-ink/85 backdrop-blur-xl"
-            : "border-b border-transparent bg-transparent"
+          scrolled ? "bg-black/70 backdrop-blur-md" : "bg-transparent"
         }`}
       >
-        <div className="container-page flex h-[76px] items-center justify-between">
-          <Logo size="sm" withTagline={false} />
+        <div className="relative flex h-[110px] items-center justify-between px-4 md:h-[130px] md:px-6">
+          <a
+            href={RESTAURANT.phoneHref}
+            aria-label="Позвонить"
+            className="icon-frame"
+          >
+            <span className="cf-tr" />
+            <span className="cf-bl" />
+            <PhoneIcon className="h-5 w-5" />
+          </a>
 
-          <nav className="hidden items-center gap-8 lg:flex">
-            {NAV.map((n) => (
-              <a
-                key={n.href}
-                href={n.href}
-                className="text-sm font-medium text-muted transition-colors hover:text-gold"
-              >
-                {n.label}
-              </a>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <a href="#book" className="btn-gold hidden sm:inline-flex">
-              Забронировать
-            </a>
-            <button
-              aria-label="Открыть меню"
-              onClick={() => setOpen(true)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gold/30 text-gold lg:hidden"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-                <path d="M3 6h18M3 12h18M3 18h18" />
-              </svg>
-            </button>
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <Logo />
           </div>
+
+          <button
+            aria-label="Открыть меню"
+            onClick={() => setOpen(true)}
+            className="icon-frame"
+          >
+            <span className="cf-tr" />
+            <span className="cf-bl" />
+            <BurgerIcon className="h-5 w-5" />
+          </button>
         </div>
       </header>
 
-      <MobileMenu open={open} onClose={() => setOpen(false)} />
+      <SideMenu open={open} onClose={() => setOpen(false)} />
     </>
+  );
+}
+
+function PhoneIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.6 19.6 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z" />
+    </svg>
+  );
+}
+
+function BurgerIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" {...props}>
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
   );
 }

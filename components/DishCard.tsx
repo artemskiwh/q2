@@ -11,13 +11,11 @@ export function DishCard({ dish }: { dish: Dish }) {
   const src = withBasePath(`/dishes/${dish.img}.webp`);
 
   return (
-    <article className="dish-card group relative flex flex-col items-center rounded-3xl border border-gold/10 bg-gradient-to-b from-ink-card/70 to-ink/40 px-5 pb-6 pt-8 text-center transition-colors duration-300 hover:border-gold/30">
-      {/* 3D floating plate */}
+    <article className="dish-card group relative flex flex-col items-center border border-white/10 bg-white/[0.02] px-5 pb-6 pt-8 text-center transition-colors duration-300 hover:border-white/35">
       <div className="dish-plate dish-halo relative mb-5 flex aspect-square w-[62%] max-w-[190px] items-center justify-center">
-        {/* Branded plate placeholder — shown until a real photo loads */}
         {(!loaded || failed) && (
           <div className="plate-fallback absolute inset-0 z-10 flex items-center justify-center rounded-full">
-            <span className="font-display text-3xl tracking-wide text-gold/60">ICON</span>
+            <span className="serif-thin text-2xl tracking-[0.32em] text-white/50">ICON</span>
           </div>
         )}
         {!failed && (
@@ -34,17 +32,17 @@ export function DishCard({ dish }: { dish: Dish }) {
         )}
       </div>
 
-      <h3 className="text-[15px] font-semibold leading-snug text-white">{dish.name}</h3>
+      <h3 className="text-[15px] font-medium leading-snug text-white">{dish.name}</h3>
       {dish.desc && (
-        <p className="mt-2 text-xs leading-relaxed text-muted">{dish.desc}</p>
+        <p className="mt-2 text-xs leading-relaxed text-white/60">{dish.desc}</p>
       )}
 
       <div className="mt-auto flex w-full items-end justify-center gap-2 pt-4">
-        <span className="font-display text-2xl text-gold-gradient">
+        <span className="serif-thin text-2xl text-white">
           {formatPrice(dish.price)}&nbsp;₽
         </span>
         {dish.weight && (
-          <span className="mb-1 text-xs text-mute2">/ {dish.weight}</span>
+          <span className="mb-1 text-xs text-white/45">/ {dish.weight}</span>
         )}
       </div>
     </article>

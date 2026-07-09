@@ -4,39 +4,28 @@
 
 :root {
   color-scheme: dark;
-  --gold: #c9a24b;
-  --gold-light: #e7c877;
-  --gold-glow: rgba(201, 162, 75, 0.4);
 }
 
 html,
 body {
-  background: #050505;
+  background: #000;
   color: #ece9e3;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  background-image: radial-gradient(
-    90% 60% at 50% -10%,
-    rgba(201, 162, 75, 0.08) 0%,
-    transparent 60%
-  );
-}
-
 * {
-  border-color: theme(colors.ink.line);
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
 ::selection {
-  background: rgba(201, 162, 75, 0.32);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.85);
+  color: #000;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 84px;
+  scroll-padding-top: 96px;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -47,6 +36,7 @@ html {
   scrollbar-width: none;
 }
 
+/* ——— Container ——— */
 .container-page {
   width: 100%;
   max-width: 1240px;
@@ -62,170 +52,223 @@ html {
   }
 }
 
-.text-muted {
-  color: #9a968d;
+/* ——— Typography helpers ——— */
+.serif {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 300;
 }
-.text-mute2 {
-  color: #6d6a63;
+.serif-thin {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 300;
+  letter-spacing: 0.06em;
 }
-
-/* ——— Gold text ——— */
-.text-gold-gradient {
-  background: linear-gradient(135deg, #f3dd9a 0%, #c9a24b 50%, #9a7a30 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.section-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  color: #fff;
+  text-align: center;
 }
-
-.brand-word {
-  font-weight: 800;
+.section-sub {
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  font-size: 1rem;
   letter-spacing: 0.02em;
 }
 
-/* ——— Eyebrow label with gold lines (like the ICON menu header) ——— */
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.85rem;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--gold-light);
+/* ——— Corner-bracket frame (used around logo, icons) ——— */
+.corner-frame {
+  position: relative;
 }
-.eyebrow::before,
-.eyebrow::after {
+.corner-frame::before,
+.corner-frame::after,
+.corner-frame > .cf-tr,
+.corner-frame > .cf-bl {
   content: "";
-  height: 1px;
-  width: 2.2rem;
-  background: linear-gradient(90deg, transparent, var(--gold));
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
 }
-.eyebrow.only-after::before {
-  display: none;
+.corner-frame::before {
+  top: 0;
+  left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+.corner-frame::after {
+  bottom: 0;
+  right: 0;
+  border-left: 0;
+  border-top: 0;
+}
+.corner-frame > .cf-tr {
+  top: 0;
+  right: 0;
+  border-left: 0;
+  border-bottom: 0;
+}
+.corner-frame > .cf-bl {
+  bottom: 0;
+  left: 0;
+  border-right: 0;
+  border-top: 0;
+}
+
+/* ——— Logo box (LETH-style rectangle) ——— */
+.logo-box {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.55rem 1.4rem 0.5rem;
+  border: 1px solid #fff;
+  color: #fff;
+  line-height: 1;
+}
+.logo-box .word {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 300;
+  letter-spacing: 0.45em;
+  font-size: 1.35rem;
+  padding-left: 0.45em; /* balance the tracked letter-spacing */
+}
+@media (min-width: 768px) {
+  .logo-box {
+    padding: 0.7rem 1.7rem 0.65rem;
+  }
+  .logo-box .word {
+    font-size: 1.5rem;
+  }
 }
 
 /* ——— Buttons ——— */
-.btn-gold {
-  background: linear-gradient(135deg, #f3dd9a 0%, #c9a24b 50%, #a9842f 100%);
-  color: #1a1406;
-  border-radius: 999px;
-  padding: 0.85rem 1.6rem;
-  font-weight: 700;
-  font-size: 0.86rem;
-  letter-spacing: 0.02em;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+.btn-white {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.55rem;
-  box-shadow: 0 12px 30px -12px rgba(201, 162, 75, 0.7);
+  background: #fff;
+  color: #111;
+  padding: 1rem 2.2rem;
+  min-width: 260px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.86rem;
+  transition: filter 0.2s ease, transform 0.2s ease;
   white-space: nowrap;
 }
-.btn-gold:hover {
-  filter: brightness(1.05);
-  transform: translateY(-2px);
-  box-shadow: 0 18px 40px -12px rgba(201, 162, 75, 0.8);
-}
-.btn-gold:active {
-  transform: translateY(0);
+.btn-white:hover {
+  filter: brightness(0.92);
+  transform: translateY(-1px);
 }
 
-.btn-outline {
-  background: transparent;
-  color: #ece9e3;
-  border: 1px solid rgba(201, 162, 75, 0.5);
-  border-radius: 999px;
-  padding: 0.85rem 1.6rem;
-  font-weight: 600;
-  font-size: 0.86rem;
-  letter-spacing: 0.02em;
-  transition: all 0.2s ease;
+.btn-ghost {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.55rem;
+  background: transparent;
+  color: #fff;
+  padding: 1rem 2.2rem;
+  min-width: 260px;
+  border: 1px solid #fff;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.86rem;
+  transition: background 0.2s ease, color 0.2s ease;
   white-space: nowrap;
 }
-.btn-outline:hover {
-  background: rgba(201, 162, 75, 0.1);
-  border-color: var(--gold-light);
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ——— Icon frame (call, menu buttons in header) ——— */
+.icon-frame {
+  position: relative;
+  width: 62px;
+  height: 62px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: #fff;
 }
-
-/* ——— Surfaces ——— */
-.surface {
-  background: linear-gradient(180deg, #111113 0%, #0a0a0c 100%);
-  border: 1px solid rgba(201, 162, 75, 0.14);
-  border-radius: 1.25rem;
-}
-
-/* Gold framed box like the printed ICON menu */
-.gold-frame {
-  border: 1px solid rgba(201, 162, 75, 0.45);
-  border-radius: 0.5rem;
-  position: relative;
-}
-
-/* ——— Inputs ——— */
-input,
-textarea,
-select {
-  font-family: inherit;
-}
-.input {
-  background: #0d0d0f;
-  border: 1px solid rgba(201, 162, 75, 0.22);
-  border-radius: 0.75rem;
-  padding: 0.8rem 1rem;
-  width: 100%;
-  color: #ece9e3;
-  transition: border 0.18s, box-shadow 0.18s;
-  font-size: 0.92rem;
-}
-.input:focus {
-  outline: none;
-  border-color: rgba(201, 162, 75, 0.7);
-  box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.14);
-}
-.input::placeholder {
-  color: #5f5c55;
-}
-
-/* ——— Dish 3D card ——— */
-.dish-plate {
-  position: relative;
-  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
-  will-change: transform;
-}
-.dish-card:hover .dish-plate {
-  transform: translateY(-10px) rotate(-3deg) scale(1.04);
-}
-.dish-img {
-  filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.75));
-}
-
-/* Radial glow behind a dish */
-.dish-halo::before {
+.icon-frame::before,
+.icon-frame::after,
+.icon-frame .cf-tr,
+.icon-frame .cf-bl {
   content: "";
   position: absolute;
-  inset: 8% 8% 6% 8%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 50% 45%,
-    rgba(201, 162, 75, 0.28) 0%,
-    rgba(201, 162, 75, 0.08) 45%,
-    transparent 70%
-  );
-  filter: blur(6px);
-  z-index: 0;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #fff;
+  pointer-events: none;
+}
+.icon-frame::before {
+  top: 0;
+  left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+.icon-frame::after {
+  bottom: 0;
+  right: 0;
+  border-left: 0;
+  border-top: 0;
+}
+.icon-frame .cf-tr {
+  top: 0;
+  right: 0;
+  border-left: 0;
+  border-bottom: 0;
+}
+.icon-frame .cf-bl {
+  bottom: 0;
+  left: 0;
+  border-right: 0;
+  border-top: 0;
+}
+.icon-frame:hover {
+  background: rgba(255, 255, 255, 0.06);
 }
 
-/* Fallback stylized plate when no photo yet */
-.plate-fallback {
-  background: radial-gradient(circle at 38% 32%, #24242a 0%, #141418 55%, #0c0c0f 100%);
-  box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.06),
-    inset 0 -18px 40px rgba(0, 0, 0, 0.6), 0 26px 40px -18px rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(201, 162, 75, 0.25);
+/* ——— Underlined input (LETH-style form) ——— */
+.uf-field {
+  display: block;
+  position: relative;
+  padding-top: 1.2rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+}
+.uf-field:focus-within {
+  border-bottom-color: #fff;
+}
+.uf-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.2s ease;
+}
+.uf-input {
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: #fff;
+  width: 100%;
+  padding: 0;
+  font-size: 1rem;
+  font-family: var(--font-sans);
+}
+.uf-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
 }
 
 /* ——— Reveal on scroll ——— */
@@ -239,22 +282,46 @@ select {
   transform: translateY(0);
 }
 
-/* ——— Marquee ——— */
+/* ——— Dish 3D card (kept for menu page) ——— */
+.dish-plate {
+  position: relative;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+.dish-card:hover .dish-plate {
+  transform: translateY(-12px) rotate(-3deg) scale(1.05);
+}
+.dish-img {
+  filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.8));
+}
+.dish-halo::before {
+  content: "";
+  position: absolute;
+  inset: 8% 8% 6% 8%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.04) 45%,
+    transparent 70%
+  );
+  filter: blur(6px);
+  z-index: 0;
+}
+.plate-fallback {
+  background: radial-gradient(circle at 38% 32%, #262626 0%, #131313 55%, #0a0a0a 100%);
+  box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.06),
+    inset 0 -18px 40px rgba(0, 0, 0, 0.6), 0 26px 40px -18px rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ——— Marquee (for reviews or any horizontal scroll) ——— */
 .marquee {
   display: flex;
   width: max-content;
   animation: marquee-x 40s linear infinite;
 }
-
-/* Star rating */
-.stars {
-  display: inline-flex;
-  gap: 2px;
-  color: var(--gold);
-}
-
-/* Noise / texture overlay helper */
-.grain {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 3px 3px;
+@keyframes marquee-x {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
