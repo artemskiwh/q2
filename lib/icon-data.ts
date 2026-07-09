@@ -12,10 +12,9 @@ export const RESTAURANT = {
   rating: 4.8,
   ratingCount: 237,
   reviewsCount: 224,
-  // TODO: реальный телефон подставить (в 2ГИС скрыт за «Показать телефон»)
-  phone: "+7 (863) 000-00-00",
-  phoneHref: "tel:+78630000000",
-  whatsapp: "https://wa.me/78630000000",
+  phone: "+7 (961) 301-10-08",
+  phoneHref: "tel:+79613011008",
+  whatsapp: "https://wa.me/79613011008",
   telegram: "",
   instagram: "",
   gis: "https://go.2gis.com/R9af4",
