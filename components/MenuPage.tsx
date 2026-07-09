@@ -10,10 +10,9 @@ import { useOpenBooking } from "@/lib/use-open-booking";
 
 const KITCHEN_CATEGORY_IDS = FOOD.map((c) => c.id);
 
-// Split bar items into "bar" (spirits, cocktails, non-alco) and "wine" (wines & sparkling)
-const WINE_TITLES = new Set(["Вино белое / красное", "Шампанское и игристое"]);
-const WINE_GROUPS = BAR.filter((g) => WINE_TITLES.has(g.title));
-const BAR_GROUPS = BAR.filter((g) => !WINE_TITLES.has(g.title));
+// Split bar items into "bar" (spirits, cocktails, non-alco) and "wine" (wines, champagne, sparkling)
+const WINE_GROUPS = BAR.filter((g) => g.kind === "wine");
+const BAR_GROUPS = BAR.filter((g) => g.kind !== "wine");
 
 export function MenuPage() {
   const [booking, setBooking] = useState(false);
