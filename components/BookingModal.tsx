@@ -83,12 +83,13 @@ export function BookingModal({
               setTimeout(reset, 300);
             }}
           />
+          <div className="fixed inset-0 z-[71] flex items-center justify-center p-3 md:p-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed left-1/2 top-1/2 z-[71] max-h-[92vh] w-[min(560px,94vw)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto border border-white/25 bg-black p-6 md:p-10"
+            className="relative max-h-[92vh] w-[min(560px,100%)] overflow-y-auto border border-white/25 bg-black p-6 md:p-10"
           >
             <button
               aria-label="Закрыть"
@@ -255,6 +256,7 @@ export function BookingModal({
               </form>
             )}
           </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>
