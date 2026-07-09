@@ -26,6 +26,16 @@ body {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 96px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+a:focus,
+button:focus {
+  outline: none;
 }
 
 .scrollbar-hide::-webkit-scrollbar {

@@ -2,19 +2,8 @@ import { Reveal } from "./Reveal";
 
 export function About() {
   return (
-    <section id="about" className="relative pb-24 pt-8 md:pb-32 md:pt-14">
-      {/* Full-width interior photo */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden md:aspect-[16/9]">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=80')",
-          }}
-        />
-      </div>
-
-      <div className="container-page mt-16 md:mt-24">
+    <section id="about" className="relative py-24 md:py-32">
+      <div className="container-page">
         <Reveal>
           <h2 className="section-title">О ресторане</h2>
         </Reveal>

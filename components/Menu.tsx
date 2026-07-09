@@ -29,10 +29,12 @@ export function Menu() {
           <div className="mt-16 flex justify-center">
             <Link
               href="/menu/"
-              className="group flex aspect-square w-[240px] items-center justify-center rounded-full border border-white/45 transition hover:border-white md:w-[300px]"
+              className="group flex aspect-square w-[240px] items-center justify-center rounded-full border border-white/45 outline-none transition hover:border-white focus:outline-none focus-visible:outline-none md:w-[300px]"
             >
-              <span className="text-sm font-semibold uppercase tracking-[0.28em] text-white md:text-base">
-                Меню
+              <span className="text-center text-sm font-semibold uppercase tracking-[0.28em] text-white md:text-base">
+                Полное
+                <br />
+                меню
               </span>
             </Link>
           </div>
