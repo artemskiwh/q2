@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
 import { RESTAURANT } from "@/lib/icon-data";
 import { withBasePath } from "@/lib/path";
+import { Logo } from "./Logo";
 
 const NAV = [
   { href: "/", label: "Главная" },
@@ -29,101 +30,86 @@ export function SideMenu({
     };
   }, [open]);
 
+  const book = () => {
+    onClose();
+    setTimeout(() => {
+      if (onBook) onBook();
+      else window.dispatchEvent(new CustomEvent("open-booking"));
+    }, 260);
+  };
+
   return (
     <AnimatePresence>
       {open && (
-        <>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+          className="fixed inset-0 z-[70] flex flex-col bg-black/95 backdrop-blur-2xl"
+        >
+          {/* header — mirrors the site header */}
+          <div className="relative flex h-[110px] shrink-0 items-center justify-between px-4 md:h-[130px] md:px-6">
+            <span className="corner-frame pointer-events-none h-11 w-11 opacity-0" aria-hidden />
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+              <Logo />
+            </div>
+            <button aria-label="Закрыть меню" onClick={onClose} className="icon-frame">
+              <span className="cf-tr" />
+              <span className="cf-bl" />
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" className="h-5 w-5">
+                <path d="M6 6l12 12M6 18 18 6" />
+              </svg>
+            </button>
+          </div>
+
+          {/* nav */}
+          <nav className="flex flex-1 flex-col items-center justify-center gap-6 md:gap-7">
+            {NAV.map((item, i) => {
+              const hashIdx = item.href.indexOf("#");
+              const hash = hashIdx >= 0 ? item.href.slice(hashIdx) : "";
+              return (
+                <motion.a
+                  key={item.href}
+                  href={withBasePath(item.href)}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.12 + i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  onClick={(e) => {
+                    onClose();
+                    if (hash && typeof document !== "undefined" && document.querySelector(hash)) {
+                      e.preventDefault();
+                      setTimeout(() => document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" }), 260);
+                    }
+                  }}
+                  className="serif-thin text-4xl leading-none text-white/90 transition-colors hover:text-white md:text-6xl"
+                >
+                  {item.label}
+                </motion.a>
+              );
+            })}
+          </nav>
+
+          {/* footer */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/85 backdrop-blur-md"
-            onClick={onClose}
-          />
-          <motion.aside
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "tween", ease: [0.22, 1, 0.36, 1], duration: 0.5 }}
-            className="fixed inset-y-0 right-0 z-[61] flex w-full max-w-md flex-col bg-black"
+            transition={{ delay: 0.45, duration: 0.5 }}
+            className="shrink-0 pb-12 text-center"
           >
-            {/* Close button - inside like LETH */}
-            <div className="flex justify-end p-4 md:p-6">
-              <button
-                aria-label="Закрыть меню"
-                onClick={onClose}
-                className="icon-frame"
-              >
-                <span className="cf-tr" />
-                <span className="cf-bl" />
-                <CloseIcon className="h-5 w-5" />
-              </button>
-            </div>
-
-            <nav className="flex flex-1 flex-col items-end justify-center gap-5 px-8 pb-8 md:gap-6 md:px-14">
-              {NAV.map((item) => {
-                const hashIdx = item.href.indexOf("#");
-                const hash = hashIdx >= 0 ? item.href.slice(hashIdx) : "";
-                return (
-                  <a
-                    key={item.href}
-                    href={withBasePath(item.href)}
-                    onClick={(e) => {
-                      onClose();
-                      // If the target section exists on the current page,
-                      // scroll smoothly instead of navigating.
-                      if (hash && typeof document !== "undefined" && document.querySelector(hash)) {
-                        e.preventDefault();
-                        setTimeout(() => {
-                          document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
-                        }, 240);
-                      }
-                    }}
-                    className="serif-thin text-4xl text-white transition-opacity hover:opacity-70 md:text-5xl"
-                  >
-                    {item.label}
-                  </a>
-                );
-              })}
-            </nav>
-
-            <div className="flex flex-col items-end gap-3 px-8 pb-8 text-right md:px-14 md:pb-12">
-              <a
-                href={RESTAURANT.phoneHref}
-                className="serif-thin text-xl text-white md:text-2xl"
-              >
-                {RESTAURANT.phone}
-              </a>
-              <p className="text-sm text-white/70">
-                {RESTAURANT.address}
-              </p>
-              <button
-                onClick={() => {
-                  onClose();
-                  if (onBook) {
-                    setTimeout(onBook, 240);
-                  } else {
-                    setTimeout(() => {
-                      window.dispatchEvent(new CustomEvent("open-booking"));
-                    }, 240);
-                  }
-                }}
-                className="btn-white mt-4 w-full"
-              >
-                Забронировать
-              </button>
-            </div>
-          </motion.aside>
-        </>
+            <a href={RESTAURANT.phoneHref} className="serif-thin block text-2xl text-white md:text-3xl">
+              {RESTAURANT.phone}
+            </a>
+            <p className="mt-3 text-sm text-white/60">
+              {RESTAURANT.address} · {RESTAURANT.city}
+            </p>
+            <p className="mt-1 text-sm text-white/60">{RESTAURANT.hoursShort}, ежедневно</p>
+            <button onClick={book} className="btn-white mt-7">
+              Забронировать
+            </button>
+          </motion.div>
+        </motion.div>
       )}
     </AnimatePresence>
-  );
-}
-
-function CloseIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" {...props}>
-      <path d="M6 6l12 12M6 18 18 6" />
-    </svg>
   );
 }

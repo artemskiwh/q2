@@ -72,73 +72,69 @@ function ReviewsDrawer({ open, onClose }: { open: boolean; onClose: () => void }
   return (
     <AnimatePresence>
       {open && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/85 backdrop-blur-md"
-            onClick={onClose}
-          />
-          <motion.aside
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "tween", ease: [0.22, 1, 0.36, 1], duration: 0.5 }}
-            className="fixed inset-y-0 right-0 z-[61] flex w-full max-w-md flex-col bg-black"
-          >
-            {/* header */}
-            <div className="flex items-center justify-between border-b border-white/15 px-6 py-5">
-              <div>
-                <p className="serif-thin text-2xl text-white">Отзывы</p>
-                <p className="mt-1 flex items-center gap-2 text-sm text-white/60">
-                  <span className="text-white">{RESTAURANT.rating}</span>
-                  <Stars />
-                  <span>· {RESTAURANT.ratingCount} оценок</span>
-                </p>
-              </div>
-              <button
-                aria-label="Закрыть"
-                onClick={onClose}
-                className="icon-frame"
-              >
-                <span className="cf-tr" />
-                <span className="cf-bl" />
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="h-5 w-5">
-                  <path d="M6 6l12 12M6 18 18 6" />
-                </svg>
-              </button>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+          className="fixed inset-0 z-[70] flex flex-col bg-black/95 backdrop-blur-2xl"
+        >
+          {/* header */}
+          <div className="relative flex h-[110px] shrink-0 items-center justify-between px-4 md:h-[130px] md:px-6">
+            <span className="corner-frame pointer-events-none h-11 w-11 opacity-0" aria-hidden />
+            <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
+              <span className="serif-thin text-2xl tracking-[0.14em] text-white md:text-3xl">Отзывы</span>
+              <span className="mt-1 flex items-center gap-2 text-xs text-white/60">
+                <span className="text-white">{RESTAURANT.rating}</span>
+                <Stars />
+                <span>· {RESTAURANT.ratingCount}</span>
+              </span>
             </div>
+            <button aria-label="Закрыть" onClick={onClose} className="icon-frame">
+              <span className="cf-tr" />
+              <span className="cf-bl" />
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" className="h-5 w-5">
+                <path d="M6 6l12 12M6 18 18 6" />
+              </svg>
+            </button>
+          </div>
 
-            {/* scrollable list */}
-            <div className="flex-1 space-y-5 overflow-y-auto px-6 py-6">
+          {/* scrollable list */}
+          <div className="flex-1 overflow-y-auto">
+            <div className="mx-auto max-w-2xl px-6 pb-16 pt-2 md:px-8">
               {REVIEWS.slice(0, 8).map((r, i) => (
-                <div key={r.name + i} className="border border-white/12 bg-white/[0.02] p-5">
+                <motion.div
+                  key={r.name + i}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + i * 0.05, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  className="border-b border-white/10 py-8"
+                >
                   <div className="flex items-center gap-3">
-                    <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/40 text-sm font-medium text-white">
+                    <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/40 text-sm text-white">
                       {initials(r.name)}
                     </div>
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium text-white">{r.name}</p>
-                      <p className="text-xs text-white/50">{r.date}</p>
+                      <p className="serif-thin truncate text-lg text-white">{r.name}</p>
+                      <p className="text-xs text-white/45">{r.date}</p>
                     </div>
+                    <Stars className="ml-auto" />
                   </div>
-                  <Stars className="mt-3" />
-                  <p className="mt-2.5 text-sm leading-relaxed text-white/80">{r.text}</p>
-                </div>
+                  <p className="mt-4 text-[15px] leading-relaxed text-white/80">{r.text}</p>
+                </motion.div>
               ))}
 
               <a
                 href={RESTAURANT.gis}
                 target="_blank"
                 rel="noreferrer"
-                className="block py-3 text-center text-sm text-white underline underline-offset-4 hover:text-white/70"
+                className="mt-8 block text-center text-sm uppercase tracking-[0.2em] text-white/70 transition-colors hover:text-white"
               >
                 Все отзывы в 2ГИС →
               </a>
             </div>
-          </motion.aside>
-        </>
+          </div>
+        </motion.div>
       )}
     </AnimatePresence>
   );
