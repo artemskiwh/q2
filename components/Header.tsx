@@ -1,129 +1,70 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import clsx from "clsx";
-import { Icon } from "./Icons";
 import { Logo } from "./Logo";
-import { SearchBar } from "./SearchBar";
-import { useCart } from "./CartProvider";
-import { useFavorites } from "./FavoritesProvider";
 import { MobileMenu } from "./MobileMenu";
 
-const NAV = [
-  { href: "/catalog", label: "Каталог" },
-  { href: "/about", label: "О нас" },
-  { href: "/wholesale", label: "Опт" },
-  { href: "/profile", label: "Профиль" },
+export const NAV = [
+  { href: "#about", label: "О ресторане" },
+  { href: "#menu", label: "Меню" },
+  { href: "#karaoke", label: "Караоке" },
+  { href: "#reviews", label: "Отзывы" },
+  { href: "#contacts", label: "Контакты" },
 ];
 
 export function Header() {
-  const pathname = usePathname();
-  const { totalQty } = useCart();
-  const { count: favCount } = useFavorites();
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => setMenuOpen(false), [pathname]);
-
   return (
     <>
       <header
-        className={clsx(
-          "sticky top-0 z-40 transition-all duration-300",
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "border-b border-bg-line bg-bg/85 backdrop-blur-xl"
-            : "border-b border-transparent bg-bg/60 backdrop-blur",
-        )}
+            ? "border-b border-gold/15 bg-ink/85 backdrop-blur-xl"
+            : "border-b border-transparent bg-transparent"
+        }`}
       >
-        <div className="container-page flex h-16 items-center gap-4 md:h-[72px]">
-          <button
-            type="button"
-            className="grid h-10 w-10 place-items-center rounded-xl border border-bg-line bg-bg-soft text-white/90 lg:hidden"
-            onClick={() => setMenuOpen(true)}
-            aria-label="Меню"
-          >
-            <Icon.Menu className="h-5 w-5" />
-          </button>
+        <div className="container-page flex h-[76px] items-center justify-between">
+          <Logo size="sm" withTagline={false} />
 
-          <Logo />
-
-          <nav className="hidden flex-1 items-center justify-center gap-1 lg:flex">
-            {NAV.map((item) => {
-              const active = pathname === item.href || pathname?.startsWith(item.href + "/");
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={clsx(
-                    "rounded-lg px-3 py-2 text-sm font-medium transition",
-                    active
-                      ? "bg-bg-elev text-white"
-                      : "text-muted hover:bg-bg-soft hover:text-white",
-                  )}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+          <nav className="hidden items-center gap-8 lg:flex">
+            {NAV.map((n) => (
+              <a
+                key={n.href}
+                href={n.href}
+                className="text-sm font-medium text-muted transition-colors hover:text-gold"
+              >
+                {n.label}
+              </a>
+            ))}
           </nav>
 
-          <div className="hidden flex-1 md:flex lg:hidden">
-            <SearchBar size="sm" />
-          </div>
-
-          <div className="ml-auto hidden w-[280px] lg:block">
-            <SearchBar />
-          </div>
-
-          <div className="ml-auto flex items-center gap-1.5 lg:ml-2">
-            <Link
-              href="/favorites"
-              className="relative hidden h-10 w-10 place-items-center rounded-xl border border-bg-line bg-bg-soft text-white/90 hover:bg-bg-elev md:grid"
-              aria-label="Избранное"
+          <div className="flex items-center gap-3">
+            <a href="#book" className="btn-gold hidden sm:inline-flex">
+              Забронировать
+            </a>
+            <button
+              aria-label="Открыть меню"
+              onClick={() => setOpen(true)}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gold/30 text-gold lg:hidden"
             >
-              <Icon.Heart className="h-5 w-5" />
-              {favCount > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-bg">
-                  {favCount}
-                </span>
-              )}
-            </Link>
-            <Link
-              href="/cart"
-              className="relative grid h-10 w-10 place-items-center rounded-xl border border-bg-line bg-bg-soft text-white/90 hover:bg-bg-elev"
-              aria-label="Корзина"
-            >
-              <Icon.Cart className="h-5 w-5" />
-              {totalQty > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 grid h-5 min-w-5 place-items-center rounded-full bg-brand px-1 text-[10px] font-bold text-white">
-                  {totalQty}
-                </span>
-              )}
-            </Link>
-            <Link
-              href="/wholesale"
-              className="ml-1 hidden h-10 items-center rounded-xl bg-brand px-4 text-sm font-semibold text-white hover:bg-brand-hover md:inline-flex"
-            >
-              Стать партнёром
-            </Link>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                <path d="M3 6h18M3 12h18M3 18h18" />
+              </svg>
+            </button>
           </div>
-        </div>
-
-        <div className="container-page pb-3 md:hidden">
-          <SearchBar size="sm" />
         </div>
       </header>
 
-      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <MobileMenu open={open} onClose={() => setOpen(false)} />
     </>
   );
 }

@@ -4,31 +4,39 @@
 
 :root {
   color-scheme: dark;
-  --brand: #ff3b30;
-  --brand-glow: rgba(255, 59, 48, 0.45);
-  --accent: #22d3ee;
+  --gold: #c9a24b;
+  --gold-light: #e7c877;
+  --gold-glow: rgba(201, 162, 75, 0.4);
 }
 
 html,
 body {
-  background: #07070a;
-  color: #e7e7ee;
+  background: #050505;
+  color: #ece9e3;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background-image:
-    radial-gradient(80% 60% at 50% -200px, rgba(255, 59, 48, 0.08) 0%, transparent 60%);
+  background-image: radial-gradient(
+    90% 60% at 50% -10%,
+    rgba(201, 162, 75, 0.08) 0%,
+    transparent 60%
+  );
 }
 
 * {
-  border-color: theme(colors.bg.line);
+  border-color: theme(colors.ink.line);
 }
 
 ::selection {
-  background: rgba(255, 59, 48, 0.35);
+  background: rgba(201, 162, 75, 0.32);
   color: #fff;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -41,231 +49,212 @@ body {
 
 .container-page {
   width: 100%;
-  max-width: 1320px;
+  max-width: 1240px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
-
 @media (min-width: 768px) {
   .container-page {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 }
 
 .text-muted {
-  color: #8a8a96;
+  color: #9a968d;
 }
-
 .text-mute2 {
-  color: #6a6a76;
+  color: #6d6a63;
 }
 
-/* === BUTTONS === */
-.btn-primary {
-  background: linear-gradient(135deg, #ff3b30 0%, #d92414 100%);
-  color: #fff;
-  border-radius: 0.875rem;
-  padding: 0.7rem 1.15rem;
+/* ——— Gold text ——— */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #f3dd9a 0%, #c9a24b 50%, #9a7a30 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.brand-word {
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+/* ——— Eyebrow label with gold lines (like the ICON menu header) ——— */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  font-size: 0.9rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+.eyebrow::before,
+.eyebrow::after {
+  content: "";
+  height: 1px;
+  width: 2.2rem;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+.eyebrow.only-after::before {
+  display: none;
+}
+
+/* ——— Buttons ——— */
+.btn-gold {
+  background: linear-gradient(135deg, #f3dd9a 0%, #c9a24b 50%, #a9842f 100%);
+  color: #1a1406;
+  border-radius: 999px;
+  padding: 0.85rem 1.6rem;
+  font-weight: 700;
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
   transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  box-shadow: 0 8px 22px -10px rgba(255, 59, 48, 0.7),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  gap: 0.55rem;
+  box-shadow: 0 12px 30px -12px rgba(201, 162, 75, 0.7);
   white-space: nowrap;
 }
-.btn-primary:hover {
-  filter: brightness(1.06);
-  transform: translateY(-1px);
-  box-shadow: 0 10px 28px -8px rgba(255, 59, 48, 0.75),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+.btn-gold:hover {
+  filter: brightness(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -12px rgba(201, 162, 75, 0.8);
 }
-.btn-primary:active {
+.btn-gold:active {
   transform: translateY(0);
-  filter: brightness(0.95);
 }
 
-.btn-secondary {
-  background: #1c1c25;
-  color: #e7e7ee;
-  border: 1px solid #2a2a36;
-  border-radius: 0.875rem;
-  padding: 0.7rem 1.15rem;
-  font-weight: 500;
-  font-size: 0.9rem;
-  transition: all 0.18s ease;
+.btn-outline {
+  background: transparent;
+  color: #ece9e3;
+  border: 1px solid rgba(201, 162, 75, 0.5);
+  border-radius: 999px;
+  padding: 0.85rem 1.6rem;
+  font-weight: 600;
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   white-space: nowrap;
 }
-.btn-secondary:hover {
-  background: #22222d;
-  border-color: #3a3a48;
+.btn-outline:hover {
+  background: rgba(201, 162, 75, 0.1);
+  border-color: var(--gold-light);
+  color: #fff;
 }
 
-.btn-ghost {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #e7e7ee;
-  border-radius: 0.875rem;
-  padding: 0.7rem 1.15rem;
-  font-weight: 500;
-  transition: all 0.18s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-.btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.14);
+/* ——— Surfaces ——— */
+.surface {
+  background: linear-gradient(180deg, #111113 0%, #0a0a0c 100%);
+  border: 1px solid rgba(201, 162, 75, 0.14);
+  border-radius: 1.25rem;
 }
 
-/* === CHIPS === */
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  border-radius: 999px;
-  padding: 0.22rem 0.6rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: 0.02em;
+/* Gold framed box like the printed ICON menu */
+.gold-frame {
+  border: 1px solid rgba(201, 162, 75, 0.45);
+  border-radius: 0.5rem;
+  position: relative;
 }
 
-.chip-brand {
-  background: rgba(255, 59, 48, 0.13);
-  color: #ff6b5e;
-  border: 1px solid rgba(255, 59, 48, 0.28);
-}
-
-.chip-accent {
-  background: rgba(34, 211, 238, 0.10);
-  color: #67e8f9;
-  border: 1px solid rgba(34, 211, 238, 0.25);
-}
-
-.chip-gold {
-  background: rgba(251, 191, 36, 0.10);
-  color: #fcd34d;
-  border: 1px solid rgba(251, 191, 36, 0.28);
-}
-
-.chip-neutral {
-  background: #1c1c25;
-  color: #b8b8c2;
-  border: 1px solid #2a2a36;
-}
-
-/* === INPUT === */
+/* ——— Inputs ——— */
 input,
 textarea,
 select {
   font-family: inherit;
 }
-
 .input {
-  background: #15151c;
-  border: 1px solid #2a2a36;
-  border-radius: 0.875rem;
-  padding: 0.7rem 0.95rem;
+  background: #0d0d0f;
+  border: 1px solid rgba(201, 162, 75, 0.22);
+  border-radius: 0.75rem;
+  padding: 0.8rem 1rem;
   width: 100%;
-  color: #e7e7ee;
-  transition: border 0.18s, background 0.18s, box-shadow 0.18s;
+  color: #ece9e3;
+  transition: border 0.18s, box-shadow 0.18s;
   font-size: 0.92rem;
 }
 .input:focus {
   outline: none;
-  border-color: rgba(255, 59, 48, 0.55);
-  background: #181820;
-  box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.12);
+  border-color: rgba(201, 162, 75, 0.7);
+  box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.14);
 }
 .input::placeholder {
-  color: #5d5d68;
+  color: #5f5c55;
 }
 
-/* === SURFACES === */
-.surface {
-  background: linear-gradient(180deg, #15151c 0%, #111117 100%);
-  border: 1px solid #262631;
-  border-radius: 1.125rem;
-}
-.surface-elev {
-  background: linear-gradient(180deg, #1c1c25 0%, #15151c 100%);
-  border: 1px solid #2a2a36;
-  border-radius: 1.125rem;
-}
-
-/* Hero radial */
-.hero-bg {
-  background:
-    radial-gradient(80% 60% at 0% 0%, rgba(255, 59, 48, 0.25) 0%, transparent 55%),
-    radial-gradient(70% 55% at 100% 100%, rgba(34, 211, 238, 0.18) 0%, transparent 55%),
-    linear-gradient(180deg, #15151c 0%, #0a0a10 100%);
-}
-
-/* Subtle conic for category tiles */
-.tile-shine {
+/* ——— Dish 3D card ——— */
+.dish-plate {
   position: relative;
-  isolation: isolate;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
 }
-.tile-shine::before {
+.dish-card:hover .dish-plate {
+  transform: translateY(-10px) rotate(-3deg) scale(1.04);
+}
+.dish-img {
+  filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.75));
+}
+
+/* Radial glow behind a dish */
+.dish-halo::before {
   content: "";
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: conic-gradient(
-    from 220deg at 70% 30%,
-    rgba(255, 255, 255, 0.08) 0deg,
-    rgba(255, 255, 255, 0) 90deg,
-    rgba(255, 255, 255, 0) 270deg,
-    rgba(255, 255, 255, 0.04) 360deg
+  inset: 8% 8% 6% 8%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(201, 162, 75, 0.28) 0%,
+    rgba(201, 162, 75, 0.08) 45%,
+    transparent 70%
   );
-  pointer-events: none;
+  filter: blur(6px);
   z-index: 0;
 }
 
-/* Marquee */
+/* Fallback stylized plate when no photo yet */
+.plate-fallback {
+  background: radial-gradient(circle at 38% 32%, #24242a 0%, #141418 55%, #0c0c0f 100%);
+  box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.06),
+    inset 0 -18px 40px rgba(0, 0, 0, 0.6), 0 26px 40px -18px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(201, 162, 75, 0.25);
+}
+
+/* ——— Reveal on scroll ——— */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ——— Marquee ——— */
 .marquee {
   display: flex;
   width: max-content;
-  animation: marquee-x 38s linear infinite;
+  animation: marquee-x 40s linear infinite;
 }
 
-/* Hero device floats */
-@keyframes hero-float-1 { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
-@keyframes hero-float-2 { 0%,100% { transform: translateY(0) } 50% { transform: translateY(12px) } }
-@keyframes hero-float-3 { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
-.hero-float-1 { animation: hero-float-1 4.5s ease-in-out infinite; }
-.hero-float-2 { animation: hero-float-2 4.8s ease-in-out infinite 0.4s; }
-.hero-float-3 { animation: hero-float-3 5s ease-in-out infinite 0.8s; }
-
-/* Fade-in for sections */
-@keyframes section-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.section-in {
-  animation: section-in 0.4s ease-out backwards;
+/* Star rating */
+.stars {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--gold);
 }
 
-/* Pricing label glow */
-.price-glow {
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5), 0 0 12px rgba(255, 59, 48, 0.35);
-}
-
-/* Helper line for sections */
-.section-line {
-  background: linear-gradient(90deg, transparent 0%, #2a2a36 25%, #2a2a36 75%, transparent 100%);
-  height: 1px;
-  width: 100%;
+/* Noise / texture overlay helper */
+.grain {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 3px 3px;
 }

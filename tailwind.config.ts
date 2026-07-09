@@ -1,40 +1,32 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-  ],
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        bg: {
-          DEFAULT: "#07070a",
-          soft: "#0f0f14",
-          card: "#15151c",
-          elev: "#1c1c25",
-          line: "#262631",
-          hover: "#22222d",
-        },
-        brand: {
-          DEFAULT: "#ff3b30",
-          hover: "#ff5347",
-          dark: "#c41e1e",
-          soft: "rgba(255, 59, 48, 0.12)",
-          glow: "rgba(255, 59, 48, 0.45)",
-        },
-        accent: {
-          DEFAULT: "#22d3ee",
-          hover: "#67e8f9",
-          soft: "rgba(34, 211, 238, 0.12)",
+        ink: {
+          DEFAULT: "#050505",
+          soft: "#0b0b0d",
+          card: "#101012",
+          elev: "#161618",
+          line: "#26262b",
         },
         gold: {
-          DEFAULT: "#fbbf24",
-          soft: "rgba(251, 191, 36, 0.12)",
+          DEFAULT: "#c9a24b",
+          light: "#e7c877",
+          bright: "#f3dd9a",
+          deep: "#9a7a30",
+          soft: "rgba(201, 162, 75, 0.12)",
+          glow: "rgba(201, 162, 75, 0.45)",
         },
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
+      },
+      letterSpacing: {
+        brand: "0.35em",
       },
       borderRadius: {
         xl: "0.875rem",
@@ -42,41 +34,39 @@ const config: Config = {
         "3xl": "1.5rem",
       },
       boxShadow: {
-        card: "0 8px 24px -12px rgba(0,0,0,0.65)",
-        glow: "0 0 0 1px rgba(255,59,48,0.45), 0 12px 36px -10px rgba(255,59,48,0.45)",
-        "glow-cyan": "0 0 0 1px rgba(34,211,238,0.35), 0 12px 36px -10px rgba(34,211,238,0.35)",
-        inner: "inset 0 1px 0 0 rgba(255,255,255,0.05)",
+        card: "0 20px 50px -24px rgba(0,0,0,0.9)",
+        gold: "0 0 0 1px rgba(201,162,75,0.35), 0 18px 44px -14px rgba(201,162,75,0.35)",
+        dish: "0 30px 55px -20px rgba(0,0,0,0.85)",
       },
       backgroundImage: {
-        "brand-gradient": "linear-gradient(135deg, #ff3b30 0%, #c41e1e 100%)",
-        "accent-gradient": "linear-gradient(135deg, #22d3ee 0%, #0891b2 100%)",
-        "gold-gradient": "linear-gradient(135deg, #fbbf24 0%, #d97706 100%)",
-        "hero-radial":
-          "radial-gradient(120% 100% at 0% 0%, rgba(255,59,48,0.18) 0%, transparent 55%), radial-gradient(100% 80% at 100% 100%, rgba(34,211,238,0.10) 0%, transparent 55%)",
+        "gold-gradient":
+          "linear-gradient(135deg, #f3dd9a 0%, #c9a24b 45%, #9a7a30 100%)",
+        "gold-line":
+          "linear-gradient(90deg, transparent, #c9a24b 20%, #e7c877 50%, #c9a24b 80%, transparent)",
       },
       keyframes: {
         "fade-in-up": {
-          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "0%": { opacity: "0", transform: "translateY(14px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        shimmer: {
-          "0%": { backgroundPosition: "-1000px 0" },
-          "100%": { backgroundPosition: "1000px 0" },
         },
         "marquee-x": {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
-        "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 0 0 rgba(255,59,48,0.5)" },
-          "50%": { boxShadow: "0 0 0 14px rgba(255,59,48,0)" },
+        float: {
+          "0%,100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-12px)" },
+        },
+        "spin-slow": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
         },
       },
       animation: {
-        "fade-in-up": "fade-in-up 0.4s ease-out",
-        shimmer: "shimmer 2.4s linear infinite",
-        marquee: "marquee-x 38s linear infinite",
-        "pulse-glow": "pulse-glow 2.2s ease-out infinite",
+        "fade-in-up": "fade-in-up 0.6s ease-out",
+        marquee: "marquee-x 40s linear infinite",
+        float: "float 6s ease-in-out infinite",
+        "spin-slow": "spin-slow 40s linear infinite",
       },
     },
   },
