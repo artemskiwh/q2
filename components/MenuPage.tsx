@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FOOD, BAR, formatPrice } from "@/lib/icon-data";
 import { DishCard } from "./DishCard";
 import { Reveal } from "./Reveal";
+import { Divider } from "./Divider";
 import { BookingModal } from "./BookingModal";
 import { useOpenBooking } from "@/lib/use-open-booking";
 
@@ -43,7 +44,7 @@ export function MenuPage() {
         </div>
       </section>
 
-      <div className="mx-auto h-px w-full max-w-4xl bg-white/10" />
+      <Divider />
 
       {/* Bar */}
       <section id="bar" className="relative py-24 md:py-32">
@@ -65,7 +66,7 @@ export function MenuPage() {
         </div>
       </section>
 
-      <div className="mx-auto h-px w-full max-w-4xl bg-white/10" />
+      <Divider />
 
       {/* Wine */}
       <section id="wine" className="relative py-24 md:py-32">
