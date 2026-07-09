@@ -3,6 +3,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { RESTAURANT } from "@/lib/icon-data";
+import { sendToTelegram, telegramEnabled, bookingText } from "@/lib/booking-config";
+
+const WA_NUMBER = RESTAURANT.whatsapp.replace(/\D/g, "");
 
 const TIME_SLOTS = [
   "20:00",
@@ -48,6 +51,8 @@ export function BookingModal({
   const [time, setTime] = useState("");
   const [contact, setContact] = useState("");
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     if (!open) return;
@@ -57,8 +62,26 @@ export function BookingModal({
     };
   }, [open]);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (sending) return;
+    const data = { name, phone, guests, date, time, contact };
+
+    if (telegramEnabled()) {
+      setSending(true);
+      const ok = await sendToTelegram(data);
+      setSending(false);
+      if (ok) {
+        setSent(true);
+      } else {
+        setFailed(true); // show WhatsApp / phone fallback
+      }
+      return;
+    }
+
+    // No bot configured yet — hand off to WhatsApp with the details pre-filled.
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(bookingText(data))}`;
+    window.open(url, "_blank", "noopener");
     setSent(true);
   };
 
@@ -70,6 +93,8 @@ export function BookingModal({
     setTime("");
     setContact("");
     setSent(false);
+    setSending(false);
+    setFailed(false);
   };
 
   return (
@@ -227,9 +252,32 @@ export function BookingModal({
                   </label>
                 </div>
 
-                <button type="submit" className="btn-white mt-8 w-full">
-                  Отправить
+                <button
+                  type="submit"
+                  disabled={sending}
+                  className="btn-white mt-8 w-full disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {sending ? "Отправляем…" : "Отправить"}
                 </button>
+
+                {failed && (
+                  <div className="mt-4 border border-white/25 p-4 text-center text-xs text-white/70">
+                    Не удалось отправить заявку автоматически. Напишите нам напрямую:
+                    <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                      <a
+                        href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(bookingText({ name, phone, guests, date, time, contact }))}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn-white flex-1 !min-w-0 !py-2 !text-[11px]"
+                      >
+                        WhatsApp
+                      </a>
+                      <a href={RESTAURANT.phoneHref} className="btn-ghost flex-1 !min-w-0 !py-2 !text-[11px]">
+                        Позвонить
+                      </a>
+                    </div>
+                  </div>
+                )}
 
                 <p className="mt-4 text-center text-xs text-white/50">
                   Или позвоните нам:{" "}
