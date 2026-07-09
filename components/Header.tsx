@@ -3,13 +3,11 @@
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 import { SideMenu } from "./SideMenu";
-import { RESTAURANT } from "@/lib/icon-data";
 
 export const NAV = [
   { href: "/", label: "Главная" },
   { href: "/menu/", label: "Меню" },
   { href: "#about", label: "О нас" },
-  { href: "#karaoke", label: "Караоке" },
   { href: "#contacts", label: "Контакты" },
 ];
 
@@ -32,15 +30,10 @@ export function Header() {
         }`}
       >
         <div className="relative flex h-[110px] items-center justify-between px-4 md:h-[130px] md:px-6">
-          <a
-            href={RESTAURANT.phoneHref}
-            aria-label="Позвонить"
-            className="icon-frame"
-          >
-            <span className="cf-tr" />
-            <span className="cf-bl" />
-            <PhoneIcon className="h-5 w-5" />
-          </a>
+          {/* left spacer keeps the logo centred (call button removed) */}
+          <span className="icon-frame pointer-events-none opacity-0" aria-hidden>
+            <BurgerIcon className="h-5 w-5" />
+          </span>
 
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <Logo />
@@ -60,14 +53,6 @@ export function Header() {
 
       <SideMenu open={open} onClose={() => setOpen(false)} />
     </>
-  );
-}
-
-function PhoneIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.6 19.6 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z" />
-    </svg>
   );
 }
 

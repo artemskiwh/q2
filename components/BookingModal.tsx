@@ -16,6 +16,16 @@ const TIME_SLOTS = [
   "00:00",
   "00:30",
   "01:00",
+  "01:30",
+  "02:00",
+  "02:30",
+  "03:00",
+  "03:30",
+  "04:00",
+  "04:30",
+  "05:00",
+  "05:30",
+  "06:00",
 ];
 
 const CONTACT_METHODS = [
@@ -37,9 +47,6 @@ export function BookingModal({
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [contact, setContact] = useState("");
-  const [consent, setConsent] = useState(false);
-  const [ackKids, setAckKids] = useState(false);
-  const [ackPets, setAckPets] = useState(false);
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
@@ -52,7 +59,6 @@ export function BookingModal({
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!consent) return;
     setSent(true);
   };
 
@@ -63,9 +69,6 @@ export function BookingModal({
     setDate("");
     setTime("");
     setContact("");
-    setConsent(false);
-    setAckKids(false);
-    setAckPets(false);
     setSent(false);
   };
 
@@ -224,26 +227,7 @@ export function BookingModal({
                   </label>
                 </div>
 
-                <div className="mt-6 space-y-3 text-sm text-white/80">
-                  <Check checked={consent} onChange={setConsent}>
-                    Настоящим подтверждаю, что ознакомлен с условиями Политики оператора
-                    в отношении обработки персональных данных и даю согласие на обработку
-                    моих персональных данных.
-                  </Check>
-                  <Check checked={ackKids} onChange={setAckKids}>
-                    Мы не рекомендуем приходить с детьми младше 7 лет из-за продолжительности
-                    и характера дегустационного меню.
-                  </Check>
-                  <Check checked={ackPets} onChange={setAckPets}>
-                    Посещение ресторана с животными не предусмотрено
-                  </Check>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={!consent}
-                  className="btn-white mt-8 w-full disabled:cursor-not-allowed disabled:opacity-40"
-                >
+                <button type="submit" className="btn-white mt-8 w-full">
                   Отправить
                 </button>
 
@@ -260,40 +244,6 @@ export function BookingModal({
         </>
       )}
     </AnimatePresence>
-  );
-}
-
-function Check({
-  checked,
-  onChange,
-  children,
-}: {
-  checked: boolean;
-  onChange: (v: boolean) => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <label className="flex cursor-pointer items-start gap-3 leading-snug">
-      <span
-        onClick={() => onChange(!checked)}
-        className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center border transition-colors ${
-          checked ? "border-white bg-white text-black" : "border-white/50"
-        }`}
-      >
-        {checked && (
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="h-3 w-3">
-            <path d="m5 12 5 5 9-12" />
-          </svg>
-        )}
-      </span>
-      <input
-        type="checkbox"
-        className="sr-only"
-        checked={checked}
-        onChange={(e) => onChange(e.target.checked)}
-      />
-      <span className="flex-1 text-[13px]">{children}</span>
-    </label>
   );
 }
 

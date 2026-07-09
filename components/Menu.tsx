@@ -1,12 +1,6 @@
 import Link from "next/link";
 import { Reveal } from "./Reveal";
 
-const CIRCLES = [
-  { label: "Меню кухни", href: "/menu/#kitchen" },
-  { label: "Бар", href: "/menu/#bar" },
-  { label: "Винная карта", href: "/menu/#wine" },
-];
-
 export function Menu() {
   return (
     <section id="menu" className="relative overflow-hidden py-24 md:py-32">
@@ -30,25 +24,17 @@ export function Menu() {
           </p>
         </Reveal>
 
-        {/* Three intersecting thin circles */}
+        {/* Single circle → full menu */}
         <Reveal delay={120}>
-          <div className="relative mx-auto mt-14 flex h-[560px] w-full max-w-[420px] flex-col items-center justify-center md:h-[620px]">
-            {CIRCLES.map((c, i) => (
-              <Link
-                key={c.label}
-                href={c.href}
-                className="group absolute flex aspect-square w-[70%] items-center justify-center rounded-full border border-white/45 transition hover:border-white"
-                style={{
-                  top: `${i * 26}%`,
-                }}
-              >
-                <span
-                  className="text-sm font-semibold uppercase tracking-[0.24em] text-white transition group-hover:text-white md:text-[15px]"
-                >
-                  {c.label}
-                </span>
-              </Link>
-            ))}
+          <div className="mt-16 flex justify-center">
+            <Link
+              href="/menu/"
+              className="group flex aspect-square w-[240px] items-center justify-center rounded-full border border-white/45 transition hover:border-white md:w-[300px]"
+            >
+              <span className="text-sm font-semibold uppercase tracking-[0.28em] text-white md:text-base">
+                Меню
+              </span>
+            </Link>
           </div>
         </Reveal>
       </div>

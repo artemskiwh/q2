@@ -41,7 +41,7 @@ export function Reviews() {
         </Reveal>
 
         <div className="mx-auto mt-16 max-w-6xl columns-1 gap-6 md:columns-2 lg:columns-3 [&>*]:mb-6 [&>*]:break-inside-avoid">
-          {REVIEWS.map((r, i) => (
+          {REVIEWS.slice(0, 8).map((r, i) => (
             <Reveal key={r.name + i} delay={(i % 4) * 60} as="article">
               <div className="border border-white/15 bg-white/[0.02] p-6">
                 <div className="flex items-center gap-3">

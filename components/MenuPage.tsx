@@ -8,7 +8,8 @@ import { Reveal } from "./Reveal";
 import { BookingModal } from "./BookingModal";
 import { useOpenBooking } from "@/lib/use-open-booking";
 
-const KITCHEN_CATEGORY_IDS = FOOD.map((c) => c.id);
+// All kitchen dishes as one flat list (no category split)
+const KITCHEN_ITEMS = FOOD.flatMap((c) => c.items);
 
 // Split bar items into "bar" (spirits, cocktails, non-alco) and "wine" (wines, champagne, sparkling)
 const WINE_GROUPS = BAR.filter((g) => g.kind === "wine");
@@ -17,9 +18,6 @@ const BAR_GROUPS = BAR.filter((g) => g.kind !== "wine");
 export function MenuPage() {
   const [booking, setBooking] = useState(false);
   useOpenBooking(() => setBooking(true));
-
-  const [activeFood, setActiveFood] = useState<string>(KITCHEN_CATEGORY_IDS[0]);
-  const currentFood = FOOD.find((c) => c.id === activeFood);
 
   return (
     <>
@@ -37,32 +35,11 @@ export function MenuPage() {
             </p>
           </Reveal>
 
-          <div className="mt-12 flex flex-wrap justify-center gap-2.5">
-            {FOOD.map((c) => (
-              <button
-                key={c.id}
-                onClick={() => setActiveFood(c.id)}
-                className={`px-5 py-2.5 text-xs font-medium uppercase tracking-[0.2em] transition-all ${
-                  activeFood === c.id
-                    ? "border border-white bg-white text-black"
-                    : "border border-white/30 text-white/70 hover:border-white/70 hover:text-white"
-                }`}
-              >
-                {c.title}
-              </button>
+          <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {KITCHEN_ITEMS.map((dish) => (
+              <DishCard key={dish.name} dish={dish} />
             ))}
           </div>
-
-          {currentFood && (
-            <div
-              key={currentFood.id}
-              className="mt-14 grid animate-fade-in grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-            >
-              {currentFood.items.map((dish) => (
-                <DishCard key={dish.name} dish={dish} />
-              ))}
-            </div>
-          )}
         </div>
       </section>
 

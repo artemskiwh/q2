@@ -8,7 +8,6 @@ const NAV = [
   { href: "/", label: "Главная" },
   { href: "/menu/", label: "Меню" },
   { href: "#about", label: "О нас" },
-  { href: "#karaoke", label: "Караоке" },
   { href: "#contacts", label: "Контакты" },
 ];
 

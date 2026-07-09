@@ -33,7 +33,7 @@ export function Hero() {
             Открыть меню
           </Link>
           <button onClick={() => setBooking(true)} className="btn-white">
-            Забронировать
+            Забронировать стол
           </button>
         </div>
 
