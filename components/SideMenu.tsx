@@ -3,12 +3,13 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
 import { RESTAURANT } from "@/lib/icon-data";
+import { withBasePath } from "@/lib/path";
 
 const NAV = [
   { href: "/", label: "Главная" },
   { href: "/menu/", label: "Меню" },
-  { href: "#about", label: "О нас" },
-  { href: "#contacts", label: "Контакты" },
+  { href: "/#about", label: "О нас" },
+  { href: "/#contacts", label: "Контакты" },
 ];
 
 export function SideMenu({
@@ -61,21 +62,21 @@ export function SideMenu({
 
             <nav className="flex flex-1 flex-col items-end justify-center gap-5 px-8 pb-8 md:gap-6 md:px-14">
               {NAV.map((item) => {
-                const isHash = item.href.startsWith("#");
+                const hashIdx = item.href.indexOf("#");
+                const hash = hashIdx >= 0 ? item.href.slice(hashIdx) : "";
                 return (
                   <a
                     key={item.href}
-                    href={item.href}
+                    href={withBasePath(item.href)}
                     onClick={(e) => {
-                      if (isHash) {
+                      onClose();
+                      // If the target section exists on the current page,
+                      // scroll smoothly instead of navigating.
+                      if (hash && typeof document !== "undefined" && document.querySelector(hash)) {
                         e.preventDefault();
-                        onClose();
                         setTimeout(() => {
-                          const el = document.querySelector(item.href);
-                          el?.scrollIntoView({ behavior: "smooth" });
+                          document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
                         }, 240);
-                      } else {
-                        onClose();
                       }
                     }}
                     className="serif-thin text-4xl text-white transition-opacity hover:opacity-70 md:text-5xl"

@@ -7,8 +7,8 @@ import { SideMenu } from "./SideMenu";
 export const NAV = [
   { href: "/", label: "Главная" },
   { href: "/menu/", label: "Меню" },
-  { href: "#about", label: "О нас" },
-  { href: "#contacts", label: "Контакты" },
+  { href: "/#about", label: "О нас" },
+  { href: "/#contacts", label: "Контакты" },
 ];
 
 export function Header() {
