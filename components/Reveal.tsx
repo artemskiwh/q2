@@ -19,17 +19,43 @@ export function Reveal({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    const reveal = () => setVisible(true);
+
+    // No IntersectionObserver support → just show it.
+    if (typeof IntersectionObserver === "undefined") {
+      reveal();
+      return;
+    }
+
+    // If the element is already in or above the viewport on mount
+    // (above-the-fold content, or a page restored mid-scroll), reveal it
+    // on the next frame so it still animates in — the observer's initial
+    // callback for already-visible elements isn't always delivered.
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      const raf = requestAnimationFrame(reveal);
+      return () => cancelAnimationFrame(raf);
+    }
+
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setVisible(true);
+          reveal();
           io.disconnect();
         }
       },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+      { threshold: 0.01, rootMargin: "0px 0px -8% 0px" },
     );
     io.observe(el);
-    return () => io.disconnect();
+
+    // Safety net: if the observer never fires for any reason, don't leave
+    // content stuck invisible.
+    const fallback = window.setTimeout(reveal, 2500);
+    return () => {
+      io.disconnect();
+      window.clearTimeout(fallback);
+    };
   }, []);
 
   const Comp = Tag as any;

@@ -370,7 +370,7 @@ button:focus {
   width: max-content;
   gap: 1.25rem;
   padding: 0 0.625rem;
-  animation: gallery-scroll 55s linear infinite;
+  animation: gallery-scroll 42s linear infinite;
 }
 .gallery-strip:hover .gallery-track {
   animation-play-state: paused;
