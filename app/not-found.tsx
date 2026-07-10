@@ -2,13 +2,19 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="container-page grid place-items-center py-24 text-center">
-      <span className="text-7xl font-black text-brand">404</span>
-      <h1 className="mt-3 text-2xl font-bold">Страница не найдена</h1>
-      <p className="mt-2 text-sm text-muted">Возможно, ссылка устарела или товар снят с продажи.</p>
-      <Link href="/" className="btn-primary mt-6 w-fit">
-        На главную
-      </Link>
+    <div className="container-page grid min-h-[70vh] place-items-center py-24 text-center">
+      <div>
+        <span className="serif-thin text-7xl text-white">404</span>
+        <h1 className="section-title mt-6 !text-3xl">Страница не найдена</h1>
+        <p className="section-sub mx-auto mt-4 max-w-sm">
+          Возможно, ссылка устарела. Вернитесь на главную и забронируйте вечер в ICON.
+        </p>
+        <div className="mt-8 flex justify-center">
+          <Link href="/" className="btn-white">
+            На главную
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,31 +1,36 @@
 import Link from "next/link";
 
-export function Logo({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
-  const dim = size === "sm" ? "h-8" : size === "lg" ? "h-12" : "h-10";
-  const text = size === "sm" ? "text-base" : size === "lg" ? "text-2xl" : "text-lg";
+export function Logo({
+  showCity = true,
+  size = "md",
+}: {
+  showCity?: boolean;
+  size?: "sm" | "md";
+}) {
   return (
     <Link
       href="/"
-      className={`group inline-flex items-center gap-2 ${dim}`}
-      aria-label="TYAG Moskva — главная"
+      aria-label="ICON - караоке-ресторан"
+      className="group inline-flex flex-col items-center leading-none"
     >
-      <span className="relative flex h-full aspect-square items-center justify-center rounded-xl bg-gradient-to-br from-brand to-[#a82618] shadow-glow">
-        <svg viewBox="0 0 24 24" className="h-1/2 w-1/2 text-white" fill="none">
-          <path
-            d="M5 4h14M12 4v12M8 16c0 3 2 4 4 4s4-1 4-4"
-            stroke="currentColor"
-            strokeWidth="2.4"
-            strokeLinecap="round"
-          />
-        </svg>
-        <span className="absolute -inset-0.5 rounded-xl bg-brand/30 opacity-0 blur-md transition group-hover:opacity-100" />
+      <span className={`logo-box ${size === "sm" ? "scale-90" : ""}`}>
+        <span className="word">ICON</span>
       </span>
-      <span className={`flex flex-col leading-none ${text}`}>
-        <span className="font-bold tracking-wider">TYAG</span>
-        <span className="text-[0.55em] font-medium uppercase tracking-[0.3em] text-muted">
-          Moskva
+      {showCity && (
+        <span className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.34em] text-white/85">
+          <PinIcon className="h-3 w-3" />
+          Ростов-на-Дону
         </span>
-      </span>
+      )}
     </Link>
+  );
+}
+
+function PinIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z" />
+      <circle cx="12" cy="11" r="2.2" />
+    </svg>
   );
 }
