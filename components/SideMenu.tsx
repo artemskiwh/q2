@@ -46,7 +46,7 @@ export function SideMenu({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4 }}
-          className="fixed inset-0 z-[70] flex flex-col bg-white/95 backdrop-blur-2xl"
+          className="fixed inset-0 z-[70] flex flex-col bg-white"
         >
           {/* header - mirrors the site header */}
           <div className="relative flex h-[110px] shrink-0 items-center justify-between px-4 md:h-[130px] md:px-6">
