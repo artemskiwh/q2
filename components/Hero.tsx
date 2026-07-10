@@ -29,7 +29,7 @@ export function Hero() {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-black to-transparent" />
 
         <div className="animate-fade-in-up absolute inset-x-0 bottom-28 z-10 flex flex-col items-center gap-4 px-6 md:bottom-32">
-          <div className="flex w-full max-w-[460px] flex-col gap-4">
+          <div className="flex w-full max-w-[290px] flex-col gap-4">
             <Link href="/menu/" className="btn-ghost !min-w-0 w-full">
               Открыть меню
             </Link>
