@@ -12,24 +12,24 @@ export function Contacts() {
         <Reveal delay={100}>
           <div className="mx-auto mt-10 max-w-3xl space-y-9 text-center">
             <div>
-              <p className="serif-thin text-lg text-black md:text-xl">Адрес</p>
-              <p className="mt-3 text-[13px] text-black">{RESTAURANT.address}</p>
-              <p className="mt-1 text-[12px] text-black/75">
+              <p className="serif-thin text-lg text-white md:text-xl">Адрес</p>
+              <p className="mt-3 text-[13px] text-white/85">{RESTAURANT.address}</p>
+              <p className="mt-1 text-[12px] text-white/55">
                 {RESTAURANT.district}, {RESTAURANT.city}
               </p>
             </div>
 
             <div>
-              <p className="serif-thin text-lg text-black md:text-xl">График работы</p>
-              <p className="mt-3 text-[13px] text-black">{RESTAURANT.hoursShort}</p>
-              <p className="mt-1 text-[12px] text-black/75">Ежедневно</p>
+              <p className="serif-thin text-lg text-white md:text-xl">График работы</p>
+              <p className="mt-3 text-[13px] text-white/85">{RESTAURANT.hoursShort}</p>
+              <p className="mt-1 text-[12px] text-white/55">Ежедневно</p>
             </div>
 
             <div>
-              <p className="serif-thin text-lg text-black md:text-xl">Номер телефона</p>
+              <p className="serif-thin text-lg text-white md:text-xl">Номер телефона</p>
               <a
                 href={RESTAURANT.phoneHref}
-                className="mt-3 inline-block text-[13px] text-black hover:opacity-70"
+                className="mt-3 inline-block text-[13px] text-white hover:opacity-70"
               >
                 {RESTAURANT.phone}
               </a>

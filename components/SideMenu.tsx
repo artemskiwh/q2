@@ -46,7 +46,7 @@ export function SideMenu({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4 }}
-          className="fixed inset-0 z-[70] flex flex-col bg-white"
+          className="fixed inset-0 z-[70] flex flex-col bg-black/95 backdrop-blur-2xl"
         >
           {/* header - mirrors the site header */}
           <div className="relative flex h-[110px] shrink-0 items-center justify-between px-4 md:h-[130px] md:px-6">
@@ -80,7 +80,7 @@ export function SideMenu({
                       setTimeout(() => document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" }), 260);
                     }
                   }}
-                  className="serif-thin text-4xl leading-none text-black/90 transition-colors hover:text-black md:text-6xl"
+                  className="serif-thin text-4xl leading-none text-white/90 transition-colors hover:text-white md:text-6xl"
                 >
                   {item.label}
                 </motion.a>
@@ -95,13 +95,13 @@ export function SideMenu({
             transition={{ delay: 0.45, duration: 0.5 }}
             className="shrink-0 pb-12 text-center"
           >
-            <a href={RESTAURANT.phoneHref} className="serif-thin block text-2xl text-black md:text-3xl">
+            <a href={RESTAURANT.phoneHref} className="serif-thin block text-2xl text-white md:text-3xl">
               {RESTAURANT.phone}
             </a>
-            <p className="serif mt-3 text-[15px] tracking-wide text-black/85">
+            <p className="serif mt-3 text-[15px] tracking-wide text-white/70">
               {RESTAURANT.address} · {RESTAURANT.city}
             </p>
-            <p className="serif mt-1 text-[15px] tracking-wide text-black/85">
+            <p className="serif mt-1 text-[15px] tracking-wide text-white/70">
               {RESTAURANT.hoursShort}, ежедневно
             </p>
             <button onClick={book} className="btn-white mt-7">

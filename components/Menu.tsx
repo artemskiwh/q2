@@ -12,7 +12,7 @@ export function Menu() {
             "url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1600&q=80')",
         }}
       />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-white/85 to-white" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black via-black/85 to-black" />
 
       <div className="container-page relative">
         <Reveal>
@@ -35,9 +35,9 @@ export function Menu() {
               <Link
                 key={c.href}
                 href={c.href}
-                className="group flex aspect-square w-[150px] items-center justify-center rounded-full border border-black/40 outline-none transition hover:border-black focus:outline-none focus-visible:outline-none sm:w-[180px] md:w-[210px]"
+                className="group flex aspect-square w-[150px] items-center justify-center rounded-full border border-white/45 outline-none transition hover:border-white focus:outline-none focus-visible:outline-none sm:w-[180px] md:w-[210px]"
               >
-                <span className="text-center text-xs font-semibold uppercase tracking-[0.24em] text-black md:text-sm">
+                <span className="text-center text-xs font-semibold uppercase tracking-[0.24em] text-white md:text-sm">
                   {c.label.map((line, i) => (
                     <span key={i}>
                       {line}
