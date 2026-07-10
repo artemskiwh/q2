@@ -13,23 +13,23 @@ export function Contacts() {
           <div className="mx-auto mt-14 max-w-3xl space-y-12 text-center">
             <div>
               <p className="serif-thin text-2xl text-white md:text-3xl">Адрес</p>
-              <p className="mt-4 text-[15px] text-white/80">{RESTAURANT.address}</p>
-              <p className="mt-1 text-[15px] text-white/70">
+              <p className="mt-4 text-[17px] text-white/85">{RESTAURANT.address}</p>
+              <p className="mt-1.5 text-[15px] text-white/60">
                 {RESTAURANT.district}, {RESTAURANT.city}
               </p>
             </div>
 
             <div>
               <p className="serif-thin text-2xl text-white md:text-3xl">График работы</p>
-              <p className="mt-4 text-[15px] text-white/80">{RESTAURANT.hoursShort}</p>
-              <p className="mt-1 text-[15px] text-white/70">Ежедневно</p>
+              <p className="mt-4 text-[17px] text-white/85">{RESTAURANT.hoursShort}</p>
+              <p className="mt-1.5 text-[15px] text-white/60">Ежедневно</p>
             </div>
 
             <div>
               <p className="serif-thin text-2xl text-white md:text-3xl">Номер телефона</p>
               <a
                 href={RESTAURANT.phoneHref}
-                className="mt-4 inline-block text-[15px] text-white hover:opacity-70"
+                className="mt-4 inline-block text-lg text-white hover:opacity-70"
               >
                 {RESTAURANT.phone}
               </a>
@@ -38,7 +38,7 @@ export function Contacts() {
         </Reveal>
       </div>
 
-      {/* Yandex Map — Rostov-on-Don, Sotsialisticheskaya 80 */}
+      {/* Yandex Map - Rostov-on-Don, Sotsialisticheskaya 80 */}
       <Reveal delay={200}>
         <div className="mt-20 h-[440px] w-full grayscale">
           <iframe

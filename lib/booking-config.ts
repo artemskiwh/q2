@@ -26,7 +26,7 @@ export type BookingData = {
 
 export function bookingText(b: BookingData): string {
   const lines = [
-    "🎤 Новая бронь — ICON",
+    "🎤 Новая бронь - ICON",
     `Имя: ${b.name}`,
     `Телефон: +7 ${b.phone}`,
     `Гостей: ${b.guests}`,

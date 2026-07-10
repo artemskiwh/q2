@@ -79,7 +79,7 @@ export function BookingModal({
       return;
     }
 
-    // No bot configured yet — hand off to WhatsApp with the details pre-filled.
+    // No bot configured yet - hand off to WhatsApp with the details pre-filled.
     const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(bookingText(data))}`;
     window.open(url, "_blank", "noopener");
     setSent(true);

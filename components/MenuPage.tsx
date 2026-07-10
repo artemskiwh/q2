@@ -94,7 +94,7 @@ export function MenuPage() {
           <Reveal>
             <h2 className="section-title !text-2xl md:!text-3xl">Готовы отметить вечер?</h2>
             <p className="section-sub mx-auto mt-4 max-w-md">
-              Забронируйте стол за пару минут — администратор перезвонит, чтобы подтвердить.
+              Забронируйте стол за пару минут - администратор перезвонит, чтобы подтвердить.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <button onClick={() => setBooking(true)} className="btn-white">

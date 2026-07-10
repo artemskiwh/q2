@@ -10,7 +10,7 @@ export function Logo({
   return (
     <Link
       href="/"
-      aria-label="ICON — караоке-ресторан"
+      aria-label="ICON - караоке-ресторан"
       className="group inline-flex flex-col items-center leading-none"
     >
       <span className={`logo-box ${size === "sm" ? "scale-90" : ""}`}>

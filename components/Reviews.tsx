@@ -39,7 +39,7 @@ export function Reviews() {
               <Stars className="mt-2 justify-center" />
             </div>
             <div className="h-16 w-px bg-white/25" />
-            <div className="text-sm text-white/70">
+            <div className="text-[15px] text-white/75">
               <p className="text-white">{RESTAURANT.ratingCount} оценок</p>
               <p className="mt-1">{RESTAURANT.reviewsCount} отзыва</p>
               <a

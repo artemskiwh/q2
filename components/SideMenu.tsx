@@ -48,7 +48,7 @@ export function SideMenu({
           transition={{ duration: 0.4 }}
           className="fixed inset-0 z-[70] flex flex-col bg-black/95 backdrop-blur-2xl"
         >
-          {/* header — mirrors the site header */}
+          {/* header - mirrors the site header */}
           <div className="relative flex h-[110px] shrink-0 items-center justify-between px-4 md:h-[130px] md:px-6">
             <span className="corner-frame pointer-events-none h-11 w-11 opacity-0" aria-hidden />
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
