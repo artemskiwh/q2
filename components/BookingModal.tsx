@@ -117,7 +117,7 @@ export function BookingModal({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="relative max-h-[92vh] w-[min(560px,100%)] overflow-y-auto border border-black/15 bg-white p-6 md:p-10 shadow-2xl"
+            className="relative max-h-[92vh] w-[min(560px,100%)] overflow-y-auto border border-black/20 bg-white p-6 md:p-10"
           >
             <button
               aria-label="Закрыть"

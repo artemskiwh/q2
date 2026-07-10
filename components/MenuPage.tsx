@@ -102,7 +102,7 @@ function DrinkGroup({ group }: { group: (typeof BAR)[number] }) {
           {group.title}
         </h3>
         {group.note && (
-          <span className="text-[10px] uppercase tracking-[0.2em] text-black/45">
+          <span className="text-[10px] uppercase tracking-[0.2em] text-black/65">
             {group.note}
           </span>
         )}
@@ -110,14 +110,14 @@ function DrinkGroup({ group }: { group: (typeof BAR)[number] }) {
       <ul className="space-y-2.5">
         {group.items.map((d) => (
           <li key={d.name} className="flex items-baseline gap-2 text-sm">
-            <span className="text-black/90">{d.name}</span>
+            <span className="text-black">{d.name}</span>
             <span className="mx-1 flex-1 translate-y-[-3px] border-b border-dotted border-black/25" />
             <span className="whitespace-nowrap font-medium text-black">
               {formatPrice(d.price)}
               {d.price2 ? (
-                <span className="text-black/45"> / {formatPrice(d.price2)}</span>
+                <span className="text-black/65"> / {formatPrice(d.price2)}</span>
               ) : null}
-              <span className="text-black/45"> ₽</span>
+              <span className="text-black/65"> ₽</span>
             </span>
           </li>
         ))}

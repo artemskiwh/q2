@@ -41,9 +41,9 @@ export function Hero() {
 
         {/* Bottom address strip */}
         <div className="absolute inset-x-0 bottom-6 z-10 px-4 text-center">
-          <p className="text-[11px] text-black/75 md:text-xs">
+          <p className="text-[11px] text-black/90 md:text-xs">
             {RESTAURANT.address}
-            <span className="mx-3 text-black/40">|</span>
+            <span className="mx-3 text-black/55">|</span>
             {RESTAURANT.district}, {RESTAURANT.city}
           </p>
         </div>

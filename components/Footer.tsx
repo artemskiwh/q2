@@ -8,7 +8,7 @@ export function Footer() {
           <Logo showCity />
         </div>
 
-        <ul className="mx-auto mt-10 space-y-3 text-sm text-black/60">
+        <ul className="mx-auto mt-10 space-y-3 text-sm text-black/80">
           <li>
             <a href="#" className="hover:text-black">Политика конфиденциальности</a>
           </li>
@@ -17,7 +17,7 @@ export function Footer() {
           </li>
         </ul>
 
-        <p className="mt-10 text-xs text-black/45">
+        <p className="mt-10 text-xs text-black/65">
           © {new Date().getFullYear()} ICON. Все права защищены.
         </p>
       </div>

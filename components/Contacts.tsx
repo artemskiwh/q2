@@ -13,16 +13,16 @@ export function Contacts() {
           <div className="mx-auto mt-10 max-w-3xl space-y-9 text-center">
             <div>
               <p className="serif-thin text-lg text-black md:text-xl">Адрес</p>
-              <p className="mt-3 text-[13px] text-black/80">{RESTAURANT.address}</p>
-              <p className="mt-1 text-[12px] text-black/55">
+              <p className="mt-3 text-[13px] text-black">{RESTAURANT.address}</p>
+              <p className="mt-1 text-[12px] text-black/75">
                 {RESTAURANT.district}, {RESTAURANT.city}
               </p>
             </div>
 
             <div>
               <p className="serif-thin text-lg text-black md:text-xl">График работы</p>
-              <p className="mt-3 text-[13px] text-black/80">{RESTAURANT.hoursShort}</p>
-              <p className="mt-1 text-[12px] text-black/55">Ежедневно</p>
+              <p className="mt-3 text-[13px] text-black">{RESTAURANT.hoursShort}</p>
+              <p className="mt-1 text-[12px] text-black/75">Ежедневно</p>
             </div>
 
             <div>

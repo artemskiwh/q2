@@ -21,7 +21,7 @@ export function DishCard({ dish }: { dish: Dish }) {
       <div className="dish-square relative mb-6 aspect-square w-full overflow-hidden rounded-2xl ring-1 ring-black/10">
         {failed ? (
           <div className="plate-fallback flex h-full w-full items-center justify-center">
-            <span className="serif-thin text-2xl tracking-[0.3em] text-black/40">ICON</span>
+            <span className="serif-thin text-2xl tracking-[0.3em] text-black/60">ICON</span>
           </div>
         ) : (
           <img
@@ -36,12 +36,12 @@ export function DishCard({ dish }: { dish: Dish }) {
 
       <h3 className="serif-thin text-[17px] leading-snug text-black">{dish.name}</h3>
       {dish.desc && (
-        <p className="mt-2 max-w-[26ch] text-xs leading-relaxed text-black/55">{dish.desc}</p>
+        <p className="mt-2 max-w-[26ch] text-xs leading-relaxed text-black/75">{dish.desc}</p>
       )}
 
       <div className="mt-3 flex items-baseline gap-2">
         <span className="serif-thin text-2xl text-black">{formatPrice(dish.price)}&nbsp;₽</span>
-        {dish.weight && <span className="text-xs text-black/45">/ {dish.weight}</span>}
+        {dish.weight && <span className="text-xs text-black/65">/ {dish.weight}</span>}
       </div>
     </article>
   );
