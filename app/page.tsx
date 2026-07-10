@@ -12,6 +12,7 @@ export default function HomePage() {
       <Hero />
       <Divider />
       <About />
+      <Divider />
       <Gallery />
       <Divider />
       <Menu />
