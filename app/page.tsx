@@ -1,5 +1,6 @@
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
+import { Gallery } from "@/components/Gallery";
 import { Menu } from "@/components/Menu";
 import { Reviews } from "@/components/Reviews";
 import { Contacts } from "@/components/Contacts";
@@ -11,6 +12,7 @@ export default function HomePage() {
       <Hero />
       <Divider />
       <About />
+      <Gallery />
       <Divider />
       <Menu />
       <Divider />

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { FOOD, BAR, formatPrice } from "@/lib/icon-data";
 import { DishCard } from "./DishCard";
 import { Reveal } from "./Reveal";
@@ -88,25 +87,7 @@ export function MenuPage() {
         </div>
       </section>
 
-      {/* Booking CTA */}
-      <section className="pb-24 pt-4 md:pb-32">
-        <div className="container-page text-center">
-          <Reveal>
-            <h2 className="section-title !text-2xl md:!text-3xl">Готовы отметить вечер?</h2>
-            <p className="section-sub mx-auto mt-4 max-w-md">
-              Забронируйте стол за пару минут - администратор перезвонит, чтобы подтвердить.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <button onClick={() => setBooking(true)} className="btn-white">
-                Забронировать
-              </button>
-              <Link href="/" className="btn-ghost">
-                На главную
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <div className="pb-24 md:pb-32" />
 
       <BookingModal open={booking} onClose={() => setBooking(false)} />
     </>
