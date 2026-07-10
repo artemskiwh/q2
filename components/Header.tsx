@@ -26,9 +26,7 @@ export function Header() {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "border-b border-[#1a1613]/10 bg-[#f5f2ec]/85 backdrop-blur-md"
-            : "bg-transparent"
+          scrolled ? "bg-black/70 backdrop-blur-md" : "bg-transparent"
         }`}
       >
         <div className="relative flex h-[110px] items-center justify-between px-4 md:h-[130px] md:px-6">

@@ -17,12 +17,12 @@ export function DishCard({ dish }: { dish: Dish }) {
   const src = withBasePath(`/dishes/${dish.img}.webp`);
 
   return (
-    <article className="group flex items-center gap-4 border-b border-[#1a1613]/10 py-4">
+    <article className="group flex items-center gap-4 border-b border-white/10 py-4">
       {/* thumbnail */}
       <div className="relative h-[68px] w-[68px] shrink-0 overflow-hidden rounded-full">
         {(!loaded || failed) && (
           <div className="plate-fallback absolute inset-0 flex items-center justify-center rounded-full">
-            <CutleryIcon className="h-6 w-6 text-[#1a1613]/25" />
+            <CutleryIcon className="h-6 w-6 text-white/25" />
           </div>
         )}
         {!failed && (
@@ -42,14 +42,14 @@ export function DishCard({ dish }: { dish: Dish }) {
       {/* text */}
       <div className="min-w-0 flex-1">
         <div className="flex items-baseline gap-2">
-          <h3 className="text-[15px] font-medium leading-snug text-[#1a1613]">{dish.name}</h3>
-          <span className="mx-1 hidden flex-1 translate-y-[-3px] border-b border-dotted border-[#1a1613]/20 sm:block" />
-          <span className="ml-auto whitespace-nowrap text-[15px] text-[#1a1613] sm:ml-0">
+          <h3 className="text-[15px] font-medium leading-snug text-white">{dish.name}</h3>
+          <span className="mx-1 hidden flex-1 translate-y-[-3px] border-b border-dotted border-white/20 sm:block" />
+          <span className="ml-auto whitespace-nowrap text-[15px] text-white sm:ml-0">
             {formatPrice(dish.price)}&nbsp;₽
           </span>
         </div>
         {(dish.weight || dish.desc) && (
-          <p className="mt-1 text-xs leading-relaxed text-[#1a1613]/50">
+          <p className="mt-1 text-xs leading-relaxed text-white/50">
             {dish.weight}
             {dish.weight && dish.desc ? " · " : ""}
             {dish.desc}

@@ -17,7 +17,7 @@ export function Logo({
         <span className="word">ICON</span>
       </span>
       {showCity && (
-        <span className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.34em] text-[#1a1613]/85">
+        <span className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.34em] text-white/85">
           <PinIcon className="h-3 w-3" />
           Ростов-на-Дону
         </span>

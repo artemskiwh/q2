@@ -115,13 +115,13 @@ export function MenuPage() {
 
 function DrinkGroup({ group }: { group: (typeof BAR)[number] }) {
   return (
-    <div className="border border-[#1a1613]/15 bg-[#1a1613]/[0.02] px-6 py-7">
-      <div className="mb-5 flex items-baseline justify-between gap-3 border-b border-[#1a1613]/15 pb-3">
-        <h3 className="serif-thin text-lg tracking-[0.14em] text-[#1a1613] md:text-xl">
+    <div className="border border-white/15 bg-white/[0.02] px-6 py-7">
+      <div className="mb-5 flex items-baseline justify-between gap-3 border-b border-white/15 pb-3">
+        <h3 className="serif-thin text-lg tracking-[0.14em] text-white md:text-xl">
           {group.title}
         </h3>
         {group.note && (
-          <span className="text-[10px] uppercase tracking-[0.2em] text-[#1a1613]/45">
+          <span className="text-[10px] uppercase tracking-[0.2em] text-white/45">
             {group.note}
           </span>
         )}
@@ -129,14 +129,14 @@ function DrinkGroup({ group }: { group: (typeof BAR)[number] }) {
       <ul className="space-y-2.5">
         {group.items.map((d) => (
           <li key={d.name} className="flex items-baseline gap-2 text-sm">
-            <span className="text-[#1a1613]/90">{d.name}</span>
-            <span className="mx-1 flex-1 translate-y-[-3px] border-b border-dotted border-[#1a1613]/25" />
-            <span className="whitespace-nowrap font-medium text-[#1a1613]">
+            <span className="text-white/90">{d.name}</span>
+            <span className="mx-1 flex-1 translate-y-[-3px] border-b border-dotted border-white/25" />
+            <span className="whitespace-nowrap font-medium text-white">
               {formatPrice(d.price)}
               {d.price2 ? (
-                <span className="text-[#1a1613]/45"> / {formatPrice(d.price2)}</span>
+                <span className="text-white/45"> / {formatPrice(d.price2)}</span>
               ) : null}
-              <span className="text-[#1a1613]/45"> ₽</span>
+              <span className="text-white/45"> ₽</span>
             </span>
           </li>
         ))}

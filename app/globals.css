@@ -3,26 +3,24 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
-  --paper: #f5f2ec;
-  --ink: #1a1613;
+  color-scheme: dark;
 }
 
 html,
 body {
-  background: #f5f2ec;
-  color: #1a1613;
+  background: #000;
+  color: #ece9e3;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 * {
-  border-color: rgba(26, 22, 19, 0.14);
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
 ::selection {
-  background: #1a1613;
-  color: #f5f2ec;
+  background: rgba(255, 255, 255, 0.85);
+  color: #000;
 }
 
 html {
@@ -30,6 +28,7 @@ html {
   scroll-padding-top: 96px;
   -webkit-tap-highlight-color: transparent;
 }
+
 a,
 button {
   -webkit-tap-highlight-color: transparent;
@@ -79,11 +78,11 @@ button:focus {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   font-size: clamp(2.2rem, 5vw, 3.6rem);
-  color: #1a1613;
+  color: #fff;
   text-align: center;
 }
 .section-sub {
-  color: rgba(26, 22, 19, 0.58);
+  color: rgba(255, 255, 255, 0.75);
   text-align: center;
   font-size: clamp(1.05rem, 2.2vw, 1.2rem);
   line-height: 1.6;
@@ -91,7 +90,7 @@ button:focus {
   font-weight: 300;
 }
 
-/* ——— Corner-bracket frame (decorative spacer only) ——— */
+/* ——— Corner-bracket frame (used around logo, icons) ——— */
 .corner-frame {
   position: relative;
 }
@@ -103,7 +102,7 @@ button:focus {
   position: absolute;
   width: 12px;
   height: 12px;
-  border: 1px solid rgba(26, 22, 19, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.9);
 }
 .corner-frame::before {
   top: 0;
@@ -136,8 +135,8 @@ button:focus {
   flex-direction: column;
   align-items: center;
   padding: 0.55rem 1.4rem 0.5rem;
-  border: 1px solid #1a1613;
-  color: #1a1613;
+  border: 1px solid #fff;
+  color: #fff;
   line-height: 1;
 }
 .logo-box .word {
@@ -145,7 +144,7 @@ button:focus {
   font-weight: 300;
   letter-spacing: 0.45em;
   font-size: 1.35rem;
-  padding-left: 0.45em;
+  padding-left: 0.45em; /* balance the tracked letter-spacing */
 }
 @media (min-width: 768px) {
   .logo-box {
@@ -161,22 +160,20 @@ button:focus {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #1a1613;
-  color: #f5f2ec;
+  background: #fff;
+  color: #111;
   padding: 1rem 2.2rem;
   min-width: 260px;
-  border: 1px solid #1a1613;
   font-family: var(--font-sans);
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   font-size: 0.86rem;
-  transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+  transition: filter 0.2s ease, transform 0.2s ease;
   white-space: nowrap;
 }
 .btn-white:hover {
-  background: transparent;
-  color: #1a1613;
+  filter: brightness(0.92);
   transform: translateY(-1px);
 }
 
@@ -185,24 +182,72 @@ button:focus {
   align-items: center;
   justify-content: center;
   background: transparent;
-  color: #1a1613;
+  color: #fff;
   padding: 1rem 2.2rem;
   min-width: 260px;
-  border: 1px solid #1a1613;
+  border: 1px solid #fff;
   font-family: var(--font-sans);
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   font-size: 0.86rem;
-  transition: background 0.25s ease, color 0.25s ease;
+  transition: background 0.2s ease, color 0.2s ease;
   white-space: nowrap;
 }
 .btn-ghost:hover {
-  background: #1a1613;
-  color: #f5f2ec;
+  background: rgba(255, 255, 255, 0.08);
 }
 
-/* ——— Icon button (plain, no square frame) ——— */
+/* ——— Icon frame (call, menu buttons in header) ——— */
+.icon-frame {
+  position: relative;
+  width: 62px;
+  height: 62px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.icon-frame::before,
+.icon-frame::after,
+.icon-frame .cf-tr,
+.icon-frame .cf-bl {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #fff;
+  pointer-events: none;
+}
+.icon-frame::before {
+  top: 0;
+  left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+.icon-frame::after {
+  bottom: 0;
+  right: 0;
+  border-left: 0;
+  border-top: 0;
+}
+.icon-frame .cf-tr {
+  top: 0;
+  right: 0;
+  border-left: 0;
+  border-bottom: 0;
+}
+.icon-frame .cf-bl {
+  bottom: 0;
+  left: 0;
+  border-right: 0;
+  border-top: 0;
+}
+.icon-frame:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ——— Plain icon button (no square frame) ——— */
 .icon-btn {
   position: relative;
   width: 48px;
@@ -210,24 +255,24 @@ button:focus {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #1a1613;
+  color: #fff;
   border-radius: 999px;
   transition: background 0.2s ease;
 }
 .icon-btn:hover {
-  background: rgba(26, 22, 19, 0.07);
+  background: rgba(255, 255, 255, 0.08);
 }
 
-/* ——— Underlined input (form) ——— */
+/* ——— Underlined input (LETH-style form) ——— */
 .uf-field {
   display: block;
   position: relative;
   padding-top: 1.2rem;
   padding-bottom: 0.6rem;
-  border-bottom: 1px solid rgba(26, 22, 19, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
 }
 .uf-field:focus-within {
-  border-bottom-color: #1a1613;
+  border-bottom-color: #fff;
 }
 .uf-label {
   position: absolute;
@@ -237,21 +282,21 @@ button:focus {
   font-weight: 300;
   letter-spacing: 0.08em;
   font-size: 0.9rem;
-  color: rgba(26, 22, 19, 0.55);
+  color: rgba(255, 255, 255, 0.6);
   transition: color 0.2s ease;
 }
 .uf-input {
   background: transparent;
   border: 0;
   outline: 0;
-  color: #1a1613;
+  color: #fff;
   width: 100%;
   padding: 0;
   font-size: 1rem;
   font-family: var(--font-sans);
 }
 .uf-input::placeholder {
-  color: rgba(26, 22, 19, 0.35);
+  color: rgba(255, 255, 255, 0.35);
 }
 
 /* ——— Reveal on scroll ——— */
@@ -265,15 +310,40 @@ button:focus {
   transform: translateY(0);
 }
 
-/* ——— Dish thumbnail placeholder ——— */
+/* ——— Dish 3D card (kept for menu page) ——— */
+.dish-plate {
+  position: relative;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+.dish-card:hover .dish-plate {
+  transform: translateY(-12px) rotate(-3deg) scale(1.05);
+}
+.dish-img {
+  filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.8));
+}
+.dish-halo::before {
+  content: "";
+  position: absolute;
+  inset: 8% 8% 6% 8%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.04) 45%,
+    transparent 70%
+  );
+  filter: blur(6px);
+  z-index: 0;
+}
 .plate-fallback {
-  background: radial-gradient(circle at 38% 30%, #ffffff 0%, #efece4 55%, #e4dfd4 100%);
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8),
-    inset 0 -10px 22px rgba(26, 22, 19, 0.06);
-  border: 1px solid rgba(26, 22, 19, 0.12);
+  background: radial-gradient(circle at 38% 32%, #262626 0%, #131313 55%, #0a0a0a 100%);
+  box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.06),
+    inset 0 -18px 40px rgba(0, 0, 0, 0.6), 0 26px 40px -18px rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* ——— Marquee ——— */
+/* ——— Marquee (for reviews or any horizontal scroll) ——— */
 .marquee {
   display: flex;
   width: max-content;

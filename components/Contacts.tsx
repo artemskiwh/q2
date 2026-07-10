@@ -12,24 +12,24 @@ export function Contacts() {
         <Reveal delay={100}>
           <div className="mx-auto mt-14 max-w-3xl space-y-12 text-center">
             <div>
-              <p className="serif-thin text-2xl text-[#1a1613] md:text-3xl">Адрес</p>
-              <p className="mt-4 text-[17px] text-[#1a1613]/85">{RESTAURANT.address}</p>
-              <p className="mt-1.5 text-[15px] text-[#1a1613]/60">
+              <p className="serif-thin text-2xl text-white md:text-3xl">Адрес</p>
+              <p className="mt-4 text-[17px] text-white/85">{RESTAURANT.address}</p>
+              <p className="mt-1.5 text-[15px] text-white/60">
                 {RESTAURANT.district}, {RESTAURANT.city}
               </p>
             </div>
 
             <div>
-              <p className="serif-thin text-2xl text-[#1a1613] md:text-3xl">График работы</p>
-              <p className="mt-4 text-[17px] text-[#1a1613]/85">{RESTAURANT.hoursShort}</p>
-              <p className="mt-1.5 text-[15px] text-[#1a1613]/60">Ежедневно</p>
+              <p className="serif-thin text-2xl text-white md:text-3xl">График работы</p>
+              <p className="mt-4 text-[17px] text-white/85">{RESTAURANT.hoursShort}</p>
+              <p className="mt-1.5 text-[15px] text-white/60">Ежедневно</p>
             </div>
 
             <div>
-              <p className="serif-thin text-2xl text-[#1a1613] md:text-3xl">Номер телефона</p>
+              <p className="serif-thin text-2xl text-white md:text-3xl">Номер телефона</p>
               <a
                 href={RESTAURANT.phoneHref}
-                className="mt-4 inline-block text-lg text-[#1a1613] hover:opacity-70"
+                className="mt-4 inline-block text-lg text-white hover:opacity-70"
               >
                 {RESTAURANT.phone}
               </a>
