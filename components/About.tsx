@@ -9,7 +9,7 @@ export function About() {
         </Reveal>
 
         <Reveal delay={100}>
-          <div className="serif mx-auto mt-8 max-w-lg space-y-4 text-[13px] leading-[1.75] text-white/75 md:text-[14px]">
+          <div className="serif mx-auto mt-8 max-w-lg space-y-4 text-[13px] leading-[1.75] text-black/70 md:text-[14px]">
             <p>
               ICON - это караоке-ресторан нового формата в самом центре Ростова-на-Дону. Место, где встречаются
               безупречная акустика, авторская кухня и атмосфера, ради которой хочется возвращаться. Вечер начинается
