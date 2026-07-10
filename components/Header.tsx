@@ -26,14 +26,14 @@ export function Header() {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-          scrolled ? "bg-black/70 backdrop-blur-md" : "bg-transparent"
+          scrolled
+            ? "border-b border-[#1a1613]/10 bg-[#f5f2ec]/85 backdrop-blur-md"
+            : "bg-transparent"
         }`}
       >
         <div className="relative flex h-[110px] items-center justify-between px-4 md:h-[130px] md:px-6">
           {/* left spacer keeps the logo centred (call button removed) */}
-          <span className="icon-frame pointer-events-none opacity-0" aria-hidden>
-            <BurgerIcon className="h-5 w-5" />
-          </span>
+          <span className="h-12 w-12" aria-hidden />
 
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <Logo />
@@ -42,10 +42,8 @@ export function Header() {
           <button
             aria-label="Открыть меню"
             onClick={() => setOpen(true)}
-            className="icon-frame"
+            className="icon-btn"
           >
-            <span className="cf-tr" />
-            <span className="cf-bl" />
             <BurgerIcon className="h-5 w-5" />
           </button>
         </div>

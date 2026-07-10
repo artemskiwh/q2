@@ -105,7 +105,7 @@ export function BookingModal({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[70] bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[70] bg-[#1a1613]/45 backdrop-blur-sm"
             onClick={() => {
               onClose();
               setTimeout(reset, 300);
@@ -117,7 +117,7 @@ export function BookingModal({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="relative max-h-[92vh] w-[min(560px,100%)] overflow-y-auto border border-white/25 bg-black p-6 md:p-10"
+            className="relative max-h-[92vh] w-[min(560px,100%)] overflow-y-auto border border-[#1a1613]/15 bg-white p-6 shadow-[0_30px_80px_-24px_rgba(26,22,19,0.4)] md:p-10"
           >
             <button
               aria-label="Закрыть"
@@ -125,11 +125,8 @@ export function BookingModal({
                 onClose();
                 setTimeout(reset, 300);
               }}
-              className="icon-frame absolute right-4 top-4"
-              style={{ width: 44, height: 44 }}
+              className="icon-btn absolute right-3 top-3"
             >
-              <span className="cf-tr" />
-              <span className="cf-bl" />
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="h-4 w-4">
                 <path d="M6 6l12 12M6 18 18 6" />
               </svg>
@@ -138,7 +135,7 @@ export function BookingModal({
             {sent ? (
               <div className="pt-10 pb-4 text-center">
                 <h3 className="section-title !text-2xl md:!text-3xl">Заявка отправлена</h3>
-                <p className="section-sub mt-4 text-white/70">
+                <p className="section-sub mt-4 text-[#1a1613]/70">
                   Спасибо, {name || "гость"}! Мы свяжемся с вами в ближайшее время,
                   чтобы подтвердить бронь.
                 </p>
@@ -173,7 +170,7 @@ export function BookingModal({
                     <div className="flex items-center gap-2 pb-[2px]">
                       <RuFlag />
                       <ChevIcon />
-                      <span className="text-white">+7</span>
+                      <span className="text-[#1a1613]">+7</span>
                     </div>
                     <input
                       required
@@ -206,12 +203,12 @@ export function BookingModal({
                       value={date}
                       onChange={(e) => setDate(e.target.value)}
                       className="uf-input flex-1"
-                      style={{ marginTop: "0.4rem", colorScheme: "dark" }}
+                      style={{ marginTop: "0.4rem", colorScheme: "light" }}
                     />
-                    <CalendarIcon className="mb-1 h-5 w-5 shrink-0 text-white/80" />
+                    <CalendarIcon className="mb-1 h-5 w-5 shrink-0 text-[#1a1613]/80" />
                   </label>
 
-                  <p className="pt-2 text-sm text-white/60">
+                  <p className="pt-2 text-sm text-[#1a1613]/60">
                     Ограничение во времени за столиком составляет два (2) часа
                   </p>
 
@@ -224,9 +221,9 @@ export function BookingModal({
                       className="uf-input flex-1 cursor-pointer appearance-none bg-transparent"
                       style={{ marginTop: "0.4rem" }}
                     >
-                      <option value="" disabled className="bg-black">Выберите время</option>
+                      <option value="" disabled className="bg-white">Выберите время</option>
                       {TIME_SLOTS.map((t) => (
-                        <option key={t} value={t} className="bg-black">{t}</option>
+                        <option key={t} value={t} className="bg-white">{t}</option>
                       ))}
                     </select>
                     <ChevIcon className="mb-1" />
@@ -241,9 +238,9 @@ export function BookingModal({
                       className="uf-input flex-1 cursor-pointer appearance-none bg-transparent"
                       style={{ marginTop: "0.4rem" }}
                     >
-                      <option value="" disabled className="bg-black">Выберите способ</option>
+                      <option value="" disabled className="bg-white">Выберите способ</option>
                       {CONTACT_METHODS.map((m) => (
-                        <option key={m.value} value={m.value} className="bg-black">
+                        <option key={m.value} value={m.value} className="bg-white">
                           {m.label}
                         </option>
                       ))}
@@ -261,7 +258,7 @@ export function BookingModal({
                 </button>
 
                 {failed && (
-                  <div className="mt-4 border border-white/25 p-4 text-center text-xs text-white/70">
+                  <div className="mt-4 border border-[#1a1613]/25 p-4 text-center text-xs text-[#1a1613]/70">
                     Не удалось отправить заявку автоматически. Напишите нам напрямую:
                     <div className="mt-3 flex flex-col gap-2 sm:flex-row">
                       <a
@@ -279,9 +276,9 @@ export function BookingModal({
                   </div>
                 )}
 
-                <p className="mt-4 text-center text-xs text-white/50">
+                <p className="mt-4 text-center text-xs text-[#1a1613]/50">
                   Или позвоните нам:{" "}
-                  <a href={RESTAURANT.phoneHref} className="text-white hover:underline">
+                  <a href={RESTAURANT.phoneHref} className="text-[#1a1613] hover:underline">
                     {RESTAURANT.phone}
                   </a>
                 </p>
@@ -297,7 +294,7 @@ export function BookingModal({
 
 function RuFlag() {
   return (
-    <span className="inline-flex h-4 w-6 flex-col overflow-hidden border border-white/30">
+    <span className="inline-flex h-4 w-6 flex-col overflow-hidden border border-[#1a1613]/30">
       <span className="flex-1 bg-white" />
       <span className="flex-1 bg-[#0039A6]" />
       <span className="flex-1 bg-[#D52B1E]" />
@@ -307,7 +304,7 @@ function RuFlag() {
 
 function ChevIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={`h-4 w-4 text-white/80 ${props.className ?? ""}`}>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={`h-4 w-4 text-[#1a1613]/80 ${props.className ?? ""}`}>
       <path d="M6 9l6 6 6-6" />
     </svg>
   );
