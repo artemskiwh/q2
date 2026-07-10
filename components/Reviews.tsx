@@ -5,9 +5,144 @@ import { AnimatePresence, motion } from "framer-motion";
 import { REVIEWS, RESTAURANT } from "@/lib/icon-data";
 import { Reveal } from "./Reveal";
 
+const ORANGE = "#ff9500";
+const AVATAR_COLORS = [
+  "#4c8bf5", "#28a745", "#ff8a00", "#9b51e0",
+  "#e5484d", "#0fa0a0", "#e8a100", "#d6409f",
+];
+// Rating distribution for 5/4/3/2/1 stars (percent of the bar filled)
+const DIST = [93, 4, 1, 1, 1];
+// Author review counts (as shown on 2GIS)
+const COUNTS = ["1 отзыв", "1 отзыв", "1 отзыв", "1 отзыв", "1 отзыв", "2 отзыва", "1 отзыв", "1 отзыв"];
+const CHIPS = ["Музыка", "Персонал", "Караоке", "Еда", "Сервис"];
+
 function initials(name: string) {
-  const parts = name.trim().split(/\s+/);
-  return (parts[0]?.[0] ?? "") + (parts[1]?.[0] ?? "");
+  const p = name.trim().split(/\s+/);
+  return ((p[0]?.[0] ?? "") + (p[1]?.[0] ?? "")).toUpperCase();
+}
+
+function Stars({ n = 5, size = 15 }: { n?: number; size?: number }) {
+  return (
+    <span className="inline-flex gap-[2px]" style={{ color: ORANGE }}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <svg key={i} width={size} height={size} viewBox="0 0 24 24" fill={i < n ? "currentColor" : "#dcdcdc"}>
+          <path d="M12 2l2.9 6.9 7.5.6-5.7 4.9 1.8 7.4L12 17.9 5.5 21.8l1.8-7.4L1.6 9.5l7.5-.6L12 2z" />
+        </svg>
+      ))}
+    </span>
+  );
+}
+
+function Avatar({ name, i }: { name: string; i: number }) {
+  return (
+    <div
+      className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-sm font-semibold text-white"
+      style={{ background: AVATAR_COLORS[i % AVATAR_COLORS.length] }}
+    >
+      {initials(name)}
+    </div>
+  );
+}
+
+function RatingSummary() {
+  return (
+    <div className="flex items-center gap-6 px-5 py-5">
+      <div className="shrink-0 text-center">
+        <div className="text-[44px] font-semibold leading-none text-[#1a1a1a]">{RESTAURANT.rating}</div>
+        <div className="mt-1.5 flex justify-center">
+          <Stars n={5} size={14} />
+        </div>
+        <div className="mt-1.5 text-xs text-[#8a8a8a]">{RESTAURANT.ratingCount} оценок</div>
+      </div>
+      <div className="flex-1 space-y-1.5">
+        {DIST.map((pct, idx) => (
+          <div key={idx} className="flex items-center gap-2">
+            <span className="w-3 text-right text-[11px] text-[#8a8a8a]">{5 - idx}</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill={ORANGE}>
+              <path d="M12 2l2.9 6.9 7.5.6-5.7 4.9 1.8 7.4L12 17.9 5.5 21.8l1.8-7.4L1.6 9.5l7.5-.6L12 2z" />
+            </svg>
+            <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-[#efefef]">
+              <span className="block h-full rounded-full" style={{ width: `${pct}%`, background: ORANGE }} />
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Chips() {
+  return (
+    <div className="flex gap-2 overflow-x-auto px-5 pb-4 scrollbar-hide">
+      {CHIPS.map((c) => (
+        <span key={c} className="whitespace-nowrap rounded-full bg-[#f2f2f2] px-3.5 py-1.5 text-[13px] text-[#3a3a3a]">
+          {c}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function SortRow() {
+  return (
+    <div className="flex items-center justify-between px-5 py-3">
+      <span className="text-[15px] font-semibold text-[#1a1a1a]">{RESTAURANT.reviewsCount} отзыва</span>
+      <span className="inline-flex items-center gap-1 text-[13px] text-[#8a8a8a]">
+        По новизне
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </span>
+    </div>
+  );
+}
+
+function ReviewItem({ r, i }: { r: (typeof REVIEWS)[number]; i: number }) {
+  const [liked, setLiked] = useState(false);
+  return (
+    <div className="border-t border-[#efefef] px-5 py-4">
+      <div className="flex items-start gap-3">
+        <Avatar name={r.name} i={i} />
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-[15px] font-medium text-[#1a1a1a]">{r.name}</p>
+          <p className="text-xs text-[#a0a0a0]">{COUNTS[i % COUNTS.length]}</p>
+        </div>
+        <span className="text-[#c4c4c4]">···</span>
+      </div>
+      <div className="mt-3 flex items-center gap-3">
+        <Stars n={r.rating} size={15} />
+        <span className="text-[13px] text-[#a0a0a0]">{r.date}</span>
+      </div>
+      <p className="mt-2.5 text-[14px] leading-relaxed text-[#2b2b2b]">{r.text}</p>
+      <button
+        onClick={() => setLiked((v) => !v)}
+        className="mt-3 inline-flex items-center gap-2 rounded-md border border-[#e6e6e6] px-3 py-1.5 text-[13px] text-[#6b6b6b] transition-colors hover:bg-[#f7f7f7]"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill={liked ? "#e5484d" : "none"} stroke={liked ? "#e5484d" : "currentColor"} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
+        </svg>
+        Полезно?
+      </button>
+    </div>
+  );
+}
+
+/** White 2GIS-styled reviews panel. `full` renders every review; otherwise a preview. */
+function GisPanel({ full = false }: { full?: boolean }) {
+  const list = full ? REVIEWS.slice(0, 8) : REVIEWS.slice(0, 3);
+  return (
+    <div className="overflow-hidden bg-white text-[#1a1a1a]">
+      <RatingSummary />
+      <Chips />
+      <div className="h-px bg-[#efefef]" />
+      <SortRow />
+      <div>
+        {list.map((r, i) => (
+          <ReviewItem key={r.name + i} r={r} i={i} />
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export function Reviews() {
@@ -33,32 +168,27 @@ export function Reviews() {
         </Reveal>
 
         <Reveal delay={100}>
-          <div className="mx-auto mt-14 flex max-w-2xl items-center justify-center gap-8">
-            <div className="text-center">
-              <div className="serif text-6xl text-white md:text-7xl">{RESTAURANT.rating}</div>
-              <Stars className="mt-2 justify-center" />
-            </div>
-            <div className="h-16 w-px bg-white/25" />
-            <div className="text-[15px] text-white/75">
-              <p className="text-white">{RESTAURANT.ratingCount} оценок</p>
-              <p className="mt-1">{RESTAURANT.reviewsCount} отзыва</p>
-              <a
-                href={RESTAURANT.gis}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-2 inline-block text-white underline underline-offset-4 hover:text-white/70"
-              >
-                Смотреть в 2ГИС →
-              </a>
-            </div>
+          <div className="mx-auto mt-12 max-w-xl overflow-hidden rounded-2xl shadow-[0_20px_60px_-20px_rgba(0,0,0,0.6)]">
+            <GisPanel />
+            <button
+              onClick={() => setOpen(true)}
+              className="block w-full border-t border-[#efefef] bg-white py-4 text-[15px] font-medium text-[#1a6ef5] transition-colors hover:bg-[#f7f7f7]"
+            >
+              Читать все отзывы ({RESTAURANT.reviewsCount})
+            </button>
           </div>
         </Reveal>
 
-        <Reveal delay={160}>
-          <div className="mt-12 flex justify-center">
-            <button onClick={() => setOpen(true)} className="btn-ghost">
-              Читать отзывы
-            </button>
+        <Reveal delay={150}>
+          <div className="mt-6 text-center">
+            <a
+              href={RESTAURANT.gis}
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm uppercase tracking-[0.14em] text-white/60 transition-colors hover:text-white"
+            >
+              Открыть в 2ГИС →
+            </a>
           </div>
         </Reveal>
       </div>
@@ -72,82 +202,47 @@ function ReviewsDrawer({ open, onClose }: { open: boolean; onClose: () => void }
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.4 }}
-          className="fixed inset-0 z-[70] flex flex-col bg-black/95 backdrop-blur-2xl"
-        >
-          {/* header */}
-          <div className="relative flex h-[110px] shrink-0 items-center justify-between px-4 md:h-[130px] md:px-6">
-            <span className="corner-frame pointer-events-none h-11 w-11 opacity-0" aria-hidden />
-            <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
-              <span className="serif-thin text-2xl tracking-[0.14em] text-white md:text-3xl">Отзывы</span>
-              <span className="mt-1 flex items-center gap-2 text-xs text-white/60">
-                <span className="text-white">{RESTAURANT.rating}</span>
-                <Stars />
-                <span>· {RESTAURANT.ratingCount}</span>
-              </span>
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[70] bg-black/70 backdrop-blur-sm"
+            onClick={onClose}
+          />
+          <motion.aside
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "tween", ease: [0.22, 1, 0.36, 1], duration: 0.45 }}
+            className="fixed inset-y-0 right-0 z-[71] flex w-full max-w-md flex-col bg-white"
+          >
+            <div className="flex shrink-0 items-center justify-between border-b border-[#ececec] bg-white px-5 py-4">
+              <span className="text-lg font-semibold text-[#1a1a1a]">Отзывы</span>
+              <button
+                aria-label="Закрыть"
+                onClick={onClose}
+                className="grid h-9 w-9 place-items-center rounded-full text-[#6b6b6b] transition-colors hover:bg-[#f2f2f2]"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+                  <path d="M6 6l12 12M6 18 18 6" />
+                </svg>
+              </button>
             </div>
-            <button aria-label="Закрыть" onClick={onClose} className="icon-frame">
-              <span className="cf-tr" />
-              <span className="cf-bl" />
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" className="h-5 w-5">
-                <path d="M6 6l12 12M6 18 18 6" />
-              </svg>
-            </button>
-          </div>
-
-          {/* scrollable list */}
-          <div className="flex-1 overflow-y-auto">
-            <div className="mx-auto max-w-2xl px-6 pb-16 pt-2 md:px-8">
-              {REVIEWS.slice(0, 8).map((r, i) => (
-                <motion.div
-                  key={r.name + i}
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + i * 0.05, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                  className="border-b border-white/10 py-8"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/40 text-sm text-white">
-                      {initials(r.name)}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="serif-thin truncate text-lg text-white">{r.name}</p>
-                      <p className="text-xs text-white/45">{r.date}</p>
-                    </div>
-                    <Stars className="ml-auto" />
-                  </div>
-                  <p className="mt-4 text-[15px] leading-relaxed text-white/80">{r.text}</p>
-                </motion.div>
-              ))}
-
+            <div className="flex-1 overflow-y-auto">
+              <GisPanel full />
               <a
                 href={RESTAURANT.gis}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-8 block text-center text-sm uppercase tracking-[0.2em] text-white/70 transition-colors hover:text-white"
+                className="block border-t border-[#efefef] py-4 text-center text-[15px] font-medium text-[#1a6ef5] hover:bg-[#f7f7f7]"
               >
                 Все отзывы в 2ГИС →
               </a>
             </div>
-          </div>
-        </motion.div>
+          </motion.aside>
+        </>
       )}
     </AnimatePresence>
-  );
-}
-
-function Stars({ className = "" }: { className?: string }) {
-  return (
-    <div className={`inline-flex gap-[3px] text-white ${className}`}>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <svg key={i} viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
-          <path d="M12 2l2.9 6.9 7.5.6-5.7 4.9 1.8 7.4L12 17.9 5.5 21.8l1.8-7.4L1.6 9.5l7.5-.6L12 2z" />
-        </svg>
-      ))}
-    </div>
   );
 }
