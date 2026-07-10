@@ -36,7 +36,7 @@ export function MenuPage() {
             </p>
           </Reveal>
 
-          <div className="mx-auto mt-12 grid max-w-4xl gap-x-12 md:grid-cols-2">
+          <div className="mx-auto mt-14 grid max-w-5xl grid-cols-2 gap-x-6 gap-y-12 sm:gap-x-10 lg:grid-cols-3">
             {KITCHEN_ITEMS.map((dish) => (
               <DishCard key={dish.name} dish={dish} />
             ))}
