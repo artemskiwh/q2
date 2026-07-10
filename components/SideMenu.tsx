@@ -98,10 +98,12 @@ export function SideMenu({
             <a href={RESTAURANT.phoneHref} className="serif-thin block text-2xl text-white md:text-3xl">
               {RESTAURANT.phone}
             </a>
-            <p className="mt-3 text-sm text-white/60">
+            <p className="serif mt-3 text-[15px] tracking-wide text-white/70">
               {RESTAURANT.address} · {RESTAURANT.city}
             </p>
-            <p className="mt-1 text-sm text-white/60">{RESTAURANT.hoursShort}, ежедневно</p>
+            <p className="serif mt-1 text-[15px] tracking-wide text-white/70">
+              {RESTAURANT.hoursShort}, ежедневно
+            </p>
             <button onClick={book} className="btn-white mt-7">
               Забронировать
             </button>

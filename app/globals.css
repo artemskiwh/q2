@@ -75,18 +75,18 @@ button:focus {
 .section-title {
   font-family: var(--font-display), Georgia, serif;
   font-weight: 300;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-size: clamp(1.45rem, 4vw, 2.2rem);
   color: #fff;
   text-align: center;
 }
 .section-sub {
   font-family: var(--font-display), Georgia, serif;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.7);
   text-align: center;
-  font-size: clamp(1.2rem, 2.4vw, 1.4rem);
-  line-height: 1.55;
+  font-size: clamp(0.92rem, 2vw, 1.05rem);
+  line-height: 1.5;
   letter-spacing: 0.02em;
   font-weight: 300;
   font-style: italic;
