@@ -7,7 +7,6 @@ import clsx from "clsx";
 import { Icon } from "./Icons";
 import { Logo } from "./Logo";
 import { NAV } from "./Header";
-import { restaurant } from "@/lib/restaurant";
 
 /** Выезжающая шторка навигации — одна на все разрешения. */
 export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -144,64 +143,6 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
             );
           })}
         </nav>
-
-        {/* Контакты и кнопка */}
-        <div
-          className={clsx(
-            "mt-auto px-7 pb-8 pt-6 transition-all duration-700 ease-out",
-            open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
-          )}
-          style={{ transitionDelay: open ? "420ms" : "0ms" }}
-        >
-          <a
-            href={`tel:${restaurant.phoneHref}`}
-            className="flex items-center gap-3 text-ink transition-opacity hover:opacity-70"
-          >
-            <Icon.Phone className="h-4 w-4 shrink-0" />
-            <span className="text-[1.15rem] tracking-wide">{restaurant.phoneLabel}</span>
-          </a>
-
-          <a
-            href={restaurant.address.mapUrl}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="mt-3 flex items-start gap-3 text-[0.85rem] leading-relaxed text-ink-dim transition-colors hover:text-ink"
-          >
-            <Icon.Pin className="mt-0.5 h-4 w-4 shrink-0" />
-            <span>
-              {restaurant.address.street}
-              <br />
-              {restaurant.address.city}
-            </span>
-          </a>
-
-          <p className="mt-3 flex items-center gap-3 text-[0.85rem] text-ink-dim">
-            <Icon.Clock className="h-4 w-4 shrink-0" />
-            {restaurant.hours[0].days} {restaurant.hours[0].time}
-          </p>
-
-          <div className="mt-5 flex gap-3">
-            {restaurant.socials.map((s) => {
-              const Cmp = Icon[s.icon];
-              return (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label={s.label}
-                  className="grid h-11 w-11 place-items-center border border-white/15 text-ink/80 transition-all duration-300 hover:border-white/60 hover:text-ink"
-                >
-                  <Cmp className="h-[18px] w-[18px]" />
-                </a>
-              );
-            })}
-          </div>
-
-          <Link href="/booking" onClick={onClose} className="btn btn-white mt-6 w-full">
-            Забронировать стол
-          </Link>
-        </div>
       </div>
     </div>
   );
