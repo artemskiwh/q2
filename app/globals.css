@@ -315,6 +315,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   position: relative;
   overflow: hidden;
   isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
 }
 .btn::after {
   content: "";
@@ -333,6 +334,34 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .btn:hover::after {
     transform: translateX(360%) skewX(-18deg);
   }
+}
+
+/* Кнопка без реакции на наведение и нажатие — вид всегда один */
+.btn-static,
+.btn-static:hover,
+.btn-static:focus,
+.btn-static:active,
+.btn-static:focus-visible {
+  transform: none;
+  filter: none;
+  transition: none;
+}
+.btn-static::after {
+  display: none;
+}
+.btn-white.btn-static:hover,
+.btn-white.btn-static:active,
+.btn-white.btn-static:focus {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: #0a0a0a;
+}
+.btn-outline.btn-static:hover,
+.btn-outline.btn-static:active,
+.btn-outline.btn-static:focus {
+  background-color: transparent;
+  border-color: rgba(255, 255, 255, 0.75);
+  color: #ffffff;
 }
 
 @media (prefers-reduced-motion: reduce) {

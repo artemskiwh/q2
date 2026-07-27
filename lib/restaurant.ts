@@ -27,7 +27,7 @@ export const restaurant = {
    * Фон первого экрана. Положите фото в public/img/ и укажите путь,
    * например "/img/hero.jpg" — экран станет фотографическим.
    */
-  heroImage: "",
+  heroImage: "/img/hero.jpg",
 
   /** Страница с отзывами на 2ГИС. */
   reviewsUrl:
