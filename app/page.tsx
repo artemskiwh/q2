@@ -1,12 +1,10 @@
 import Link from "next/link";
 import { Hero } from "@/components/Hero";
 import { QuickBooking } from "@/components/QuickBooking";
-import { Marquee } from "@/components/Marquee";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { DishCard } from "@/components/DishCard";
 import { Reviews } from "@/components/Reviews";
-import { ContactsBlock } from "@/components/ContactsBlock";
 import { Icon } from "@/components/Icons";
 import { signatureDishes } from "@/lib/menu";
 
@@ -19,8 +17,6 @@ export default function HomePage() {
       <section className="container-page py-14 md:py-20">
         <QuickBooking />
       </section>
-
-      <Marquee />
 
       {/* Витрина блюд */}
       <section className="section container-page">
@@ -50,12 +46,6 @@ export default function HomePage() {
       <section className="section container-page border-t border-white/10">
         <SectionHeading eyebrow="Гости" title="Отзывы на 2ГИС" />
         <Reviews />
-      </section>
-
-      {/* Контакты */}
-      <section className="section container-page pt-0">
-        <SectionHeading eyebrow="Контакты" title="Приходите" />
-        <ContactsBlock />
       </section>
     </>
   );

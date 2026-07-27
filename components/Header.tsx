@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { Logo } from "./Logo";
 import { Icon } from "./Icons";
@@ -16,8 +16,21 @@ export const NAV = [
 
 export function Header() {
   const pathname = usePathname();
+  const ref = useRef<HTMLElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  /* Высота шапки уезжает в --header-h: под неё липнет поиск в меню */
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const apply = () =>
+      document.documentElement.style.setProperty("--header-h", `${el.offsetHeight}px`);
+    apply();
+    const observer = new ResizeObserver(apply);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -31,11 +44,12 @@ export function Header() {
   return (
     <>
       <header
+        ref={ref}
         className={clsx(
           "fixed inset-x-0 top-0 z-40 transition-colors duration-500",
           scrolled
-            ? "bg-night/92 backdrop-blur-xl"
-            : "bg-gradient-to-b from-night/80 to-transparent",
+            ? "border-b border-white/10 bg-night"
+            : "bg-gradient-to-b from-night/85 to-transparent",
         )}
       >
         <div className="container-page relative flex items-center justify-center py-5 md:py-6">

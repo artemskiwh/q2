@@ -49,7 +49,7 @@ export function Hero() {
           className="display-xl mt-6 max-w-[16ch] animate-reveal-up text-[2.6rem] text-ink sm:text-[3.4rem] md:mt-8 md:text-[4.6rem]"
           style={{ animationDelay: "160ms" }}
         >
-          Кавказское застолье
+          Кавказская кухня
         </h1>
 
         <p

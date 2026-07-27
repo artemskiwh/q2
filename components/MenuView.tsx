@@ -23,7 +23,10 @@ export function MenuView() {
   return (
     <>
       {/* Поиск — липнет под шапкой и остаётся хорошо читаемым */}
-      <div className="sticky top-[92px] z-30 border-b border-white/15 bg-night shadow-[0_18px_40px_-24px_rgba(0,0,0,1)] md:top-[106px]">
+      <div
+        className="sticky z-30 border-b border-white/15 bg-night shadow-[0_18px_40px_-24px_rgba(0,0,0,1)]"
+        style={{ top: "var(--header-h, 96px)" }}
+      >
         <div className="container-page py-4">
           <div className="relative mx-auto max-w-xl">
             <Icon.Search className="pointer-events-none absolute left-4 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-ink" />
@@ -77,7 +80,7 @@ export function MenuView() {
               const items = dishes.filter((d) => d.category === c.id);
               if (!items.length) return null;
               return (
-                <section key={c.id} id={c.id} className="scroll-mt-[210px]">
+                <section key={c.id} id={c.id} className="scroll-mt-[calc(var(--header-h,96px)+90px)]">
                   <Reveal className="flex flex-col items-center text-center">
                     <h2 className="display-xl text-[1.9rem] text-ink md:text-[2.6rem]">
                       {c.name}

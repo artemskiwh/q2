@@ -47,10 +47,6 @@ const config: Config = {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
-        "marquee-x": {
-          "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(-50%)" },
-        },
         "spin-slow": {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
@@ -69,7 +65,6 @@ const config: Config = {
       animation: {
         "reveal-up": "reveal-up 0.7s cubic-bezier(0.22,1,0.36,1) backwards",
         "fade-in": "fade-in 0.9s ease-out backwards",
-        marquee: "marquee-x 48s linear infinite",
         "spin-slow": "spin-slow 90s linear infinite",
         drift: "drift 26s ease-in-out infinite",
         "scroll-hint": "scroll-hint 2.4s ease-in-out infinite",

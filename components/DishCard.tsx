@@ -1,21 +1,5 @@
-import { Icon } from "./Icons";
 import { withBasePath } from "@/lib/path";
-import { formatPrice, TAG_LABELS, type Dish, type DishTag } from "@/lib/menu";
-
-export function DishTags({ tags, max = 1 }: { tags?: DishTag[]; max?: number }) {
-  if (!tags?.length) return null;
-  return (
-    <span className="flex flex-wrap gap-1.5">
-      {tags.slice(0, max).map((t) => (
-        <span key={t} className="tag tag-white backdrop-blur-sm">
-          {t === "spicy" ? <Icon.Flame className="h-3 w-3" /> : null}
-          {t === "veg" ? <Icon.Leaf className="h-3 w-3" /> : null}
-          {TAG_LABELS[t]}
-        </span>
-      ))}
-    </span>
-  );
-}
+import { formatPrice, type Dish } from "@/lib/menu";
 
 /**
  * Фотография блюда. Пока снимка нет — ровная тёмная плашка того же размера,
@@ -51,20 +35,9 @@ export function DishCard({ dish }: { dish: Dish }) {
     <article className="group flex overflow-hidden border border-white/10 bg-night-card/40 transition-all duration-500 hover:border-white/30 hover:bg-night-card/70 md:flex-col">
       <div className="relative aspect-square w-[116px] shrink-0 overflow-hidden sm:w-[140px] md:aspect-[4/3] md:w-full">
         <DishPhoto dish={dish} />
-        {dish.tags?.length ? (
-          <span className="absolute left-4 top-4 hidden md:block">
-            <DishTags tags={dish.tags} />
-          </span>
-        ) : null}
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col p-4 md:p-6">
-        {dish.tags?.length ? (
-          <span className="mb-2 md:hidden">
-            <DishTags tags={dish.tags} />
-          </span>
-        ) : null}
-
         <h3 className="display-xl text-[1.05rem] leading-snug text-ink transition-colors md:text-[1.3rem]">
           {dish.name}
         </h3>
