@@ -14,8 +14,6 @@ export type Booking = {
   createdAt: number;
 };
 
-const STORAGE_KEY = "pakhlava:bookings";
-
 /* ————— Даты ————— */
 
 export function toISODate(d: Date) {
@@ -126,38 +124,4 @@ export function makeBookingCode() {
     tail += CODE_ALPHABET[Math.floor(Math.random() * CODE_ALPHABET.length)];
   }
   return `PKH-${tail}`;
-}
-
-/* ————— Хранилище (localStorage) ————— */
-
-export function loadBookings(): Booking[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed: unknown = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return [];
-    return (parsed as Booking[]).filter((b) => b && b.code && b.date && b.time);
-  } catch {
-    return [];
-  }
-}
-
-export function saveBooking(booking: Booking) {
-  if (typeof window === "undefined") return;
-  const all = [booking, ...loadBookings()].slice(0, 20);
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
-}
-
-export function removeBooking(code: string) {
-  if (typeof window === "undefined") return;
-  const all = loadBookings().filter((b) => b.code !== code);
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
-}
-
-/** Бронь считается активной, пока не прошло её время. */
-export function isUpcoming(b: Booking) {
-  const [y, m, d] = b.date.split("-").map(Number);
-  const [hh, mm] = b.time.split(":").map(Number);
-  return new Date(y, m - 1, d, hh, mm).getTime() > Date.now();
 }

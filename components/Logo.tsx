@@ -1,40 +1,44 @@
 import Link from "next/link";
-import { Icon } from "./Icons";
+import { Rosette } from "./Ornament";
 import { restaurant } from "@/lib/restaurant";
 
+const SIZES = {
+  sm: { mark: "h-4 w-4", word: "text-[1.5rem]", tag: "text-[0.44rem]", gap: "mt-1.5" },
+  md: {
+    mark: "h-5 w-5 md:h-6 md:w-6",
+    word: "text-[1.9rem] md:text-[2.3rem]",
+    tag: "text-[0.5rem] md:text-[0.56rem]",
+    gap: "mt-2 md:mt-2.5",
+  },
+  lg: { mark: "h-7 w-7", word: "text-[2.8rem]", tag: "text-[0.6rem]", gap: "mt-3" },
+} as const;
+
 /**
- * Логотип-вывеска: разряжённые прописные в тонкой рамке,
- * под рамкой — город с иконкой метки.
+ * Фирменный знак: розетка, ниже — «pakhlava» светлой антиквой,
+ * под ней разряжённая подпись. Повторяет вывеску ресторана.
  */
 export function Logo({
   href = "/",
   size = "md",
-  withCity = true,
+  withTagline = true,
 }: {
   href?: string | null;
-  size?: "sm" | "md" | "lg";
-  withCity?: boolean;
+  size?: keyof typeof SIZES;
+  withTagline?: boolean;
 }) {
-  const box =
-    size === "sm"
-      ? "border px-3 py-1.5 text-[0.85rem]"
-      : size === "lg"
-        ? "border px-6 py-3 text-[1.5rem] md:px-8 md:py-3.5 md:text-[2rem]"
-        : "border px-4 py-2 text-[1.05rem] md:text-[1.2rem]";
+  const s = SIZES[size];
 
   const inner = (
-    <span className="flex flex-col items-center">
-      <span className={`wordmark border-ink/85 leading-none text-ink ${box}`}>
-        Pakhlava
-      </span>
-      {withCity ? (
+    <span className="flex flex-col items-center leading-none">
+      <Rosette className={`${s.mark} text-ink/90`} />
+      <span className={`wordmark mt-2 text-ink ${s.word}`}>pakhlava</span>
+      {withTagline ? (
         <span
-          className={`mt-2 flex items-center gap-1.5 uppercase tracking-wider2 text-ink/85 ${
-            size === "sm" ? "text-[0.55rem]" : "text-[0.62rem] md:text-[0.7rem]"
-          }`}
+          className={`${s.gap} flex items-center gap-1.5 uppercase tracking-wider3 text-ink/65 ${s.tag}`}
         >
-          <Icon.Pin className={size === "sm" ? "h-3 w-3" : "h-3.5 w-3.5"} />
-          {restaurant.address.shortCity}
+          <span className="h-[3px] w-[3px] rotate-45 bg-ink/60" />
+          {restaurant.tagline}
+          <span className="h-[3px] w-[3px] rotate-45 bg-ink/60" />
         </span>
       ) : null}
     </span>
@@ -43,7 +47,11 @@ export function Logo({
   if (!href) return inner;
 
   return (
-    <Link href={href} aria-label="Pakhlava — на главную" className="shrink-0">
+    <Link
+      href={href}
+      aria-label="Pakhlava — на главную"
+      className="shrink-0 transition-opacity hover:opacity-80"
+    >
       {inner}
     </Link>
   );

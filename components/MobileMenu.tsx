@@ -42,7 +42,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
         )}
       >
         <div className="flex items-start justify-between border-b border-white/10 px-6 py-5">
-          <Logo size="sm" withCity={false} />
+          <Logo size="sm" withTagline={false} />
           <button
             type="button"
             onClick={onClose}

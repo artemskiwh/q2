@@ -17,7 +17,6 @@ const NAV_COLUMNS = [
     title: "Гостям",
     links: [
       { href: "/booking", label: "Забронировать стол" },
-      { href: "/booking#my", label: "Мои брони" },
       { href: "/menu#mangal", label: "Мангал" },
       { href: "/menu#desserts", label: "Десерты" },
     ],
@@ -29,7 +28,7 @@ export function Footer() {
     <footer className="relative z-10 mt-auto border-t border-accent/15 bg-night-soft/70">
       <div className="container-page grid gap-12 pb-12 pt-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr] md:gap-8">
         <div>
-          <Logo />
+          <Logo size="sm" />
           <p className="mt-6 max-w-xs text-sm leading-relaxed text-ink-dim">
             {restaurant.description}
           </p>

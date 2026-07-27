@@ -32,11 +32,11 @@ export function Hero() {
 
       {/* Кнопки по центру экрана */}
       <div className="flex flex-1 flex-col items-center justify-center">
-        <div className="flex w-full max-w-[340px] flex-col gap-4 animate-fade-in">
-          <Link href="/menu" className="btn btn-outline w-full">
+        <div className="flex w-full max-w-[340px] animate-fade-in flex-col items-center gap-4 md:w-auto md:max-w-none md:flex-row md:gap-5">
+          <Link href="/menu" className="btn btn-outline w-full md:w-[260px]">
             Открыть меню
           </Link>
-          <Link href="/booking" className="btn btn-white w-full">
+          <Link href="/booking" className="btn btn-white w-full md:w-[260px]">
             Забронировать
           </Link>
         </div>

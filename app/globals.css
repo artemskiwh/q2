@@ -48,6 +48,11 @@ button {
   font-family: inherit;
 }
 
+/* У fieldset по умолчанию min-inline-size: min-content — мешает горизонтальной прокрутке внутри */
+fieldset {
+  min-width: 0;
+}
+
 /* Календарь в тёмной теме */
 input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
@@ -101,13 +106,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     letter-spacing: -0.01em;
   }
 
-  /* Логотип: разряжённые прописные, как на вывеске */
+  /* Логотип: светлая антиква строчными — как на фирменной вывеске */
   .wordmark {
-    font-family: var(--font-display), system-ui, sans-serif;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.34em;
-    text-indent: 0.34em;
+    font-family: var(--font-logo), Georgia, serif;
+    font-weight: 300;
+    text-transform: lowercase;
+    letter-spacing: 0.06em;
+    line-height: 1;
   }
 
   /* === КНОПКИ === */
@@ -234,13 +239,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-color: rgba(255, 255, 255, 0.18);
     background-color: rgba(255, 255, 255, 0.04);
     color: #cfcfcf;
-  }
-
-  /* === ЗАГЛУШКА ПОД ФОТО === */
-  .dish-plate {
-    background-image:
-      radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.05) 0%, transparent 62%),
-      linear-gradient(180deg, #181818 0%, #0f0f0f 100%);
   }
 
   /* Отточие в строке меню */

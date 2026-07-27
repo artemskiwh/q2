@@ -47,34 +47,3 @@ export function OrnamentDivider({
     </div>
   );
 }
-
-/** Угловой завиток для рамок карточек и медальонов. */
-export function CornerFlourish({ className = "", ...props }: SvgProps) {
-  return (
-    <svg
-      viewBox="0 0 40 40"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1"
-      className={className}
-      aria-hidden="true"
-      {...props}
-    >
-      <path d="M1 12 C1 5.4 5.4 1 12 1 L26 1" />
-      <path d="M1 22 C1 11 11 1 22 1" opacity="0.45" />
-      <path d="M8 8 l4 0 0 4" opacity="0.7" />
-    </svg>
-  );
-}
-
-/** Рамка с тонкими уголками. */
-export function FramedCorners({ className = "" }: { className?: string }) {
-  return (
-    <div className={`pointer-events-none absolute inset-0 ${className}`} aria-hidden="true">
-      <CornerFlourish className="absolute left-2 top-2 h-6 w-6 text-accent/45" />
-      <CornerFlourish className="absolute right-2 top-2 h-6 w-6 -scale-x-100 text-accent/45" />
-      <CornerFlourish className="absolute bottom-2 left-2 h-6 w-6 -scale-y-100 text-accent/45" />
-      <CornerFlourish className="absolute bottom-2 right-2 h-6 w-6 -scale-100 text-accent/45" />
-    </div>
-  );
-}

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Manrope } from "next/font/google";
+import { Montserrat, Manrope, Cormorant } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -15,6 +15,14 @@ const display = Montserrat({
 const sans = Manrope({
   subsets: ["latin", "cyrillic"],
   variable: "--font-sans",
+  display: "swap",
+});
+
+// Антиква только для логотипа — как на фирменной вывеске
+const logo = Cormorant({
+  subsets: ["latin", "cyrillic"],
+  weight: ["300", "400"],
+  variable: "--font-logo",
   display: "swap",
 });
 
@@ -52,7 +60,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru" className={`${display.variable} ${sans.variable}`}>
+    <html lang="ru" className={`${display.variable} ${sans.variable} ${logo.variable}`}>
       <body className="flex min-h-screen flex-col font-sans antialiased">
         <Header />
         <main className="relative z-10 flex-1">{children}</main>
