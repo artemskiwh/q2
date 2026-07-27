@@ -16,18 +16,18 @@ export const metadata: Metadata = {
 const WAYS = [
   {
     icon: "Pin" as const,
-    title: "На метро",
-    text: `${restaurant.address.metro}. Выход к центру, дальше по переулку до тёмного фасада с золотой вывеской.`,
+    title: "Пешком",
+    text: `${restaurant.address.street} — ищите тёмный фасад с золотой вывеской. Маршрут удобно построить по кнопке на карте выше.`,
   },
   {
     icon: "Arrow" as const,
     title: "На машине",
-    text: "Парковка во дворе на 12 мест — скажите на входе номер, поднимем шлагбаум.",
+    text: "Парковка рядом с рестораном. В пятницу и субботу вечером место лучше занять пораньше.",
   },
   {
     icon: "Users" as const,
     title: "Большой компанией",
-    text: "Банкеты от 12 гостей согласуем заранее: своё меню, отдельный вход и звук.",
+    text: "Банкеты от 12 гостей согласуем заранее: своё меню, отдельный зал и звук. Позвоните — обсудим.",
   },
 ];
 
@@ -69,7 +69,7 @@ export default function ContactsPage() {
               <span className="display-xl mt-5 text-[1.6rem] text-ink md:text-[2rem]">
                 {restaurant.address.street}
               </span>
-              <span className="mt-2 text-sm text-ink-dim">{restaurant.address.metro}</span>
+              <span className="mt-2 text-sm text-ink-dim">{restaurant.address.city}</span>
               <span className="mt-6 inline-flex items-center gap-2 text-[0.68rem] uppercase tracking-wider2 text-gold transition-all group-hover:gap-3">
                 Построить маршрут
                 <Icon.Arrow className="h-3.5 w-3.5" />

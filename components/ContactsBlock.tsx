@@ -11,7 +11,6 @@ export function ContactsBlock() {
           <h3 className="eyebrow mt-5">Адрес</h3>
           <p className="mt-3 text-lg text-ink">{restaurant.address.street}</p>
           <p className="text-ink-dim">{restaurant.address.city}</p>
-          <p className="mt-2 text-sm text-ink-mute">{restaurant.address.metro}</p>
           <a
             href={restaurant.address.mapUrl}
             target="_blank"
@@ -57,6 +56,15 @@ export function ContactsBlock() {
             className="mt-1 text-sm text-ink-dim transition-colors hover:text-gold"
           >
             {restaurant.email}
+          </a>
+          <a
+            href={restaurant.reviewsUrl}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="mt-4 inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-wider2 text-gold transition-all hover:gap-3"
+          >
+            Отзывы на 2ГИС
+            <Icon.Arrow className="h-3.5 w-3.5" />
           </a>
           <div className="mt-auto flex gap-3 pt-6">
             {restaurant.socials.map((s) => {

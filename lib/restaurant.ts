@@ -1,6 +1,6 @@
 /**
  * Единый конфиг ресторана.
- * ⚠️ Черновые данные — замените на реальные адрес, телефон и ссылки.
+ * Контакты — реальные. Часы работы пока черновые: уточните и замените.
  */
 
 export const restaurant = {
@@ -8,20 +8,24 @@ export const restaurant = {
   tagline: "кухня высоких гор",
   legalName: "Ресторан кавказской кухни «Pakhlava»",
   description:
-    "Ресторан кавказской кухни: мангал на живых углях, тандыр, домашние соленья и десерты по семейным рецептам.",
+    "Ресторан кавказской кухни в Казани: мангал на живых углях, тандыр, домашние соленья и десерты по семейным рецептам.",
 
-  phoneLabel: "+7 (495) 123-45-67",
-  phoneHref: "+74951234567",
+  phoneLabel: "+7 (917) 274-96-04",
+  phoneHref: "+79172749604",
 
-  email: "hello@pakhlava.ru",
+  email: "kafepakhvala@mail.ru",
 
   address: {
-    street: "ул. Пятницкая, 12, стр. 1",
-    city: "Москва",
-    metro: "м. Новокузнецкая — 4 минуты пешком",
-    mapUrl: "https://yandex.ru/maps/?text=Москва, улица Пятницкая, 12с1",
+    street: "ул. Амирхана Еники, 8",
+    city: "Казань, Респ. Татарстан",
+    mapUrl: "https://2gis.ru/kazan/firm/70000001082580216",
   },
 
+  /** Страница с отзывами на 2ГИС. */
+  reviewsUrl:
+    "https://2gis.ru/kazan/search/%D1%80%D0%B5%D1%81%D1%82%D0%BE%D1%80%D0%B0%D0%BD%20pakhlava/firm/70000001082580216/49.153158%2C55.782794/tab/reviews?m=49.153158%2C55.782794%2F16",
+
+  /** ⚠️ Черновик — заменить на фактический режим работы. */
   hours: [
     { days: "Понедельник — четверг", time: "12:00 — 00:00" },
     { days: "Пятница — суббота", time: "12:00 — 02:00" },
@@ -39,9 +43,16 @@ export const restaurant = {
   },
 
   socials: [
-    { label: "Telegram", href: "https://t.me/", icon: "Telegram" as const },
-    { label: "WhatsApp", href: "https://wa.me/74951234567", icon: "Whatsapp" as const },
-    { label: "Instagram", href: "https://instagram.com/", icon: "Instagram" as const },
+    {
+      label: "Instagram",
+      href: "https://instagram.com/pakhlava_kzn",
+      icon: "Instagram" as const,
+    },
+    {
+      label: "WhatsApp",
+      href: "https://wa.me/79172749604",
+      icon: "Whatsapp" as const,
+    },
   ],
 };
 

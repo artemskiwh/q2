@@ -60,10 +60,15 @@ export function Hero() {
           ежедневно с 12:00
         </span>
         <span className="hidden h-3 w-px bg-gold/20 sm:block" />
-        <span className="flex items-center gap-2">
+        <a
+          href={restaurant.address.mapUrl}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="flex items-center gap-2 transition-colors hover:text-gold"
+        >
           <Icon.Pin className="h-3.5 w-3.5 text-gold/70" />
-          {restaurant.address.metro}
-        </span>
+          смотреть на карте
+        </a>
         <span className="hidden h-3 w-px bg-gold/20 sm:block" />
         <a
           href={`tel:${restaurant.phoneHref}`}

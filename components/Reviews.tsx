@@ -1,11 +1,12 @@
 import { Reveal } from "./Reveal";
 import { Icon } from "./Icons";
 import { Rosette } from "./Ornament";
-import { reviews } from "@/lib/restaurant";
+import { restaurant, reviews } from "@/lib/restaurant";
 
 export function Reviews() {
   return (
-    <div className="mt-14 grid gap-6 md:grid-cols-3">
+    <>
+      <div className="mt-14 grid gap-6 md:grid-cols-3">
       {reviews.map((r, i) => (
         <Reveal key={r.name} as="article" delay={i * 110}>
           <figure className="relative flex h-full flex-col border border-gold/12 bg-night-card/40 p-8">
@@ -30,6 +31,19 @@ export function Reviews() {
           </figure>
         </Reveal>
       ))}
-    </div>
+      </div>
+
+      <Reveal className="mt-10 flex justify-center">
+        <a
+          href={restaurant.reviewsUrl}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="btn btn-outline"
+        >
+          Все отзывы на 2ГИС
+          <Icon.Arrow className="h-4 w-4" />
+        </a>
+      </Reveal>
+    </>
   );
 }

@@ -82,8 +82,6 @@ export function Footer() {
                 {restaurant.address.street}
                 <br />
                 {restaurant.address.city}
-                <br />
-                <span className="text-ink-mute">{restaurant.address.metro}</span>
               </span>
             </li>
             <li className="flex gap-3">
