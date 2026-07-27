@@ -15,7 +15,9 @@ export default function HomePage() {
 
       {/* Быстрая бронь */}
       <section className="container-page py-14 md:py-20">
-        <QuickBooking />
+        <Reveal variant="zoom">
+          <QuickBooking />
+        </Reveal>
       </section>
 
       {/* Витрина блюд */}
@@ -28,7 +30,7 @@ export default function HomePage() {
 
         <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {signatureDishes.map((dish, i) => (
-            <Reveal key={dish.id} delay={(i % 3) * 110}>
+            <Reveal key={dish.id} delay={(i % 3) * 120} variant="zoom">
               <DishCard dish={dish} />
             </Reveal>
           ))}

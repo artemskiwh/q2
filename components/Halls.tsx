@@ -9,7 +9,7 @@ export function Halls() {
     <div className="mt-14 grid gap-6 md:grid-cols-3">
       {halls.map((hall, i) => (
         <Reveal key={hall.id} as="article" delay={i * 110}>
-          <div className="group flex h-full flex-col overflow-hidden border border-white/12 bg-night-card/50 transition-colors duration-500 hover:border-white/35">
+          <div className="lift group flex h-full flex-col overflow-hidden border border-white/12 bg-night-card/50 hover:border-white/35">
             {hall.image ? (
               <div className="relative aspect-[16/10] overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}

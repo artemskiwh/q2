@@ -266,24 +266,87 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /* === АНИМАЦИЯ ПОЯВЛЕНИЯ === */
 .reveal {
   opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.9s ease-out;
   will-change: opacity, transform;
+}
+.reveal-up {
+  transform: translateY(26px);
+}
+.reveal-zoom {
+  transform: scale(0.965);
+}
+.reveal-left {
+  transform: translateX(-28px);
+}
+.reveal-right {
+  transform: translateX(28px);
 }
 .reveal.is-visible {
   opacity: 1;
   transform: none;
 }
 
+/* Подчёркивание заголовка «прорисовывается» при появлении */
+.rule-draw {
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+.is-visible .rule-draw,
+.reveal.is-visible.rule-draw {
+  transform: scaleX(1);
+}
+
+/* Карточка приподнимается на наведении */
+.lift {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.5s ease, background-color 0.5s ease;
+}
+@media (hover: hover) {
+  .lift:hover {
+    transform: translateY(-6px);
+  }
+}
+
+/* Светлый блик по кнопке при наведении */
+.btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 -60%;
+  width: 45%;
+  z-index: -1;
+  transform: skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transition: transform 0.7s ease;
+}
+.btn-white::after {
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.12), transparent);
+}
+@media (hover: hover) {
+  .btn:hover::after {
+    transform: translateX(360%) skewX(-18deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .reveal {
+  .reveal,
+  .rule-draw {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  .btn::after {
+    display: none;
   }
   *,
   *::before,

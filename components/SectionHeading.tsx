@@ -22,7 +22,9 @@ export function SectionHeading({
       <h2 className="display-xl mt-4 text-[2.1rem] text-ink md:text-[3rem]">{title}</h2>
       {divider ? (
         <OrnamentDivider
-          className={centered ? "mt-6 max-w-[420px]" : "mt-6 max-w-[280px] justify-start"}
+          className={`rule-draw ${
+            centered ? "mt-6 max-w-[420px]" : "mt-6 max-w-[280px] justify-start"
+          }`}
         />
       ) : null}
       {text ? (

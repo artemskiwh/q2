@@ -6,7 +6,7 @@ export function ContactsBlock() {
   return (
     <div className="mt-14 grid gap-6 md:grid-cols-3">
       <Reveal>
-        <div className="flex h-full flex-col border border-accent/12 bg-night-card/40 p-8">
+        <div className="lift flex h-full flex-col border border-white/12 bg-night-card/40 p-8">
           <Icon.Pin className="h-6 w-6 text-accent" />
           <h3 className="eyebrow mt-5">Адрес</h3>
           <p className="mt-3 text-lg text-ink">{restaurant.address.street}</p>
@@ -24,7 +24,7 @@ export function ContactsBlock() {
       </Reveal>
 
       <Reveal delay={110}>
-        <div className="flex h-full flex-col border border-accent/12 bg-night-card/40 p-8">
+        <div className="lift flex h-full flex-col border border-white/12 bg-night-card/40 p-8">
           <Icon.Clock className="h-6 w-6 text-accent" />
           <h3 className="eyebrow mt-5">Часы работы</h3>
           <ul className="mt-3 space-y-2.5">
@@ -42,7 +42,7 @@ export function ContactsBlock() {
       </Reveal>
 
       <Reveal delay={220}>
-        <div className="flex h-full flex-col border border-accent/12 bg-night-card/40 p-8">
+        <div className="lift flex h-full flex-col border border-white/12 bg-night-card/40 p-8">
           <Icon.Phone className="h-6 w-6 text-accent" />
           <h3 className="eyebrow mt-5">Связь</h3>
           <a

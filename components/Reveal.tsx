@@ -2,15 +2,23 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/** Плавное появление блока при попадании во вьюпорт. */
+type Variant = "up" | "zoom" | "left" | "right";
+
+/**
+ * Плавное появление блока при попадании во вьюпорт.
+ * Если IntersectionObserver почему-то не сработал, блок всё равно
+ * показывается через секунду — пустых мест на странице не остаётся.
+ */
 export function Reveal({
   children,
   delay = 0,
+  variant = "up",
   className = "",
   as: Tag = "div",
 }: {
   children: React.ReactNode;
   delay?: number;
+  variant?: Variant;
   className?: string;
   as?: "div" | "section" | "li" | "article";
 }) {
@@ -35,18 +43,23 @@ export function Reveal({
           }
         });
       },
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.05 },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.03 },
     );
 
     observer.observe(node);
-    return () => observer.disconnect();
+    const fallback = window.setTimeout(() => setVisible(true), 1400);
+
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(fallback);
+    };
   }, []);
 
   return (
     <Tag
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ref={ref as any}
-      className={`reveal ${visible ? "is-visible" : ""} ${className}`}
+      className={`reveal reveal-${variant} ${visible ? "is-visible" : ""} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}

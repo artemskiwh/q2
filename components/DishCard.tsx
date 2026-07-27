@@ -32,7 +32,7 @@ function DishPhoto({ dish }: { dish: Dish }) {
  */
 export function DishCard({ dish }: { dish: Dish }) {
   return (
-    <article className="group flex overflow-hidden border border-white/10 bg-night-card/40 transition-all duration-500 hover:border-white/30 hover:bg-night-card/70 md:flex-col">
+    <article className="lift group flex overflow-hidden border border-white/10 bg-night-card/40 hover:border-white/30 hover:bg-night-card/70 md:flex-col">
       <div className="relative aspect-square w-[116px] shrink-0 overflow-hidden sm:w-[140px] md:aspect-[4/3] md:w-full">
         <DishPhoto dish={dish} />
       </div>

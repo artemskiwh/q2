@@ -60,8 +60,10 @@ export function MenuView() {
             </p>
             {filtered.length ? (
               <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {filtered.map((d) => (
-                  <DishCard key={d.id} dish={d} />
+                {filtered.map((d, i) => (
+                  <Reveal key={d.id} delay={(i % 3) * 90} variant="zoom">
+                    <DishCard dish={d} />
+                  </Reveal>
                 ))}
               </div>
             ) : (
@@ -86,12 +88,12 @@ export function MenuView() {
                       {c.name}
                     </h2>
                     <p className="mt-3 text-[0.85rem] text-ink-mute">{c.subtitle}</p>
-                    <OrnamentDivider className="mt-6 max-w-[320px]" />
+                    <OrnamentDivider className="rule-draw mt-6 max-w-[320px]" />
                   </Reveal>
 
                   <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                     {items.map((d, i) => (
-                      <Reveal key={d.id} delay={(i % 3) * 90}>
+                      <Reveal key={d.id} delay={(i % 3) * 110} variant="zoom">
                         <DishCard dish={d} />
                       </Reveal>
                     ))}

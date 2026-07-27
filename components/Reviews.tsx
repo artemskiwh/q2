@@ -60,7 +60,9 @@ export function Reviews() {
       {/* Лента отзывов */}
       <div className="mt-4 border border-white/12">
         {shown.map((r, i) => (
-          <ReviewCard key={r.name + r.date} review={r} first={i === 0} />
+          <Reveal key={r.name + r.date} delay={Math.min(i, 3) * 90}>
+            <ReviewCard review={r} first={i === 0} />
+          </Reveal>
         ))}
       </div>
 
