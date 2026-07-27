@@ -1,82 +1,93 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-  ],
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        bg: {
-          DEFAULT: "#07070a",
-          soft: "#0f0f14",
-          card: "#15151c",
-          elev: "#1c1c25",
-          line: "#262631",
-          hover: "#22222d",
+        // Тёмный сланец — как каменный стол на фирменных фото
+        night: {
+          DEFAULT: "#0b0b0e",
+          soft: "#101116",
+          card: "#16171d",
+          elev: "#1c1e25",
+          line: "#2a2b33",
+          warm: "#2e2a22",
         },
-        brand: {
-          DEFAULT: "#ff3b30",
-          hover: "#ff5347",
-          dark: "#c41e1e",
-          soft: "rgba(255, 59, 48, 0.12)",
-          glow: "rgba(255, 59, 48, 0.45)",
+        // Слоновая кость — основной текст
+        ink: {
+          DEFAULT: "#f3ede2",
+          dim: "#b6ae9f",
+          mute: "#847c6e",
         },
-        accent: {
-          DEFAULT: "#22d3ee",
-          hover: "#67e8f9",
-          soft: "rgba(34, 211, 238, 0.12)",
-        },
+        // Золото с ободка керамики
         gold: {
-          DEFAULT: "#fbbf24",
-          soft: "rgba(251, 191, 36, 0.12)",
+          DEFAULT: "#c9a25a",
+          light: "#e6cd93",
+          deep: "#8d6c2c",
+          soft: "rgba(201, 162, 90, 0.12)",
+          line: "rgba(201, 162, 90, 0.28)",
+        },
+        // Бирюза глазури
+        turq: {
+          DEFAULT: "#2f8f88",
+          light: "#5cbdb4",
+          soft: "rgba(47, 143, 136, 0.14)",
+        },
+        // Гранат
+        pom: {
+          DEFAULT: "#a02a35",
+          light: "#d0505c",
+          soft: "rgba(160, 42, 53, 0.14)",
         },
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
-      borderRadius: {
-        xl: "0.875rem",
-        "2xl": "1.125rem",
-        "3xl": "1.5rem",
+      letterSpacing: {
+        wider2: "0.18em",
+        wider3: "0.32em",
       },
       boxShadow: {
-        card: "0 8px 24px -12px rgba(0,0,0,0.65)",
-        glow: "0 0 0 1px rgba(255,59,48,0.45), 0 12px 36px -10px rgba(255,59,48,0.45)",
-        "glow-cyan": "0 0 0 1px rgba(34,211,238,0.35), 0 12px 36px -10px rgba(34,211,238,0.35)",
-        inner: "inset 0 1px 0 0 rgba(255,255,255,0.05)",
+        card: "0 24px 60px -30px rgba(0,0,0,0.9)",
+        gold: "0 0 0 1px rgba(201,162,90,0.35), 0 18px 50px -24px rgba(201,162,90,0.4)",
+        medallion: "0 40px 90px -30px rgba(0,0,0,0.95)",
       },
       backgroundImage: {
-        "brand-gradient": "linear-gradient(135deg, #ff3b30 0%, #c41e1e 100%)",
-        "accent-gradient": "linear-gradient(135deg, #22d3ee 0%, #0891b2 100%)",
-        "gold-gradient": "linear-gradient(135deg, #fbbf24 0%, #d97706 100%)",
-        "hero-radial":
-          "radial-gradient(120% 100% at 0% 0%, rgba(255,59,48,0.18) 0%, transparent 55%), radial-gradient(100% 80% at 100% 100%, rgba(34,211,238,0.10) 0%, transparent 55%)",
+        "gold-gradient":
+          "linear-gradient(120deg, #8d6c2c 0%, #c9a25a 35%, #e6cd93 52%, #c9a25a 68%, #8d6c2c 100%)",
+        "night-fade":
+          "linear-gradient(180deg, rgba(11,11,14,0) 0%, rgba(11,11,14,0.75) 55%, #0b0b0e 100%)",
       },
       keyframes: {
-        "fade-in-up": {
-          "0%": { opacity: "0", transform: "translateY(8px)" },
+        "reveal-up": {
+          "0%": { opacity: "0", transform: "translateY(18px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        shimmer: {
-          "0%": { backgroundPosition: "-1000px 0" },
-          "100%": { backgroundPosition: "1000px 0" },
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        "slow-zoom": {
+          "0%": { transform: "scale(1)" },
+          "100%": { transform: "scale(1.08)" },
         },
         "marquee-x": {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
-        "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 0 0 rgba(255,59,48,0.5)" },
-          "50%": { boxShadow: "0 0 0 14px rgba(255,59,48,0)" },
+        "spin-slow": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
         },
       },
       animation: {
-        "fade-in-up": "fade-in-up 0.4s ease-out",
-        shimmer: "shimmer 2.4s linear infinite",
-        marquee: "marquee-x 38s linear infinite",
-        "pulse-glow": "pulse-glow 2.2s ease-out infinite",
+        "reveal-up": "reveal-up 0.7s cubic-bezier(0.22,1,0.36,1) backwards",
+        "fade-in": "fade-in 0.9s ease-out backwards",
+        "slow-zoom": "slow-zoom 22s ease-out forwards",
+        marquee: "marquee-x 48s linear infinite",
+        "spin-slow": "spin-slow 60s linear infinite",
       },
     },
   },

@@ -1,167 +1,133 @@
-import type { SVGProps } from "react";
+type P = React.SVGProps<SVGSVGElement>;
 
 const base = {
-  width: 20,
-  height: 20,
-  viewBox: "0 0 24 24",
   fill: "none",
   stroke: "currentColor",
-  strokeWidth: 1.8,
+  strokeWidth: 1.5,
   strokeLinecap: "round" as const,
   strokeLinejoin: "round" as const,
+  viewBox: "0 0 24 24",
+  "aria-hidden": true,
 };
 
 export const Icon = {
-  Search: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <circle cx="11" cy="11" r="7" />
-      <path d="m20 20-3.5-3.5" />
-    </svg>
-  ),
-  Cart: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="M3 4h2l2.4 12.3a2 2 0 0 0 2 1.7h7.2a2 2 0 0 0 2-1.6L20 8H6" />
-      <circle cx="10" cy="20" r="1.4" />
-      <circle cx="17" cy="20" r="1.4" />
-    </svg>
-  ),
-  Heart: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="M12 21s-7-4.35-9.5-9C1 8.5 3 5 6.5 5c2 0 3.5 1.2 5.5 3.5C13.9 6.2 15.5 5 17.5 5 21 5 23 8.5 21.5 12c-2.5 4.65-9.5 9-9.5 9z" />
-    </svg>
-  ),
-  User: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <circle cx="12" cy="8" r="4" />
-      <path d="M4 21c0-4 4-6 8-6s8 2 8 6" />
-    </svg>
-  ),
-  Menu: (p: SVGProps<SVGSVGElement>) => (
+  Menu: (p: P) => (
     <svg {...base} {...p}>
       <path d="M3 6h18M3 12h18M3 18h18" />
     </svg>
   ),
-  X: (p: SVGProps<SVGSVGElement>) => (
+  Close: (p: P) => (
     <svg {...base} {...p}>
-      <path d="M6 6l12 12M6 18 18 6" />
+      <path d="M6 6l12 12M18 6L6 18" />
     </svg>
   ),
-  Plus: (p: SVGProps<SVGSVGElement>) => (
+  Phone: (p: P) => (
     <svg {...base} {...p}>
-      <path d="M12 5v14M5 12h14" />
+      <path d="M6.5 3h3l1.5 4-2 1.5a12 12 0 006.5 6.5L17 13l4 1.5v3a2 2 0 01-2.2 2A17 17 0 013.1 5.2 2 2 0 015 3z" />
     </svg>
   ),
-  Minus: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="M5 12h14" />
-    </svg>
-  ),
-  Chevron: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="m9 6 6 6-6 6" />
-    </svg>
-  ),
-  Filter: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="M3 5h18M6 12h12M10 19h4" />
-    </svg>
-  ),
-  Home: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="m3 11 9-8 9 8" />
-      <path d="M5 9.5V21h14V9.5" />
-    </svg>
-  ),
-  Catalog: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <rect x="3" y="3" width="7" height="7" rx="1.5" />
-      <rect x="14" y="3" width="7" height="7" rx="1.5" />
-      <rect x="3" y="14" width="7" height="7" rx="1.5" />
-      <rect x="14" y="14" width="7" height="7" rx="1.5" />
-    </svg>
-  ),
-  Phone: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="M3 5a2 2 0 0 1 2-2h2l2 5-2.5 1.5a12 12 0 0 0 6 6L14 13l5 2v2a2 2 0 0 1-2 2A14 14 0 0 1 3 5z" />
-    </svg>
-  ),
-  Telegram: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="M22 3 2 11l7 2 9-7-7 9 2 7z" />
-    </svg>
-  ),
-  Whatsapp: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="M3 20l1.5-4A8 8 0 1 1 8 20.5L3 20z" />
-      <path d="M8 11s.5 2 1.5 3 3 1.5 3 1.5l1.5-1 2 1c0 1.5-1.5 2.5-3 2.5-3 0-7-4-7-7 0-1.5 1-3 2.5-3l1 2-1 1.5z" />
-    </svg>
-  ),
-  Truck: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="M3 6h12v10H3z" />
-      <path d="M15 9h4l2 3v4h-6" />
-      <circle cx="7" cy="18" r="1.6" />
-      <circle cx="17" cy="18" r="1.6" />
-    </svg>
-  ),
-  Shield: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z" />
-    </svg>
-  ),
-  Spark: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="M12 3v6M12 15v6M3 12h6M15 12h6" />
-    </svg>
-  ),
-  Fire: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="M12 3s4 4 4 8a4 4 0 0 1-8 0c0-1 .5-2 1-3 1 1 2 1 2 0 0-2-1-3 1-5z" />
-    </svg>
-  ),
-  Bolt: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="M13 3 4 14h6l-1 7 9-11h-6l1-7z" />
-    </svg>
-  ),
-  Handshake: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="M11 14 7 10l2-3h5l3 2 4-2v8l-4 4-3-3-2 1-2-3" />
-      <path d="m2 12 4-4 3 2" />
-    </svg>
-  ),
-  Box: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="M3 7 12 3l9 4-9 4-9-4z" />
-      <path d="M3 7v10l9 4 9-4V7" />
-      <path d="M12 11v10" />
-    </svg>
-  ),
-  Star: (p: SVGProps<SVGSVGElement>) => (
-    <svg {...base} {...p}>
-      <path d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.9l1.1-6.5L2.6 9.8l6.5-.9L12 3z" />
-    </svg>
-  ),
-  Coin: (p: SVGProps<SVGSVGElement>) => (
+  Clock: (p: P) => (
     <svg {...base} {...p}>
       <circle cx="12" cy="12" r="9" />
-      <path d="M9 11h6M9 14h6M12 8v8" />
+      <path d="M12 7v5l3 2" />
     </svg>
   ),
-  Headphones: (p: SVGProps<SVGSVGElement>) => (
+  Pin: (p: P) => (
     <svg {...base} {...p}>
-      <path d="M4 13a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-2v-7h4" />
-      <path d="M4 13v5a2 2 0 0 0 2 2h2v-7H4" />
+      <path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z" />
+      <circle cx="12" cy="10" r="2.6" />
     </svg>
   ),
-  Arrow: (p: SVGProps<SVGSVGElement>) => (
+  Calendar: (p: P) => (
     <svg {...base} {...p}>
-      <path d="M5 12h14M13 6l6 6-6 6" />
+      <rect x="3" y="5" width="18" height="16" rx="2" />
+      <path d="M3 10h18M8 3v4M16 3v4" />
     </svg>
   ),
-  Check: (p: SVGProps<SVGSVGElement>) => (
+  Users: (p: P) => (
     <svg {...base} {...p}>
-      <path d="m5 12 5 5 9-12" />
+      <circle cx="9" cy="8" r="3.2" />
+      <path d="M3 20a6 6 0 0112 0" />
+      <path d="M16 5.3a3.2 3.2 0 010 5.4M17.5 20a6 6 0 00-2-4.5" />
+    </svg>
+  ),
+  Check: (p: P) => (
+    <svg {...base} {...p}>
+      <path d="M4 12.5l5 5L20 6.5" />
+    </svg>
+  ),
+  Arrow: (p: P) => (
+    <svg {...base} {...p}>
+      <path d="M4 12h16M14 6l6 6-6 6" />
+    </svg>
+  ),
+  ChevronDown: (p: P) => (
+    <svg {...base} {...p}>
+      <path d="M6 9l6 6 6-6" />
+    </svg>
+  ),
+  ChevronLeft: (p: P) => (
+    <svg {...base} {...p}>
+      <path d="M15 6l-6 6 6 6" />
+    </svg>
+  ),
+  Search: (p: P) => (
+    <svg {...base} {...p}>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="M16 16l4.5 4.5" />
+    </svg>
+  ),
+  Star: (p: P) => (
+    <svg {...base} {...p}>
+      <path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.9 6.7 19.7l1.1-5.9-4.3-4.1 5.9-.8z" />
+    </svg>
+  ),
+  Flame: (p: P) => (
+    <svg {...base} {...p}>
+      <path d="M12 3s4.5 3.8 4.5 8a4.5 4.5 0 01-9 0c0-1.4.6-2.6 1.3-3.6.4 1.3 1.2 2 2.2 2 .6-2.6 1-4.6 1-6.4z" />
+      <path d="M7.5 13.5A6.5 6.5 0 1018.5 18" opacity="0.5" />
+    </svg>
+  ),
+  Leaf: (p: P) => (
+    <svg {...base} {...p}>
+      <path d="M4 20c0-9 6-14 16-14 0 10-5 15-14 15H4z" />
+      <path d="M9 15c2-3 5-5 8-6" />
+    </svg>
+  ),
+  Copy: (p: P) => (
+    <svg {...base} {...p}>
+      <rect x="9" y="9" width="12" height="12" rx="2" />
+      <path d="M15 5H5a2 2 0 00-2 2v10" />
+    </svg>
+  ),
+  Trash: (p: P) => (
+    <svg {...base} {...p}>
+      <path d="M4 7h16M10 7V5a1 1 0 011-1h2a1 1 0 011 1v2M6 7l1 13h10l1-13" />
+    </svg>
+  ),
+  Telegram: (p: P) => (
+    <svg {...base} {...p}>
+      <path d="M21 4.5L2.8 11.3c-.8.3-.8 1.4 0 1.7l4.6 1.6 1.7 5c.2.7 1.1.9 1.6.3l2.4-2.6 4.6 3.4c.6.4 1.4.1 1.6-.6L22.3 5.6c.2-.8-.6-1.4-1.3-1.1z" />
+      <path d="M7.6 14.7L18.4 7l-8.2 8.4-.2 3.4" />
+    </svg>
+  ),
+  Instagram: (p: P) => (
+    <svg {...base} {...p}>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none" />
+    </svg>
+  ),
+  Whatsapp: (p: P) => (
+    <svg {...base} {...p}>
+      <path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1112 20.5a8.4 8.4 0 01-3.8-.9z" />
+      <path d="M9 9.2c.3 2.6 3.2 5.1 5.6 5.4.7.1 1.3-.5 1.3-1.2v-.6l-1.9-.8-.9 1a6.6 6.6 0 01-2.3-2.3l1-.9-.8-1.9h-.7c-.7 0-1.4.6-1.3 1.3z" />
+    </svg>
+  ),
+  Sparkle: (p: P) => (
+    <svg {...base} {...p}>
+      <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" />
+      <path d="M18.5 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z" />
     </svg>
   ),
 };

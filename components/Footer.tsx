@@ -1,72 +1,70 @@
 import Link from "next/link";
-import { Icon } from "./Icons";
 import { Logo } from "./Logo";
+import { Icon } from "./Icons";
+import { OrnamentBand } from "./Ornament";
+import { restaurant } from "@/lib/restaurant";
 
-const COLS = [
+const NAV_COLUMNS = [
   {
-    title: "Каталог",
+    title: "Ресторан",
     links: [
-      { href: "/catalog?category=disposable", label: "Одноразки" },
-      { href: "/catalog?category=pod", label: "Поды-системы" },
-      { href: "/catalog?category=cartridge", label: "Картриджи" },
-      { href: "/catalog?category=sale", label: "Распродажа" },
+      { href: "/menu", label: "Меню" },
+      { href: "/about", label: "О ресторане" },
+      { href: "/about#halls", label: "Залы и банкеты" },
+      { href: "/contacts", label: "Контакты" },
     ],
   },
   {
-    title: "Информация",
+    title: "Гостям",
     links: [
-      { href: "/about", label: "О компании" },
-      { href: "/wholesale", label: "Условия опта" },
-      { href: "/contacts", label: "Контакты" },
-      { href: "/wholesale#delivery", label: "Доставка" },
+      { href: "/booking", label: "Забронировать стол" },
+      { href: "/booking#my", label: "Мои брони" },
+      { href: "/menu#mangal", label: "Мангал" },
+      { href: "/menu#desserts", label: "Десерты" },
     ],
   },
 ];
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-bg-line bg-bg-soft pb-24 lg:pb-12">
-      <div className="container-page grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-4">
-        <div className="space-y-4">
-          <Logo size="md" />
-          <p className="text-sm text-muted">
-            Оптовая поставка одноразок, под-систем и аксессуаров в розничные сети Москвы и регионов.
-            Только сертифицированный товар с маркировкой «Честный знак».
+    <footer className="relative z-10 mt-auto border-t border-gold/15 bg-night-soft/70">
+      <OrnamentBand />
+
+      <div className="container-page grid gap-12 pb-12 pt-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr] md:gap-8">
+        <div>
+          <Logo />
+          <p className="mt-6 max-w-xs text-sm leading-relaxed text-ink-dim">
+            {restaurant.description}
           </p>
-          <div className="flex items-center gap-2">
-            <a
-              href="https://t.me/Weyalzo"
-              className="grid h-10 w-10 place-items-center rounded-xl border border-bg-line bg-bg-card hover:bg-bg-elev"
-              aria-label="Telegram"
-            >
-              <Icon.Telegram className="h-5 w-5" />
-            </a>
-            <a
-              href="https://wa.me/79000000000"
-              className="grid h-10 w-10 place-items-center rounded-xl border border-bg-line bg-bg-card hover:bg-bg-elev"
-              aria-label="WhatsApp"
-            >
-              <Icon.Whatsapp className="h-5 w-5" />
-            </a>
-            <a
-              href="tel:+79000000000"
-              className="grid h-10 w-10 place-items-center rounded-xl border border-bg-line bg-bg-card hover:bg-bg-elev"
-              aria-label="Телефон"
-            >
-              <Icon.Phone className="h-5 w-5" />
-            </a>
+          <div className="mt-6 flex gap-3">
+            {restaurant.socials.map((s) => {
+              const Cmp = Icon[s.icon];
+              return (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label={s.label}
+                  className="grid h-10 w-10 place-items-center border border-gold/20 text-ink/80 transition-all hover:border-gold/60 hover:text-gold"
+                >
+                  <Cmp className="h-[18px] w-[18px]" />
+                </a>
+              );
+            })}
           </div>
         </div>
 
-        {COLS.map((col) => (
+        {NAV_COLUMNS.map((col) => (
           <div key={col.title}>
-            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted">
-              {col.title}
-            </h4>
-            <ul className="space-y-2.5 text-sm">
+            <h3 className="eyebrow">{col.title}</h3>
+            <ul className="mt-5 space-y-3">
               {col.links.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-white/80 transition hover:text-brand">
+                <li key={l.href + l.label}>
+                  <Link
+                    href={l.href}
+                    className="text-sm text-ink-dim transition-colors hover:text-gold"
+                  >
                     {l.label}
                   </Link>
                 </li>
@@ -76,29 +74,44 @@ export function Footer() {
         ))}
 
         <div>
-          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted">
-            Контакты
-          </h4>
-          <ul className="space-y-3 text-sm">
-            <li>
-              <a href="tel:+79000000000" className="text-white/90 hover:text-brand">
-                +7 (900) 000-00-00
+          <h3 className="eyebrow">Мы рядом</h3>
+          <ul className="mt-5 space-y-4 text-sm text-ink-dim">
+            <li className="flex gap-3">
+              <Icon.Pin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+              <span>
+                {restaurant.address.street}
+                <br />
+                {restaurant.address.city}
+                <br />
+                <span className="text-ink-mute">{restaurant.address.metro}</span>
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <Icon.Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+              <a href={`tel:${restaurant.phoneHref}`} className="hover:text-gold">
+                {restaurant.phoneLabel}
               </a>
             </li>
-            <li className="text-white/80">opt@tyag-moskva.ru</li>
-            <li className="text-muted">
-              Москва, склад / самовывоз
-              <br />
-              Пн–Сб 10:00 — 20:00
+            <li className="flex gap-3">
+              <Icon.Clock className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+              <span>
+                {restaurant.hours.map((h) => (
+                  <span key={h.days} className="block">
+                    {h.days}: {h.time}
+                  </span>
+                ))}
+              </span>
             </li>
           </ul>
         </div>
       </div>
 
-      <div className="border-t border-bg-line">
-        <div className="container-page flex flex-col items-center justify-between gap-3 py-5 text-xs text-muted md:flex-row">
-          <span>© {new Date().getFullYear()} TYAG Moskva. Только для лиц старше 18 лет.</span>
-          <span>Не является публичной офертой. Курение вредит вашему здоровью.</span>
+      <div className="border-t border-white/5">
+        <div className="container-page flex flex-col gap-2 py-6 text-xs text-ink-mute md:flex-row md:items-center md:justify-between">
+          <span>
+            © {new Date().getFullYear()} {restaurant.legalName}
+          </span>
+          <span>Сайт-черновик · фотографии блюд добавляются</span>
         </div>
       </div>
     </footer>

@@ -1,165 +1,78 @@
 import Link from "next/link";
+import { LogoMedallion } from "./Logo";
+import { PlateRing, OrnamentDivider } from "./Ornament";
 import { Icon } from "./Icons";
-
-const STATS = [
-  { value: "120+", label: "позиций в наличии" },
-  { value: "1 день", label: "отгрузка" },
-];
+import { restaurant } from "@/lib/restaurant";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden rounded-2xl border border-bg-line hero-bg md:rounded-3xl">
-      <div className="pointer-events-none absolute -left-16 -top-16 h-48 w-48 rounded-full opacity-50 bg-brand/30 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-16 right-0 hidden h-56 w-56 rounded-full opacity-40 bg-accent/30 blur-3xl md:block" />
-
-      <div className="relative grid gap-6 px-4 py-6 md:grid-cols-[1.05fr_1fr] md:items-center md:gap-10 md:px-10 md:py-14 lg:px-14 lg:py-16">
-        <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand md:text-[11px]">
-            <span className="grid h-1.5 w-1.5 place-items-center rounded-full bg-brand" />
-            TYAG · Moskva · Опт
-          </span>
-
-          <h1 className="mt-3 text-[24px] font-black leading-[1.05] tracking-tight text-white md:mt-4 md:text-[44px] lg:text-[56px]">
-            Оптовые поставки{" "}
-            <span className="bg-gradient-to-r from-brand via-[#ff7a5e] to-[#ffb199] bg-clip-text text-transparent">
-              вейпов
-            </span>{" "}
-            по всей России
-          </h1>
-
-          <p className="mt-3 max-w-[520px] text-[13px] leading-relaxed text-muted md:mt-4 md:text-base">
-            DUALL, WAKA, ELFBAR, GEEK BAR, Vaporesso, GeekVape — официально и со склада в Москве.
-            Цены от 110 ₽ за устройство при заказе от 50 шт.
-          </p>
-
-          <div className="mt-4 flex flex-wrap gap-2 md:mt-6 md:gap-3">
-            <Link href="/catalog" className="btn-primary text-[13px] md:text-[15px]">
-              <Icon.Bolt className="h-4 w-4" />
-              Каталог
-            </Link>
-            <Link href="/wholesale" className="btn-ghost text-[13px] md:text-[15px]">
-              <Icon.Handshake className="h-4 w-4" />
-              Партнёрам
-            </Link>
-          </div>
-
-          <div className="mt-5 flex gap-6 border-t border-bg-line pt-4 md:mt-8 md:gap-8 md:pt-6">
-            {STATS.map((s) => (
-              <div key={s.label}>
-                <div className="text-base font-black text-white md:text-2xl">{s.value}</div>
-                <div className="mt-0.5 text-[10px] leading-tight text-muted md:mt-1 md:text-xs">
-                  {s.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="hidden md:block">
-          <HeroVisual />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function HeroVisual() {
-  return (
-    <div className="relative mx-auto h-[400px] w-full max-w-[480px]">
-      <div className="absolute left-[12%] top-[14%] w-[34%] hero-float-1">
-        <DevicePreview color="#ff3b30" accent="#ffd6cc" label="40K" puffs="40 000" />
-      </div>
-      <div className="absolute left-[37%] top-[2%] z-10 w-[36%] hero-float-2">
-        <DevicePreview color="#22d3ee" accent="#cffafe" label="50K" puffs="50 000" big />
-      </div>
-      <div className="absolute right-[8%] top-[20%] w-[32%] hero-float-3">
-        <DevicePreview color="#a855f7" accent="#e9d5ff" label="25K" puffs="25 000" />
-      </div>
+    <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 pb-16 pt-32 md:pt-36">
+      {/* Каменный фон и золотое свечение */}
       <div
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(60% 50% at 50% 60%, rgba(255,59,48,0.22) 0%, transparent 70%)",
+            "radial-gradient(70% 55% at 50% 34%, #1c1e25 0%, #101116 45%, #0b0b0e 100%)",
         }}
       />
-    </div>
-  );
-}
-
-function DevicePreview({
-  color,
-  accent,
-  label,
-  puffs,
-  big,
-}: {
-  color: string;
-  accent: string;
-  label: string;
-  puffs: string;
-  big?: boolean;
-}) {
-  const id = label;
-  return (
-    <svg
-      viewBox="0 0 140 260"
-      className={big ? "scale-110" : ""}
-      style={{ filter: "drop-shadow(0 24px 36px rgba(0,0,0,0.55))" }}
-    >
-      <defs>
-        <linearGradient id={`hb-${id}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={accent} stopOpacity="0.9" />
-          <stop offset="50%" stopColor={color} />
-          <stop offset="100%" stopColor="#1a0303" />
-        </linearGradient>
-        <linearGradient id={`hg-${id}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="white" stopOpacity="0.55" />
-          <stop offset="60%" stopColor="white" stopOpacity="0" />
-        </linearGradient>
-        <linearGradient id={`hs-${id}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#0c1822" />
-          <stop offset="100%" stopColor="#000" />
-        </linearGradient>
-      </defs>
-
-      <rect x="50" y="6" width="40" height="14" rx="4" fill="#2a2a32" />
-      <rect x="58" y="13" width="24" height="3" rx="1.5" fill="#000" opacity="0.55" />
-
-      <rect
-        x="20"
-        y="20"
-        width="100"
-        height="230"
-        rx="22"
-        fill={`url(#hb-${id})`}
-        stroke="rgba(255,255,255,0.18)"
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.55]"
+        style={{
+          background:
+            "radial-gradient(38% 30% at 50% 38%, rgba(201,162,90,0.18) 0%, transparent 70%)",
+        }}
       />
-      <rect x="28" y="28" width="84" height="58" rx="16" fill={`url(#hg-${id})`} />
 
-      <rect
-        x="38"
-        y="100"
-        width="64"
-        height="46"
-        rx="6"
-        fill={`url(#hs-${id})`}
-        stroke="rgba(255,255,255,0.18)"
-      />
-      <text x="70" y="124" textAnchor="middle" fontSize="16" fontWeight="800" fill={color}>
-        {label}
-      </text>
-      <text x="70" y="138" textAnchor="middle" fontSize="7" fontWeight="600" fill="white" opacity="0.55" letterSpacing="0.8">
-        {puffs} PUFFS
-      </text>
+      {/* Огромное орнаментальное кольцо, медленно вращается */}
+      <PlateRing className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[min(150vw,1100px)] w-[min(150vw,1100px)] -translate-x-1/2 -translate-y-1/2 animate-spin-slow text-gold/[0.07]" />
+      <PlateRing className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[min(96vw,720px)] w-[min(96vw,720px)] -translate-x-1/2 -translate-y-1/2 text-gold/[0.05]" />
 
-      <rect x="20" y="170" width="100" height="2" fill="rgba(255,255,255,0.18)" />
-      <text x="70" y="194" textAnchor="middle" fontSize="11" fontWeight="900" fill="white" letterSpacing="1.5">
-        TYAG
-      </text>
+      <p className="eyebrow animate-fade-in text-center">
+        {restaurant.address.city} · {restaurant.address.street}
+      </p>
 
-      <circle cx="42" cy="220" r="6" fill="rgba(0,0,0,0.55)" />
-      <circle cx="42" cy="220" r="2" fill={color} />
-      <rect x="62" y="232" width="20" height="4" rx="2" fill="rgba(0,0,0,0.55)" />
-    </svg>
+      <LogoMedallion className="mt-8 w-[min(78vw,340px)] animate-fade-in md:mt-10 md:w-[440px]" />
+
+      <h1 className="sr-only">
+        Pakhlava — ресторан кавказской кухни в Москве
+      </h1>
+
+      <OrnamentDivider className="mt-10 max-w-[380px]" />
+
+      <p className="mt-7 max-w-xl text-center text-[0.98rem] leading-relaxed text-ink-dim md:text-[1.05rem]">
+        Мангал на живых углях виноградной лозы, тандыр с шести утра
+        и пахлава по рецепту, который в семье не меняли сто лет.
+      </p>
+
+      <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+        <Link href="/booking" className="btn btn-gold">
+          <Icon.Calendar className="h-4 w-4" />
+          Забронировать стол
+        </Link>
+        <Link href="/menu" className="btn btn-outline">
+          Смотреть меню
+        </Link>
+      </div>
+
+      <div className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[0.68rem] uppercase tracking-wider2 text-ink-mute">
+        <span className="flex items-center gap-2">
+          <Icon.Clock className="h-3.5 w-3.5 text-gold/70" />
+          ежедневно с 12:00
+        </span>
+        <span className="hidden h-3 w-px bg-gold/20 sm:block" />
+        <span className="flex items-center gap-2">
+          <Icon.Pin className="h-3.5 w-3.5 text-gold/70" />
+          {restaurant.address.metro}
+        </span>
+        <span className="hidden h-3 w-px bg-gold/20 sm:block" />
+        <a
+          href={`tel:${restaurant.phoneHref}`}
+          className="flex items-center gap-2 transition-colors hover:text-gold"
+        >
+          <Icon.Phone className="h-3.5 w-3.5 text-gold/70" />
+          {restaurant.phoneLabel}
+        </a>
+      </div>
+    </section>
   );
 }
