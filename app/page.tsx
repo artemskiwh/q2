@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Hero } from "@/components/Hero";
-import { QuickBooking } from "@/components/QuickBooking";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { DishCard } from "@/components/DishCard";
@@ -12,13 +11,6 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-
-      {/* Быстрая бронь */}
-      <section className="container-page py-14 md:py-20">
-        <Reveal variant="zoom">
-          <QuickBooking />
-        </Reveal>
-      </section>
 
       {/* Витрина блюд */}
       <section className="section container-page">
