@@ -48,7 +48,7 @@ export function Header() {
         className={clsx(
           "fixed inset-x-0 top-0 z-40 transition-colors duration-500",
           scrolled
-            ? "border-b border-white/10 bg-night"
+            ? "border-b border-white/10 bg-night/85 backdrop-blur-xl"
             : "bg-gradient-to-b from-night/85 to-transparent",
         )}
       >
