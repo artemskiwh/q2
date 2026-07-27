@@ -2,12 +2,12 @@ import { Icon } from "./Icons";
 import { withBasePath } from "@/lib/path";
 import { formatPrice, TAG_LABELS, type Dish, type DishTag } from "@/lib/menu";
 
-export function DishTags({ tags, max = 2 }: { tags?: DishTag[]; max?: number }) {
+export function DishTags({ tags, max = 1 }: { tags?: DishTag[]; max?: number }) {
   if (!tags?.length) return null;
   return (
     <span className="flex flex-wrap gap-1.5">
       {tags.slice(0, max).map((t) => (
-        <span key={t} className="tag tag-white">
+        <span key={t} className="tag tag-white backdrop-blur-sm">
           {t === "spicy" ? <Icon.Flame className="h-3 w-3" /> : null}
           {t === "veg" ? <Icon.Leaf className="h-3 w-3" /> : null}
           {TAG_LABELS[t]}
@@ -18,89 +18,69 @@ export function DishTags({ tags, max = 2 }: { tags?: DishTag[]; max?: number }) 
 }
 
 /**
- * Карточка блюда для витрины на главной.
- * Есть фотография — карточка с фото, нет — аккуратная текстовая карточка.
+ * Фотография блюда. Пока снимка нет — ровная тёмная плашка того же размера,
+ * чтобы сетка не прыгала, когда фотографии появятся.
  */
-export function DishCard({ dish }: { dish: Dish }) {
-  return (
-    <article className="group flex h-full flex-col overflow-hidden border border-white/12 bg-night-card/50 transition-colors duration-500 hover:border-white/35">
-      {dish.image ? (
-        <div className="relative aspect-[4/3] overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={withBasePath(dish.image)}
-            alt={dish.name}
-            loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-          {dish.tags?.length ? (
-            <span className="absolute left-4 top-4">
-              <DishTags tags={dish.tags} max={1} />
-            </span>
-          ) : null}
-        </div>
-      ) : null}
+function DishPhoto({ dish }: { dish: Dish }) {
+  if (dish.image) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={withBasePath(dish.image)}
+        alt={dish.name}
+        loading="lazy"
+        className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
+      />
+    );
+  }
 
-      <div className="flex flex-1 flex-col p-6">
-        {!dish.image && dish.tags?.length ? (
-          <span className="mb-4">
-            <DishTags tags={dish.tags} max={1} />
-          </span>
-        ) : null}
-        <h3 className="display-xl text-[1.35rem] text-ink">{dish.name}</h3>
-        <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-dim">{dish.description}</p>
-        <div className="mt-5 flex items-baseline justify-between border-t border-white/10 pt-4">
-          <span className="text-[0.7rem] uppercase tracking-wider2 text-ink-mute">
-            {dish.weight}
-          </span>
-          <span className="text-[1.05rem] font-medium tabular-nums text-ink">
-            {formatPrice(dish.price)}
-          </span>
-        </div>
-      </div>
-    </article>
+  return (
+    <span
+      aria-hidden="true"
+      className="block h-full w-full bg-gradient-to-br from-white/[0.09] via-white/[0.04] to-white/[0.02] transition-colors duration-500 group-hover:from-white/[0.14]"
+    />
   );
 }
 
 /**
- * Строка меню: слева — фотография блюда, если она есть,
- * дальше название, отточие и цена.
+ * Карточка блюда. На телефоне — строка с квадратным снимком слева,
+ * на широком экране — карточка с фотографией сверху.
  */
-export function DishRow({ dish }: { dish: Dish }) {
+export function DishCard({ dish }: { dish: Dish }) {
   return (
-    <article className="group flex gap-4 border-b border-white/8 py-6 last:border-b-0 md:gap-6">
-      {dish.image ? (
-        <div className="h-20 w-20 shrink-0 overflow-hidden md:h-28 md:w-28">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={withBasePath(dish.image)}
-            alt={dish.name}
-            loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-        </div>
-      ) : null}
-
-      <div className="min-w-0 flex-1">
-        <div className="flex items-end">
-          <h3 className="display-xl text-[1.15rem] leading-tight text-ink md:text-[1.35rem]">
-            {dish.name}
-          </h3>
-          <span className="dotted-leader" />
-          <span className="shrink-0 text-[1rem] font-medium tabular-nums text-ink md:text-[1.08rem]">
-            {formatPrice(dish.price)}
+    <article className="group flex overflow-hidden border border-white/10 bg-night-card/40 transition-all duration-500 hover:border-white/30 hover:bg-night-card/70 md:flex-col">
+      <div className="relative aspect-square w-[116px] shrink-0 overflow-hidden sm:w-[140px] md:aspect-[4/3] md:w-full">
+        <DishPhoto dish={dish} />
+        {dish.tags?.length ? (
+          <span className="absolute left-4 top-4 hidden md:block">
+            <DishTags tags={dish.tags} />
           </span>
-        </div>
+        ) : null}
+      </div>
 
-        <p className="mt-2 max-w-2xl text-[0.9rem] leading-relaxed text-ink-dim">
+      <div className="flex min-w-0 flex-1 flex-col p-4 md:p-6">
+        {dish.tags?.length ? (
+          <span className="mb-2 md:hidden">
+            <DishTags tags={dish.tags} />
+          </span>
+        ) : null}
+
+        <h3 className="display-xl text-[1.05rem] leading-snug text-ink transition-colors md:text-[1.3rem]">
+          {dish.name}
+        </h3>
+
+        <p className="mt-2 line-clamp-2 text-[0.82rem] leading-relaxed text-ink-dim md:line-clamp-none md:mt-3 md:text-[0.88rem]">
           {dish.description}
         </p>
 
-        {dish.weight ? (
-          <span className="mt-3 block text-[0.68rem] uppercase tracking-wider2 text-ink-mute">
+        <div className="mt-auto flex items-baseline justify-between gap-3 pt-4 md:mt-6 md:border-t md:border-white/10 md:pt-4">
+          <span className="text-[0.66rem] uppercase tracking-wider2 text-ink-mute">
             {dish.weight}
           </span>
-        ) : null}
+          <span className="text-[1rem] font-medium tabular-nums text-ink md:text-[1.05rem]">
+            {formatPrice(dish.price)}
+          </span>
+        </div>
       </div>
     </article>
   );

@@ -95,17 +95,6 @@ export const halls: Hall[] = [
   },
 ];
 
-export type Occasion = { id: string; label: string };
-
-export const occasions: Occasion[] = [
-  { id: "none", label: "Просто ужин" },
-  { id: "birthday", label: "День рождения" },
-  { id: "date", label: "Свидание" },
-  { id: "family", label: "Семейное застолье" },
-  { id: "business", label: "Деловая встреча" },
-  { id: "banquet", label: "Банкет" },
-];
-
 export type Value = { title: string; text: string };
 
 export const values: Value[] = [

@@ -7,9 +7,8 @@ const NAV_COLUMNS = [
   {
     title: "Ресторан",
     links: [
+      { href: "/", label: "Главная" },
       { href: "/menu", label: "Меню" },
-      { href: "/about", label: "О ресторане" },
-      { href: "/about#halls", label: "Залы и банкеты" },
       { href: "/contacts", label: "Контакты" },
     ],
   },

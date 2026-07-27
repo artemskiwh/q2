@@ -42,7 +42,7 @@ export function Halls() {
                 ))}
               </ul>
               <Link
-                href={`/booking?hall=${hall.id}`}
+                href="/booking"
                 className="mt-6 inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-wider2 text-ink transition-all hover:gap-3"
               >
                 Забронировать

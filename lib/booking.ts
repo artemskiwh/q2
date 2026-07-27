@@ -5,11 +5,8 @@ export type Booking = {
   date: string; // YYYY-MM-DD
   time: string; // HH:MM
   guests: number;
-  hallId: string;
-  hallName: string;
   name: string;
   phone: string;
-  occasion: string;
   comment?: string;
   createdAt: number;
 };

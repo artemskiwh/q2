@@ -16,7 +16,7 @@ import {
   todayISO,
   type Booking,
 } from "@/lib/booking";
-import { halls, occasions, restaurant } from "@/lib/restaurant";
+import { restaurant } from "@/lib/restaurant";
 
 /** Заголовок шага формы: номер, название и линия. */
 function Step({ n, title, hint }: { n: number; title: string; hint?: string }) {
@@ -48,10 +48,8 @@ export function BookingForm() {
   const [date, setDate] = useState(todayISO());
   const [time, setTime] = useState("");
   const [guests, setGuests] = useState(2);
-  const [hallId, setHallId] = useState(halls[0].id);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [occasion, setOccasion] = useState(occasions[0].id);
   const [comment, setComment] = useState("");
 
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -65,12 +63,10 @@ export function BookingForm() {
     const qDate = params.get("date");
     const qTime = params.get("time");
     const qGuests = Number(params.get("guests"));
-    const qHall = params.get("hall");
 
     if (qDate && /^\d{4}-\d{2}-\d{2}$/.test(qDate) && qDate >= todayISO()) setDate(qDate);
     if (qTime && /^\d{2}:\d{2}$/.test(qTime)) setTime(qTime);
     if (qGuests >= 1 && qGuests <= restaurant.booking.maxGuestsOnline) setGuests(qGuests);
-    if (qHall && halls.some((h) => h.id === qHall)) setHallId(qHall);
   }, [params]);
 
   /* Слот мог стать недоступным при смене даты */
@@ -78,7 +74,6 @@ export function BookingForm() {
     if (time && !slots.includes(time)) setTime("");
   }, [slots, time]);
 
-  const hall = halls.find((h) => h.id === hallId) ?? halls[0];
   const nameValid = name.trim().length >= 2;
   const phoneValid = isValidPhone(phone);
   const ready = Boolean(time) && nameValid && phoneValid;
@@ -103,11 +98,8 @@ export function BookingForm() {
       date,
       time,
       guests,
-      hallId: hall.id,
-      hallName: hall.name,
       name: name.trim(),
       phone,
-      occasion: occasions.find((o) => o.id === occasion)?.label ?? "",
       comment: comment.trim() || undefined,
       createdAt: Date.now(),
     });
@@ -125,7 +117,6 @@ export function BookingForm() {
           setName("");
           setPhone("");
           setComment("");
-          setOccasion(occasions[0].id);
           setTouched({});
         }}
       />
@@ -230,32 +221,9 @@ export function BookingForm() {
           </p>
         </fieldset>
 
-        {/* 04 — зал */}
-        <fieldset>
-          <Step n={4} title="Зал" />
-          <div className="grid gap-3 sm:grid-cols-3">
-            {halls.map((h) => (
-              <button
-                key={h.id}
-                type="button"
-                onClick={() => setHallId(h.id)}
-                className={clsx("flex flex-col p-5 text-left", choice(hallId === h.id))}
-              >
-                <span className="text-[1.05rem]">{h.name}</span>
-                <span className="mt-1 text-[0.66rem] uppercase tracking-wider2 opacity-70">
-                  {h.seats}
-                </span>
-                <span className="mt-3 text-[0.8rem] leading-relaxed opacity-75">
-                  {h.features[0]}
-                </span>
-              </button>
-            ))}
-          </div>
-        </fieldset>
-
-        {/* 05 — контакты */}
+        {/* 04 — контакты */}
         <fieldset id="step-contacts">
-          <Step n={5} title="Ваши данные" />
+          <Step n={4} title="Ваши данные" />
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
               <label className="label" htmlFor="bf-name">
@@ -297,25 +265,9 @@ export function BookingForm() {
           </div>
         </fieldset>
 
-        {/* 06 — повод и пожелания */}
+        {/* 05 — пожелания */}
         <fieldset>
-          <Step n={6} title="Повод" hint="необязательно" />
-          <div className="flex flex-wrap gap-2">
-            {occasions.map((o) => (
-              <button
-                key={o.id}
-                type="button"
-                onClick={() => setOccasion(o.id)}
-                className={clsx(
-                  "px-4 py-2 text-[0.7rem] uppercase tracking-wider2",
-                  choice(occasion === o.id),
-                )}
-              >
-                {o.label}
-              </button>
-            ))}
-          </div>
-
+          <Step n={5} title="Пожелания" hint="необязательно" />
           <textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
@@ -323,7 +275,7 @@ export function BookingForm() {
             maxLength={500}
             placeholder="Стол у окна, детский стул, торт к десерту, аллергии…"
             aria-label="Пожелания"
-            className="field mt-5 resize-none"
+            className="field resize-none"
           />
         </fieldset>
       </div>
@@ -339,7 +291,6 @@ export function BookingForm() {
             <Row label="Дата" value={formatDateRu(date)} />
             <Row label="Время" value={time || "не выбрано"} muted={!time} />
             <Row label="Гостей" value={String(guests)} />
-            <Row label="Зал" value={hall.name} />
             <Row label="Имя" value={name || "—"} muted={!name} />
             <Row label="Телефон" value={phone || "—"} muted={!phone} />
           </dl>
@@ -381,7 +332,6 @@ export function BookingForm() {
               {time ? ` · ${time}` : ""} · {guests}{" "}
               {guests === 1 ? "гость" : guests < 5 ? "гостя" : "гостей"}
             </p>
-            <p className="truncate text-[0.68rem] text-ink-mute">{hall.name}</p>
           </div>
           <button type="submit" className={clsx("btn btn-white px-6", !ready && "opacity-70")}>
             Забронировать
@@ -424,7 +374,7 @@ function icsHref(b: Booking) {
     `DTSTART:${stamp(start)}`,
     `DTEND:${stamp(end)}`,
     `SUMMARY:Ужин в Pakhlava (${b.code})`,
-    `DESCRIPTION:${b.guests} гостей, ${b.hallName}. Бронь ${b.code}.`,
+    `DESCRIPTION:${b.guests} гостей. Бронь ${b.code}.`,
     `LOCATION:${restaurant.address.street}, ${restaurant.address.city}`,
     "END:VEVENT",
     "END:VCALENDAR",
@@ -479,8 +429,6 @@ function BookingSuccess({ booking, onReset }: { booking: Booking; onReset: () =>
 
         <dl className="mt-8 grid gap-px overflow-hidden border border-white/10 bg-white/10 text-left sm:grid-cols-2">
           <Cell label="Гостей" value={String(booking.guests)} />
-          <Cell label="Зал" value={booking.hallName} />
-          <Cell label="Повод" value={booking.occasion} />
           <Cell label="Адрес" value={restaurant.address.street} />
           {booking.comment ? (
             <div className="bg-night px-5 py-4 sm:col-span-2">

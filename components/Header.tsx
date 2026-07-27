@@ -8,9 +8,9 @@ import { Icon } from "./Icons";
 import { MobileMenu } from "./MobileMenu";
 
 export const NAV = [
+  { href: "/", label: "Главная" },
   { href: "/menu", label: "Меню" },
   { href: "/booking", label: "Бронирование" },
-  { href: "/about", label: "О ресторане" },
   { href: "/contacts", label: "Контакты" },
 ];
 
