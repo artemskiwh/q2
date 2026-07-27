@@ -146,8 +146,8 @@ export function BookingForm({ onCreated }: { onCreated?: (b: Booking) => void })
                       className={clsx(
                         "flex flex-col items-center border py-3 transition-all",
                         date === d.iso
-                          ? "border-gold/70 bg-gold/12 text-ink"
-                          : "border-white/10 text-ink-dim hover:border-gold/35 hover:text-ink",
+                          ? "border-accent/70 bg-accent/12 text-ink"
+                          : "border-white/10 text-ink-dim hover:border-accent/35 hover:text-ink",
                       )}
                     >
                       <span className="text-[0.58rem] uppercase tracking-wider2 text-ink-mute">
@@ -192,8 +192,8 @@ export function BookingForm({ onCreated }: { onCreated?: (b: Booking) => void })
                         className={clsx(
                           "border px-4 py-2.5 text-sm tabular-nums transition-all",
                           time === s
-                            ? "border-gold/70 bg-gold/12 text-gold-light"
-                            : "border-white/10 text-ink-dim hover:border-gold/35 hover:text-ink",
+                            ? "border-accent/70 bg-accent/12 text-accent-light"
+                            : "border-white/10 text-ink-dim hover:border-accent/35 hover:text-ink",
                         )}
                       >
                         {s}
@@ -217,7 +217,7 @@ export function BookingForm({ onCreated }: { onCreated?: (b: Booking) => void })
                       type="button"
                       onClick={() => setGuests((g) => Math.max(1, g - 1))}
                       aria-label="Меньше гостей"
-                      className="grid h-12 w-12 place-items-center text-xl text-ink-dim transition-colors hover:text-gold"
+                      className="grid h-12 w-12 place-items-center text-xl text-ink-dim transition-colors hover:text-accent"
                     >
                       −
                     </button>
@@ -230,7 +230,7 @@ export function BookingForm({ onCreated }: { onCreated?: (b: Booking) => void })
                         setGuests((g) => Math.min(restaurant.booking.maxGuestsOnline, g + 1))
                       }
                       aria-label="Больше гостей"
-                      className="grid h-12 w-12 place-items-center text-xl text-ink-dim transition-colors hover:text-gold"
+                      className="grid h-12 w-12 place-items-center text-xl text-ink-dim transition-colors hover:text-accent"
                     >
                       +
                     </button>
@@ -238,7 +238,7 @@ export function BookingForm({ onCreated }: { onCreated?: (b: Booking) => void })
                   <p className="max-w-xs text-xs leading-relaxed text-ink-mute">
                     Компанию больше {restaurant.booking.maxGuestsOnline} гостей соберём
                     в каминном кабинете — {" "}
-                    <a href={`tel:${restaurant.phoneHref}`} className="text-gold hover:underline">
+                    <a href={`tel:${restaurant.phoneHref}`} className="text-accent hover:underline">
                       позвоните нам
                     </a>
                     .
@@ -258,12 +258,12 @@ export function BookingForm({ onCreated }: { onCreated?: (b: Booking) => void })
                       className={clsx(
                         "flex flex-col border p-5 text-left transition-all",
                         hallId === h.id
-                          ? "border-gold/70 bg-gold/[0.07]"
-                          : "border-white/10 hover:border-gold/35",
+                          ? "border-accent/70 bg-accent/[0.07]"
+                          : "border-white/10 hover:border-accent/35",
                       )}
                     >
                       <span className="display-xl text-[1.25rem] text-ink">{h.name}</span>
-                      <span className="mt-1 text-[0.68rem] uppercase tracking-wider2 text-gold/70">
+                      <span className="mt-1 text-[0.68rem] uppercase tracking-wider2 text-accent/70">
                         {h.seats}
                       </span>
                       <span className="mt-3 text-[0.8rem] leading-relaxed text-ink-mute">
@@ -280,7 +280,7 @@ export function BookingForm({ onCreated }: { onCreated?: (b: Booking) => void })
                 type="button"
                 onClick={goToContacts}
                 disabled={!slots.length}
-                className="btn btn-gold w-full sm:w-auto"
+                className="btn btn-white w-full sm:w-auto"
               >
                 Дальше — контакты
                 <Icon.Arrow className="h-4 w-4" />
@@ -339,8 +339,8 @@ export function BookingForm({ onCreated }: { onCreated?: (b: Booking) => void })
                       className={clsx(
                         "border px-4 py-2 text-[0.7rem] uppercase tracking-wider2 transition-all",
                         occasion === o.id
-                          ? "border-gold/70 bg-gold/12 text-gold-light"
-                          : "border-white/10 text-ink-dim hover:border-gold/35 hover:text-ink",
+                          ? "border-accent/70 bg-accent/12 text-accent-light"
+                          : "border-white/10 text-ink-dim hover:border-accent/35 hover:text-ink",
                       )}
                     >
                       {o.label}
@@ -388,7 +388,7 @@ export function BookingForm({ onCreated }: { onCreated?: (b: Booking) => void })
                   <Icon.ChevronLeft className="h-4 w-4" />
                   Назад
                 </button>
-                <button type="submit" className="btn btn-gold flex-1 sm:flex-none">
+                <button type="submit" className="btn btn-white flex-1 sm:flex-none">
                   <Icon.Check className="h-4 w-4" />
                   Забронировать стол
                 </button>
@@ -400,10 +400,10 @@ export function BookingForm({ onCreated }: { onCreated?: (b: Booking) => void })
 
       {/* Сводка */}
       <aside className="lg:sticky lg:top-[120px] lg:self-start">
-        <div className="relative border border-gold/20 bg-night-card/60 p-8">
+        <div className="relative border border-accent/20 bg-night-card/60 p-8">
           <FramedCorners />
           <div className="flex items-center gap-3">
-            <Rosette className="h-6 w-6 text-gold" />
+            <Rosette className="h-6 w-6 text-accent" />
             <span className="eyebrow">Ваша бронь</span>
           </div>
 
@@ -424,24 +424,24 @@ export function BookingForm({ onCreated }: { onCreated?: (b: Booking) => void })
 
           <ul className="mt-7 space-y-3 text-[0.8rem] leading-relaxed text-ink-mute">
             <li className="flex gap-2.5">
-              <Icon.Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold" />
+              <Icon.Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent" />
               Подтверждаем звонком в течение 15 минут.
             </li>
             <li className="flex gap-2.5">
-              <Icon.Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold" />
+              <Icon.Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent" />
               Стол держим {restaurant.booking.holdMinutes} минут от времени брони.
             </li>
             <li className="flex gap-2.5">
-              <Icon.Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold" />
+              <Icon.Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent" />
               Отмена и перенос — бесплатно, просто позвоните.
             </li>
           </ul>
 
           <a
             href={`tel:${restaurant.phoneHref}`}
-            className="mt-7 flex items-center justify-center gap-2 border border-gold/25 py-3 text-sm text-ink transition-colors hover:border-gold/60 hover:text-gold"
+            className="mt-7 flex items-center justify-center gap-2 border border-accent/25 py-3 text-sm text-ink transition-colors hover:border-accent/60 hover:text-accent"
           >
-            <Icon.Phone className="h-4 w-4 text-gold" />
+            <Icon.Phone className="h-4 w-4 text-accent" />
             {restaurant.phoneLabel}
           </a>
         </div>
@@ -458,8 +458,8 @@ function Stepper({ step }: { step: number }) {
           <span
             className={clsx(
               "grid h-9 w-9 shrink-0 place-items-center border text-[0.75rem] transition-colors",
-              i < step && "border-gold bg-gold/15 text-gold",
-              i === step && "border-gold bg-gold text-night",
+              i < step && "border-accent bg-accent/15 text-accent",
+              i === step && "border-accent bg-accent text-night",
               i > step && "border-white/12 text-ink-mute",
             )}
           >
@@ -477,7 +477,7 @@ function Stepper({ step }: { step: number }) {
             <span
               className={clsx(
                 "h-px flex-1 transition-colors",
-                i < step ? "bg-gold/50" : "bg-white/10",
+                i < step ? "bg-accent/50" : "bg-white/10",
               )}
             />
           ) : null}
@@ -559,11 +559,11 @@ function BookingSuccess({ booking, onReset }: { booking: Booking; onReset: () =>
 
   return (
     <div className="mx-auto max-w-2xl">
-      <div className="relative border border-gold/25 bg-night-card/60 p-8 text-center md:p-12">
+      <div className="relative border border-accent/25 bg-night-card/60 p-8 text-center md:p-12">
         <FramedCorners />
 
-        <div className="mx-auto grid h-16 w-16 place-items-center rounded-full border border-gold/40 bg-gold/10">
-          <Icon.Check className="h-7 w-7 text-gold" />
+        <div className="mx-auto grid h-16 w-16 place-items-center rounded-full border border-accent/40 bg-accent/10">
+          <Icon.Check className="h-7 w-7 text-accent" />
         </div>
 
         <h2 className="display-xl mt-7 text-[2rem] text-ink md:text-[2.6rem]">
@@ -579,18 +579,18 @@ function BookingSuccess({ booking, onReset }: { booking: Booking; onReset: () =>
         <button
           type="button"
           onClick={copy}
-          className="mx-auto mt-8 flex items-center gap-3 border border-gold/30 px-6 py-4 transition-colors hover:border-gold/60"
+          className="mx-auto mt-8 flex items-center gap-3 border border-accent/30 px-6 py-4 transition-colors hover:border-accent/60"
         >
           <span className="text-left">
             <span className="block text-[0.6rem] uppercase tracking-wider2 text-ink-mute">
               Код брони
             </span>
-            <span className="display-xl text-[1.6rem] tracking-wide text-gold-gradient">
+            <span className="display-xl text-[1.6rem] tracking-wide text-ink">
               {booking.code}
             </span>
           </span>
           {copied ? (
-            <Icon.Check className="h-4 w-4 text-gold" />
+            <Icon.Check className="h-4 w-4 text-accent" />
           ) : (
             <Icon.Copy className="h-4 w-4 text-ink-mute" />
           )}

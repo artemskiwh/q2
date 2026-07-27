@@ -4,40 +4,32 @@
 
 :root {
   color-scheme: dark;
-  --gold: #c9a25a;
-  --gold-light: #e6cd93;
-  --ink: #f3ede2;
+  --accent: #ffffff;
+  --ink: #ffffff;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 110px;
+  scroll-padding-top: 130px;
 }
 
 html,
 body {
-  background: #0b0b0e;
+  background: #0a0a0a;
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Каменная фактура фона — как на фирменных снимках */
-body {
-  position: relative;
-  background-image:
-    radial-gradient(120% 80% at 50% -10%, rgba(201, 162, 90, 0.07) 0%, transparent 60%),
-    radial-gradient(90% 60% at 100% 100%, rgba(47, 143, 136, 0.04) 0%, transparent 55%);
-}
-
+/* Едва заметная зернистость поверх чёрного фона */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.4;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.3'/%3E%3C/svg%3E");
 }
 
 * {
@@ -45,8 +37,8 @@ body::before {
 }
 
 ::selection {
-  background: rgba(201, 162, 90, 0.35);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.85);
+  color: #0a0a0a;
 }
 
 input,
@@ -58,7 +50,8 @@ button {
 
 /* Календарь в тёмной теме */
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.75) sepia(0.6) saturate(3) hue-rotate(2deg);
+  filter: invert(1);
+  opacity: 0.7;
   cursor: pointer;
 }
 
@@ -96,37 +89,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .eyebrow {
     font-size: 0.68rem;
     font-weight: 500;
-    letter-spacing: 0.32em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: rgba(255, 255, 255, 0.6);
   }
 
   .display-xl {
-    font-family: var(--font-display), Georgia, serif;
+    font-family: var(--font-display), system-ui, sans-serif;
     font-weight: 300;
-    line-height: 1.06;
-    letter-spacing: -0.005em;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
   }
 
+  /* Логотип: разряжённые прописные, как на вывеске */
   .wordmark {
-    font-family: var(--font-display), Georgia, serif;
-    font-weight: 300;
-    letter-spacing: 0.02em;
-    text-transform: lowercase;
-  }
-
-  .text-gold-gradient {
-    background: linear-gradient(
-      120deg,
-      #c9a25a 0%,
-      #e6cd93 35%,
-      #f0dcae 50%,
-      #e6cd93 65%,
-      #c9a25a 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.34em;
+    text-indent: 0.34em;
   }
 
   /* === КНОПКИ === */
@@ -138,61 +119,58 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     white-space: nowrap;
     font-size: 0.74rem;
     font-weight: 600;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    padding: 0.95rem 1.7rem;
-    border-radius: 2px;
+    padding: 1rem 1.8rem;
+    border-radius: 0;
     transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .btn-gold {
-    background: linear-gradient(120deg, #8d6c2c 0%, #c9a25a 40%, #ddc086 60%, #a9853c 100%);
-    color: #14130f;
-    box-shadow: 0 12px 34px -16px rgba(201, 162, 90, 0.85);
+  /* Основная — сплошная белая */
+  .btn-white {
+    background-color: #ffffff;
+    color: #0a0a0a;
+    border: 1px solid #ffffff;
   }
-  .btn-gold:hover {
-    filter: brightness(1.08);
-    transform: translateY(-2px);
-    box-shadow: 0 18px 40px -14px rgba(201, 162, 90, 0.75);
-  }
-  .btn-gold:active {
-    transform: translateY(0);
+  .btn-white:hover {
+    background-color: rgba(255, 255, 255, 0.88);
+    border-color: rgba(255, 255, 255, 0.88);
   }
 
+  /* Вторичная — тонкая белая рамка */
   .btn-outline {
-    border: 1px solid rgba(201, 162, 90, 0.4);
-    color: var(--gold-light);
-    background-color: rgba(201, 162, 90, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    color: #ffffff;
+    background-color: transparent;
   }
   .btn-outline:hover {
-    border-color: rgba(201, 162, 90, 0.8);
-    background-color: rgba(201, 162, 90, 0.1);
-    transform: translateY(-2px);
+    background-color: #ffffff;
+    color: #0a0a0a;
   }
 
   .btn-ghost {
-    border: 1px solid rgba(243, 237, 226, 0.14);
-    color: #f3ede2;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #ffffff;
   }
   .btn-ghost:hover {
-    border-color: rgba(243, 237, 226, 0.3);
-    background-color: rgba(243, 237, 226, 0.05);
+    border-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.06);
   }
 
   .btn:disabled {
-    opacity: 0.45;
+    opacity: 0.4;
     pointer-events: none;
   }
 
-  /* === ЛИНИИ И ПОВЕРХНОСТИ === */
+  /* === ЛИНИИ === */
   .hairline {
     height: 1px;
     width: 100%;
     background-image: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(201, 162, 90, 0.35) 30%,
-      rgba(201, 162, 90, 0.35) 70%,
+      rgba(255, 255, 255, 0.35) 30%,
+      rgba(255, 255, 255, 0.35) 70%,
       transparent 100%
     );
   }
@@ -200,29 +178,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   /* === ПОЛЯ ВВОДА === */
   .field {
     width: 100%;
-    background-color: rgba(11, 11, 14, 0.65);
-    border: 1px solid rgba(243, 237, 226, 0.12);
-    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 0;
     padding: 0.85rem 1rem;
-    color: #f3ede2;
+    color: #ffffff;
     font-size: 0.95rem;
     transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
   }
   .field:focus {
     outline: none;
-    border-color: rgba(201, 162, 90, 0.65);
-    background-color: rgba(11, 11, 14, 0.9);
-    box-shadow: 0 0 0 3px rgba(201, 162, 90, 0.12);
+    border-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.05);
   }
   .field::placeholder {
-    color: #6b6459;
+    color: #6d6d6d;
   }
   .field-invalid {
-    border-color: rgba(208, 80, 92, 0.7);
-  }
-  .field-invalid:focus {
-    border-color: rgba(208, 80, 92, 0.9);
-    box-shadow: 0 0 0 3px rgba(160, 42, 53, 0.18);
+    border-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.08);
   }
 
   .label {
@@ -230,7 +204,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 0.68rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #b6ae9f;
+    color: #b4b4b4;
     margin-bottom: 0.55rem;
   }
 
@@ -246,41 +220,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     letter-spacing: 0.12em;
     text-transform: uppercase;
     line-height: 1.5;
-    border: 1px solid transparent;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background-color: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
   }
-  .tag-gold {
-    background-color: rgba(201, 162, 90, 0.12);
-    color: #e6cd93;
-    border-color: rgba(201, 162, 90, 0.32);
+  .tag-white {
+    border-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.1);
   }
-  .tag-pom {
-    background-color: rgba(160, 42, 53, 0.16);
-    color: #e08b93;
-    border-color: rgba(160, 42, 53, 0.38);
-  }
-  .tag-turq {
-    background-color: rgba(47, 143, 136, 0.14);
-    color: #7fd0c8;
-    border-color: rgba(47, 143, 136, 0.35);
-  }
+  .tag-pom,
+  .tag-turq,
   .tag-mute {
-    background-color: rgba(243, 237, 226, 0.05);
-    color: #b6ae9f;
-    border-color: rgba(243, 237, 226, 0.12);
+    border-color: rgba(255, 255, 255, 0.18);
+    background-color: rgba(255, 255, 255, 0.04);
+    color: #cfcfcf;
   }
 
-  /* === ОРНАМЕНТ === */
-  .ornament-tile {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23c9a25a' stroke-width='1' opacity='0.5'%3E%3Cpath d='M30 6 L38 14 L30 22 L22 14 Z'/%3E%3Cpath d='M30 38 L38 46 L30 54 L22 46 Z'/%3E%3Cpath d='M6 30 L14 22 L22 30 L14 38 Z'/%3E%3Cpath d='M38 30 L46 22 L54 30 L46 38 Z'/%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/svg%3E");
-    background-size: 60px 60px;
-  }
-
-  /* Заглушка «тарелки» под будущее фото */
+  /* === ЗАГЛУШКА ПОД ФОТО === */
   .dish-plate {
     background-image:
-      radial-gradient(circle at 50% 45%, rgba(201, 162, 90, 0.1) 0%, transparent 62%),
-      radial-gradient(circle at 50% 100%, rgba(47, 143, 136, 0.08) 0%, transparent 65%),
-      linear-gradient(180deg, #191b21 0%, #101116 100%);
+      radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.05) 0%, transparent 62%),
+      linear-gradient(180deg, #181818 0%, #0f0f0f 100%);
   }
 
   /* Отточие в строке меню */
@@ -289,7 +249,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 1px;
     margin: 0 0.75rem 0.5rem;
     min-width: 1.5rem;
-    background-image: radial-gradient(circle, rgba(201, 162, 90, 0.45) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.35) 1px, transparent 1px);
     background-size: 6px 1px;
     background-repeat: repeat-x;
     background-position: 0 100%;

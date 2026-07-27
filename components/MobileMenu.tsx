@@ -5,10 +5,10 @@ import { useEffect } from "react";
 import clsx from "clsx";
 import { Icon } from "./Icons";
 import { Logo } from "./Logo";
-import { OrnamentDivider } from "./Ornament";
 import { NAV } from "./Header";
 import { restaurant } from "@/lib/restaurant";
 
+/** Выезжающая панель навигации — одна на все разрешения. */
 export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   useEffect(() => {
     if (!open) return;
@@ -24,10 +24,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
 
   return (
     <div
-      className={clsx(
-        "fixed inset-0 z-50 lg:hidden",
-        open ? "pointer-events-auto" : "pointer-events-none",
-      )}
+      className={clsx("fixed inset-0 z-50", open ? "pointer-events-auto" : "pointer-events-none")}
       aria-hidden={!open}
     >
       <div
@@ -40,49 +37,44 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
 
       <div
         className={clsx(
-          "absolute inset-y-0 right-0 flex w-[86%] max-w-sm flex-col border-l border-gold/20 bg-night-soft transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "absolute inset-y-0 right-0 flex w-[88%] max-w-md flex-col border-l border-white/12 bg-night-soft transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
           open ? "translate-x-0" : "translate-x-full",
         )}
       >
-        <div className="flex items-center justify-between border-b border-gold/12 px-6 py-5">
-          <Logo size="sm" />
+        <div className="flex items-start justify-between border-b border-white/10 px-6 py-5">
+          <Logo size="sm" withCity={false} />
           <button
             type="button"
             onClick={onClose}
             aria-label="Закрыть меню"
-            className="grid h-10 w-10 place-items-center border border-gold/25 text-ink"
+            className="grid h-11 w-11 place-items-center border border-white/20 text-ink transition-colors hover:border-white/50"
           >
             <Icon.Close className="h-5 w-5" />
           </button>
         </div>
 
-        <nav className="flex flex-col gap-1 px-6 py-8">
-          {NAV.map((item, i) => (
+        <nav className="flex flex-col px-6 py-8">
+          {NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={onClose}
-              className="wordmark border-b border-white/5 py-4 text-[1.6rem] text-ink transition-colors hover:text-gold"
-              style={{ transitionDelay: `${i * 40}ms` }}
+              className="display-xl border-b border-white/8 py-5 text-[1.6rem] text-ink transition-opacity hover:opacity-60"
             >
-              {item.label.toLowerCase()}
+              {item.label}
             </Link>
           ))}
         </nav>
 
         <div className="mt-auto px-6 pb-10">
-          <OrnamentDivider />
-          <a
-            href={`tel:${restaurant.phoneHref}`}
-            className="mt-6 flex items-center gap-3 text-ink"
-          >
-            <Icon.Phone className="h-4 w-4 text-gold" />
+          <a href={`tel:${restaurant.phoneHref}`} className="flex items-center gap-3 text-ink">
+            <Icon.Phone className="h-4 w-4" />
             <span className="text-lg">{restaurant.phoneLabel}</span>
           </a>
           <p className="mt-2 text-sm text-ink-mute">
             {restaurant.address.street}, {restaurant.address.city}
           </p>
-          <Link href="/booking" onClick={onClose} className="btn btn-gold mt-6 w-full">
+          <Link href="/booking" onClick={onClose} className="btn btn-white mt-6 w-full">
             Забронировать стол
           </Link>
         </div>

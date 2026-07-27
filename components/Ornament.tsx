@@ -31,7 +31,7 @@ export function Rosette({ className = "", ...props }: SvgProps) {
   );
 }
 
-/** Горизонтальный разделитель с розеткой по центру. */
+/** Тонкий разделитель с небольшим ромбом по центру. */
 export function OrnamentDivider({
   className = "",
   width = "w-full",
@@ -42,11 +42,7 @@ export function OrnamentDivider({
   return (
     <div className={`flex items-center justify-center ${width} ${className}`}>
       <span className="hairline max-w-[220px] flex-1" />
-      <span className="mx-4 flex items-center gap-2 text-gold">
-        <span className="h-1 w-1 rotate-45 bg-gold/60" />
-        <Rosette className="h-5 w-5 text-gold/80" />
-        <span className="h-1 w-1 rotate-45 bg-gold/60" />
-      </span>
+      <span className="mx-4 h-1.5 w-1.5 rotate-45 border border-ink/60" />
       <span className="hairline max-w-[220px] flex-1" />
     </div>
   );
@@ -71,82 +67,14 @@ export function CornerFlourish({ className = "", ...props }: SvgProps) {
   );
 }
 
-/** Круглая кайма — «ободок тарелки» для заглушек блюд и медальонов. */
-export function PlateRing({ className = "", ...props }: SvgProps) {
-  const teeth = Array.from({ length: 36 }, (_, i) => i * 10);
-  return (
-    <svg viewBox="0 0 200 200" className={className} aria-hidden="true" {...props}>
-      <circle cx="100" cy="100" r="96" fill="none" stroke="currentColor" strokeWidth="0.8" opacity="0.55" />
-      <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" strokeWidth="1.6" opacity="0.35" />
-      <circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" strokeWidth="0.6" opacity="0.5" />
-      <g stroke="currentColor" strokeWidth="0.9" opacity="0.65">
-        {teeth.map((deg) => (
-          <line
-            key={deg}
-            x1="100"
-            y1="12"
-            x2="100"
-            y2="20"
-            transform={`rotate(${deg} 100 100)`}
-          />
-        ))}
-      </g>
-      <g fill="none" stroke="currentColor" strokeWidth="0.9" opacity="0.5">
-        {[0, 60, 120, 180, 240, 300].map((deg) => (
-          <path
-            key={deg}
-            d="M100 24 q7 10 0 20 q-7 -10 0 -20"
-            transform={`rotate(${deg} 100 100)`}
-          />
-        ))}
-      </g>
-    </svg>
-  );
-}
-
-/** Повторяющаяся кайма-плетёнка для верха/низа секции. */
-export function OrnamentBand({ className = "" }: { className?: string }) {
-  return (
-    <div
-      className={`ornament-tile h-[30px] w-full opacity-[0.18] ${className}`}
-      aria-hidden="true"
-    />
-  );
-}
-
-/**
- * Заглушка вместо фотографии: «тарелка» с ободком и розеткой.
- * Кольцо всегда круглое — независимо от пропорций контейнера.
- */
-export function PlatePlaceholder({
-  size = "w-[78%]",
-  className = "",
-}: {
-  size?: string;
-  className?: string;
-}) {
-  return (
-    <div className={`dish-plate relative h-full w-full overflow-hidden ${className}`}>
-      <span
-        className={`absolute left-1/2 top-1/2 aspect-square -translate-x-1/2 -translate-y-1/2 ${size}`}
-      >
-        <PlateRing className="h-full w-full text-gold/20 transition-transform duration-[1400ms] group-hover:rotate-45" />
-      </span>
-      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <Rosette className="h-8 w-8 text-gold/45" />
-      </span>
-    </div>
-  );
-}
-
-/** Рамка с золотыми уголками. */
+/** Рамка с тонкими уголками. */
 export function FramedCorners({ className = "" }: { className?: string }) {
   return (
     <div className={`pointer-events-none absolute inset-0 ${className}`} aria-hidden="true">
-      <CornerFlourish className="absolute left-2 top-2 h-6 w-6 text-gold/45" />
-      <CornerFlourish className="absolute right-2 top-2 h-6 w-6 -scale-x-100 text-gold/45" />
-      <CornerFlourish className="absolute bottom-2 left-2 h-6 w-6 -scale-y-100 text-gold/45" />
-      <CornerFlourish className="absolute bottom-2 right-2 h-6 w-6 -scale-100 text-gold/45" />
+      <CornerFlourish className="absolute left-2 top-2 h-6 w-6 text-accent/45" />
+      <CornerFlourish className="absolute right-2 top-2 h-6 w-6 -scale-x-100 text-accent/45" />
+      <CornerFlourish className="absolute bottom-2 left-2 h-6 w-6 -scale-y-100 text-accent/45" />
+      <CornerFlourish className="absolute bottom-2 right-2 h-6 w-6 -scale-100 text-accent/45" />
     </div>
   );
 }

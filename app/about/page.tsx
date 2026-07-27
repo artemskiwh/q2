@@ -4,9 +4,9 @@ import { PageHero } from "@/components/PageHero";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { Halls } from "@/components/Halls";
-import { Gallery } from "@/components/Gallery";
+import { Gallery, galleryHasPhotos } from "@/components/Gallery";
 import { Icon } from "@/components/Icons";
-import { OrnamentBand, PlateRing, Rosette } from "@/components/Ornament";
+import { Rosette } from "@/components/Ornament";
 import { values } from "@/lib/restaurant";
 
 export const metadata: Metadata = {
@@ -74,16 +74,14 @@ export default function AboutPage() {
           </Reveal>
 
           <Reveal delay={140}>
-            <div className="relative grid aspect-square place-items-center overflow-hidden border border-gold/15 bg-night-card/40">
-              <PlateRing className="absolute inset-[6%] animate-spin-slow text-gold/20" />
-              <PlateRing className="absolute inset-[22%] text-gold/12" />
+            <div className="relative grid aspect-square place-items-center overflow-hidden border border-accent/15 bg-night-card/40">
               <div className="relative z-10 flex flex-col items-center px-10 text-center">
-                <Rosette className="h-9 w-9 text-gold" />
+                <Rosette className="h-9 w-9 text-accent" />
                 <p className="display-xl mt-6 text-[1.7rem] leading-snug text-ink md:text-[2.1rem]">
                   «Стол должен быть щедрым,
                   <br />а вечер — долгим»
                 </p>
-                <span className="mt-6 text-[0.66rem] uppercase tracking-wider3 text-gold/80">
+                <span className="mt-6 text-[0.66rem] uppercase tracking-wider3 text-accent/80">
                   кавказская поговорка
                 </span>
               </div>
@@ -91,8 +89,6 @@ export default function AboutPage() {
           </Reveal>
         </div>
       </section>
-
-      <OrnamentBand />
 
       {/* День на кухне */}
       <section className="section container-page">
@@ -102,11 +98,11 @@ export default function AboutPage() {
           text="Ресторан начинается задолго до того, как в зале зажигают свет."
         />
 
-        <div className="mt-14 grid gap-px overflow-hidden border border-gold/12 bg-gold/12 md:grid-cols-4">
+        <div className="mt-14 grid gap-px overflow-hidden border border-accent/12 bg-accent/12 md:grid-cols-4">
           {CRAFT.map((c, i) => (
             <Reveal key={c.time} delay={i * 100}>
               <div className="group h-full bg-night p-8 transition-colors duration-500 hover:bg-night-card">
-                <span className="display-xl block text-[1.9rem] leading-none text-gold/40 transition-colors group-hover:text-gold">
+                <span className="display-xl block text-[1.9rem] leading-none text-accent/40 transition-colors group-hover:text-accent">
                   {c.time}
                 </span>
                 <h3 className="display-xl mt-5 text-[1.35rem] text-ink">{c.title}</h3>
@@ -118,14 +114,14 @@ export default function AboutPage() {
       </section>
 
       {/* Принципы */}
-      <section className="border-y border-gold/12 bg-night-soft/50">
+      <section className="border-y border-accent/12 bg-night-soft/50">
         <div className="section container-page">
           <SectionHeading eyebrow="Принципы" title="Четыре вещи, на которых держится кухня" />
           <div className="mt-14 grid gap-6 md:grid-cols-2">
             {values.map((v, i) => (
               <Reveal key={v.title} delay={(i % 2) * 110}>
-                <div className="flex h-full gap-5 border border-gold/12 bg-night-card/40 p-7">
-                  <Rosette className="h-7 w-7 shrink-0 text-gold" />
+                <div className="flex h-full gap-5 border border-accent/12 bg-night-card/40 p-7">
+                  <Rosette className="h-7 w-7 shrink-0 text-accent" />
                   <div>
                     <h3 className="display-xl text-[1.4rem] text-ink">{v.title}</h3>
                     <p className="mt-2.5 text-[0.9rem] leading-relaxed text-ink-dim">{v.text}</p>
@@ -147,26 +143,24 @@ export default function AboutPage() {
         <Halls />
       </section>
 
-      {/* Галерея */}
-      <section className="section container-page pt-0">
-        <SectionHeading
-          eyebrow="Атмосфера"
-          title="Как у нас"
-          text="Фотографии зала и подачи скоро появятся здесь."
-        />
-        <Gallery />
-      </section>
+      {/* Галерея — показываем только когда есть фотографии */}
+      {galleryHasPhotos ? (
+        <section className="section container-page pt-0">
+          <SectionHeading eyebrow="Атмосфера" title="Как у нас" />
+          <Gallery />
+        </section>
+      ) : null}
 
       {/* Призыв */}
-      <section className="border-t border-gold/12 bg-night-soft/40">
+      <section className="border-t border-accent/12 bg-night-soft/40">
         <div className="container-page flex flex-col items-center py-20 text-center">
           <Reveal className="flex flex-col items-center">
-            <Rosette className="h-9 w-9 text-gold" />
+            <Rosette className="h-9 w-9 text-accent" />
             <h2 className="display-xl mt-6 text-[1.9rem] text-ink md:text-[2.5rem]">
               Приходите на ужин
             </h2>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/booking" className="btn btn-gold">
+              <Link href="/booking" className="btn btn-white">
                 <Icon.Calendar className="h-4 w-4" />
                 Забронировать стол
               </Link>

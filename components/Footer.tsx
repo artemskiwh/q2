@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { Icon } from "./Icons";
-import { OrnamentBand } from "./Ornament";
 import { restaurant } from "@/lib/restaurant";
 
 const NAV_COLUMNS = [
@@ -27,9 +26,7 @@ const NAV_COLUMNS = [
 
 export function Footer() {
   return (
-    <footer className="relative z-10 mt-auto border-t border-gold/15 bg-night-soft/70">
-      <OrnamentBand />
-
+    <footer className="relative z-10 mt-auto border-t border-accent/15 bg-night-soft/70">
       <div className="container-page grid gap-12 pb-12 pt-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr] md:gap-8">
         <div>
           <Logo />
@@ -46,7 +43,7 @@ export function Footer() {
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label={s.label}
-                  className="grid h-10 w-10 place-items-center border border-gold/20 text-ink/80 transition-all hover:border-gold/60 hover:text-gold"
+                  className="grid h-10 w-10 place-items-center border border-accent/20 text-ink/80 transition-all hover:border-accent/60 hover:text-accent"
                 >
                   <Cmp className="h-[18px] w-[18px]" />
                 </a>
@@ -63,7 +60,7 @@ export function Footer() {
                 <li key={l.href + l.label}>
                   <Link
                     href={l.href}
-                    className="text-sm text-ink-dim transition-colors hover:text-gold"
+                    className="text-sm text-ink-dim transition-colors hover:text-accent"
                   >
                     {l.label}
                   </Link>
@@ -77,7 +74,7 @@ export function Footer() {
           <h3 className="eyebrow">Мы рядом</h3>
           <ul className="mt-5 space-y-4 text-sm text-ink-dim">
             <li className="flex gap-3">
-              <Icon.Pin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+              <Icon.Pin className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
               <span>
                 {restaurant.address.street}
                 <br />
@@ -85,13 +82,13 @@ export function Footer() {
               </span>
             </li>
             <li className="flex gap-3">
-              <Icon.Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-              <a href={`tel:${restaurant.phoneHref}`} className="hover:text-gold">
+              <Icon.Phone className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+              <a href={`tel:${restaurant.phoneHref}`} className="hover:text-accent">
                 {restaurant.phoneLabel}
               </a>
             </li>
             <li className="flex gap-3">
-              <Icon.Clock className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+              <Icon.Clock className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
               <span>
                 {restaurant.hours.map((h) => (
                   <span key={h.days} className="block">

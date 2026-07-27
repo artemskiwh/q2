@@ -33,9 +33,9 @@ export function QuickBooking() {
   return (
     <form
       onSubmit={submit}
-      className="relative mx-auto w-full max-w-4xl border border-gold/20 bg-night-card/70 p-6 backdrop-blur-sm md:p-8"
+      className="relative mx-auto w-full max-w-4xl border border-accent/20 bg-night-card/70 p-6 backdrop-blur-sm md:p-8"
     >
-      <Rosette className="absolute -top-4 left-1/2 h-8 w-8 -translate-x-1/2 bg-night px-1 text-gold/70" />
+      <Rosette className="absolute -top-4 left-1/2 h-8 w-8 -translate-x-1/2 bg-night px-1 text-accent/70" />
 
       <div className="grid gap-4 md:grid-cols-[1.4fr_1fr_1fr_auto] md:items-end">
         <div>
@@ -110,7 +110,7 @@ export function QuickBooking() {
           </div>
         </div>
 
-        <button type="submit" className="btn btn-gold h-[46px]">
+        <button type="submit" className="btn btn-white h-[46px]">
           <Icon.Calendar className="h-4 w-4" />
           Забронировать
         </button>
@@ -127,6 +127,6 @@ export function QuickBooking() {
 
 function Chevron() {
   return (
-    <Icon.ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gold/70" />
+    <Icon.ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-accent/70" />
   );
 }

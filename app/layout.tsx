@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant, Manrope } from "next/font/google";
+import { Montserrat, Manrope } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { restaurant } from "@/lib/restaurant";
 
-const display = Cormorant({
+const display = Montserrat({
   subsets: ["latin", "cyrillic"],
   weight: ["300", "400", "500", "600"],
   variable: "--font-display",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b0b0e",
+  themeColor: "#0a0a0a",
   width: "device-width",
   initialScale: 1,
 };

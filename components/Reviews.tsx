@@ -9,10 +9,10 @@ export function Reviews() {
       <div className="mt-14 grid gap-6 md:grid-cols-3">
       {reviews.map((r, i) => (
         <Reveal key={r.name} as="article" delay={i * 110}>
-          <figure className="relative flex h-full flex-col border border-gold/12 bg-night-card/40 p-8">
-            <Rosette className="absolute right-6 top-6 h-8 w-8 text-gold/12" />
+          <figure className="relative flex h-full flex-col border border-accent/12 bg-night-card/40 p-8">
+            <Rosette className="absolute right-6 top-6 h-8 w-8 text-accent/12" />
 
-            <div className="flex gap-1 text-gold">
+            <div className="flex gap-1 text-accent">
               {Array.from({ length: r.rating }).map((_, s) => (
                 <Icon.Star key={s} className="h-3.5 w-3.5 fill-current" />
               ))}
@@ -22,7 +22,7 @@ export function Reviews() {
               «{r.text}»
             </blockquote>
 
-            <figcaption className="mt-6 border-t border-gold/12 pt-5">
+            <figcaption className="mt-6 border-t border-accent/12 pt-5">
               <span className="block text-ink">{r.name}</span>
               <span className="mt-1 block text-[0.68rem] uppercase tracking-wider2 text-ink-mute">
                 {r.source}

@@ -1,4 +1,4 @@
-import { OrnamentDivider, PlateRing } from "./Ornament";
+import { OrnamentDivider } from "./Ornament";
 
 /** Компактная шапка внутренних страниц. */
 export function PageHero({
@@ -13,7 +13,7 @@ export function PageHero({
   children?: React.ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden border-b border-gold/12 pb-16 pt-[140px] md:pb-20 md:pt-[180px]">
+    <section className="relative overflow-hidden border-b border-accent/12 pb-16 pt-[140px] md:pb-20 md:pt-[180px]">
       <div
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
@@ -21,7 +21,6 @@ export function PageHero({
             "radial-gradient(70% 90% at 50% 0%, #1a1c22 0%, #101116 55%, #0b0b0e 100%)",
         }}
       />
-      <PlateRing className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 text-gold/[0.06]" />
 
       <div className="container-page flex flex-col items-center text-center">
         <span className="eyebrow animate-fade-in">{eyebrow}</span>

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
@@ -11,10 +10,40 @@ import { restaurant } from "@/lib/restaurant";
 
 export const NAV = [
   { href: "/menu", label: "Меню" },
-  { href: "/about", label: "О ресторане" },
   { href: "/booking", label: "Бронирование" },
+  { href: "/about", label: "О ресторане" },
   { href: "/contacts", label: "Контакты" },
 ];
+
+/** Уголки-скобки вокруг кнопки — как на вывеске. */
+function Bracket({
+  side,
+  children,
+}: {
+  side: "left" | "right";
+  children: React.ReactNode;
+}) {
+  const corner = "absolute h-3.5 w-3.5 border-ink/60";
+  return (
+    <span className="relative grid h-12 w-12 place-items-center">
+      <span
+        className={clsx(
+          corner,
+          "top-0",
+          side === "left" ? "left-0 border-l border-t" : "right-0 border-r border-t",
+        )}
+      />
+      <span
+        className={clsx(
+          corner,
+          "bottom-0",
+          side === "left" ? "left-0 border-b border-l" : "right-0 border-b border-r",
+        )}
+      />
+      {children}
+    </span>
+  );
+}
 
 export function Header() {
   const pathname = usePathname();
@@ -34,61 +63,39 @@ export function Header() {
     <>
       <header
         className={clsx(
-          "fixed inset-x-0 top-0 z-40 transition-all duration-500",
-          scrolled
-            ? "border-b border-gold/15 bg-night/90 backdrop-blur-xl"
-            : "border-b border-transparent bg-gradient-to-b from-night/70 to-transparent",
+          "fixed inset-x-0 top-0 z-40 transition-colors duration-500",
+          scrolled ? "bg-night/92 backdrop-blur-xl" : "bg-gradient-to-b from-night/80 to-transparent",
         )}
       >
-        <div className="container-page flex h-[74px] items-center justify-between gap-6 md:h-[86px]">
-          <Logo size="sm" />
-
-          <nav className="hidden items-center gap-9 lg:flex">
-            {NAV.map((item) => {
-              const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={clsx(
-                    "relative py-2 text-[0.7rem] font-medium uppercase tracking-wider2 transition-colors",
-                    active ? "text-gold" : "text-ink/75 hover:text-ink",
-                  )}
-                >
-                  {item.label}
-                  <span
-                    className={clsx(
-                      "absolute -bottom-0.5 left-1/2 h-px -translate-x-1/2 bg-gold transition-all duration-300",
-                      active ? "w-full" : "w-0",
-                    )}
-                  />
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <a
-              href={`tel:${restaurant.phoneHref}`}
-              className="hidden items-center gap-2 text-[0.8rem] tracking-wide text-ink/85 transition-colors hover:text-gold xl:flex"
-            >
-              <Icon.Phone className="h-4 w-4 text-gold" />
+        <div className="container-page flex items-start justify-between gap-4 py-4 md:py-5">
+          <a
+            href={`tel:${restaurant.phoneHref}`}
+            aria-label={`Позвонить ${restaurant.phoneLabel}`}
+            className="flex items-center gap-3 text-ink transition-opacity hover:opacity-70"
+          >
+            <Bracket side="left">
+              <Icon.Phone className="h-5 w-5" />
+            </Bracket>
+            <span className="hidden text-sm tracking-wide lg:block">
               {restaurant.phoneLabel}
-            </a>
+            </span>
+          </a>
 
-            <Link href="/booking" className="btn btn-gold hidden md:inline-flex">
-              Забронировать
-            </Link>
+          <Logo size="md" />
 
-            <button
-              type="button"
-              onClick={() => setOpen(true)}
-              aria-label="Открыть меню"
-              className="grid h-11 w-11 place-items-center border border-gold/25 text-ink transition-colors hover:border-gold/60 lg:hidden"
-            >
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label="Открыть меню"
+            className="flex items-center gap-3 text-ink transition-opacity hover:opacity-70"
+          >
+            <span className="hidden text-[0.7rem] uppercase tracking-wider2 lg:block">
+              Меню
+            </span>
+            <Bracket side="right">
               <Icon.Menu className="h-5 w-5" />
-            </button>
-          </div>
+            </Bracket>
+          </button>
         </div>
       </header>
 

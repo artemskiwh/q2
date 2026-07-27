@@ -1,83 +1,60 @@
 import Link from "next/link";
-import { LogoMedallion } from "./Logo";
-import { PlateRing, OrnamentDivider } from "./Ornament";
-import { Icon } from "./Icons";
+import { withBasePath } from "@/lib/path";
 import { restaurant } from "@/lib/restaurant";
 
+/**
+ * Первый экран: фон на всю высоту, две кнопки по центру и адрес внизу.
+ * Логотип и город стоят в шапке — как на вывеске.
+ */
 export function Hero() {
   return (
-    <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 pb-16 pt-32 md:pt-36">
-      {/* Каменный фон и золотое свечение */}
-      <div
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(70% 55% at 50% 34%, #1c1e25 0%, #101116 45%, #0b0b0e 100%)",
-        }}
-      />
-      <div
-        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.55]"
-        style={{
-          background:
-            "radial-gradient(38% 30% at 50% 38%, rgba(201,162,90,0.18) 0%, transparent 70%)",
-        }}
-      />
+    <section className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden px-5 pb-10 pt-[150px] md:pb-14">
+      {/* Фон: фотография, если она задана, иначе — глубокий чёрный */}
+      {restaurant.heroImage ? (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={withBasePath(restaurant.heroImage)}
+            alt=""
+            className="absolute inset-0 -z-10 h-full w-full object-cover"
+          />
+          <span className="absolute inset-0 -z-10 bg-night/55" />
+        </>
+      ) : (
+        <span
+          className="absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(80% 60% at 50% 40%, #1a1a1a 0%, #101010 55%, #0a0a0a 100%)",
+          }}
+        />
+      )}
 
-      {/* Огромное орнаментальное кольцо, медленно вращается */}
-      <PlateRing className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[min(150vw,1100px)] w-[min(150vw,1100px)] -translate-x-1/2 -translate-y-1/2 animate-spin-slow text-gold/[0.07]" />
-      <PlateRing className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[min(96vw,720px)] w-[min(96vw,720px)] -translate-x-1/2 -translate-y-1/2 text-gold/[0.05]" />
-
-      <p className="eyebrow animate-fade-in text-center">
-        {restaurant.address.city} · {restaurant.address.street}
-      </p>
-
-      <LogoMedallion className="mt-8 w-[min(78vw,340px)] animate-fade-in md:mt-10 md:w-[440px]" />
-
-      <h1 className="sr-only">
-        Pakhlava — ресторан кавказской кухни в Москве
-      </h1>
-
-      <OrnamentDivider className="mt-10 max-w-[380px]" />
-
-      <p className="mt-7 max-w-xl text-center text-[0.98rem] leading-relaxed text-ink-dim md:text-[1.05rem]">
-        Мангал на живых углях виноградной лозы, тандыр с шести утра
-        и пахлава по рецепту, который в семье не меняли сто лет.
-      </p>
-
-      <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-        <Link href="/booking" className="btn btn-gold">
-          <Icon.Calendar className="h-4 w-4" />
-          Забронировать стол
-        </Link>
-        <Link href="/menu" className="btn btn-outline">
-          Смотреть меню
-        </Link>
+      {/* Кнопки по центру экрана */}
+      <div className="flex flex-1 flex-col items-center justify-center">
+        <div className="flex w-full max-w-[340px] flex-col gap-4 animate-fade-in">
+          <Link href="/menu" className="btn btn-outline w-full">
+            Открыть меню
+          </Link>
+          <Link href="/booking" className="btn btn-white w-full">
+            Забронировать
+          </Link>
+        </div>
       </div>
 
-      <div className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[0.68rem] uppercase tracking-wider2 text-ink-mute">
-        <span className="flex items-center gap-2">
-          <Icon.Clock className="h-3.5 w-3.5 text-gold/70" />
-          ежедневно с 12:00
-        </span>
-        <span className="hidden h-3 w-px bg-gold/20 sm:block" />
-        <a
-          href={restaurant.address.mapUrl}
-          target="_blank"
-          rel="noreferrer noopener"
-          className="flex items-center gap-2 transition-colors hover:text-gold"
-        >
-          <Icon.Pin className="h-3.5 w-3.5 text-gold/70" />
-          смотреть на карте
-        </a>
-        <span className="hidden h-3 w-px bg-gold/20 sm:block" />
-        <a
-          href={`tel:${restaurant.phoneHref}`}
-          className="flex items-center gap-2 transition-colors hover:text-gold"
-        >
-          <Icon.Phone className="h-3.5 w-3.5 text-gold/70" />
-          {restaurant.phoneLabel}
-        </a>
-      </div>
+      <h1 className="sr-only">Pakhlava — ресторан кавказской кухни в Казани</h1>
+
+      {/* Адрес внизу экрана */}
+      <a
+        href={restaurant.address.mapUrl}
+        target="_blank"
+        rel="noreferrer noopener"
+        className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center text-[0.82rem] text-ink/80 transition-colors hover:text-ink md:text-[0.9rem]"
+      >
+        <span>{restaurant.address.street}</span>
+        <span className="h-3 w-px bg-white/30" />
+        <span>{restaurant.address.city}</span>
+      </a>
     </section>
   );
 }

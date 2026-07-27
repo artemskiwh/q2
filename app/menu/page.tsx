@@ -23,10 +23,10 @@ export default function MenuPage() {
 
       <MenuView />
 
-      <section className="border-t border-gold/12 bg-night-soft/50">
+      <section className="border-t border-accent/12 bg-night-soft/50">
         <div className="container-page flex flex-col items-center py-20 text-center">
           <Reveal className="flex flex-col items-center">
-            <Rosette className="h-9 w-9 text-gold" />
+            <Rosette className="h-9 w-9 text-accent" />
             <h2 className="display-xl mt-6 text-[1.9rem] text-ink md:text-[2.5rem]">
               Понравилось меню?
             </h2>
@@ -34,7 +34,7 @@ export default function MenuPage() {
               Займите стол заранее — вечером пятницы свободных мест почти
               не остаётся.
             </p>
-            <Link href="/booking" className="btn btn-gold mt-8">
+            <Link href="/booking" className="btn btn-white mt-8">
               <Icon.Calendar className="h-4 w-4" />
               Забронировать стол
             </Link>

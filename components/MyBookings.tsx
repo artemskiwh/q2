@@ -29,7 +29,7 @@ export function MyBookings({ version = 0 }: { version?: number }) {
   if (!bookings.length) {
     return (
       <div className="flex flex-col items-center border border-white/8 bg-night-card/30 px-6 py-16 text-center">
-        <Rosette className="h-9 w-9 text-gold/35" />
+        <Rosette className="h-9 w-9 text-accent/35" />
         <p className="display-xl mt-5 text-[1.5rem] text-ink">Здесь появятся ваши брони</p>
         <p className="mt-3 max-w-sm text-sm leading-relaxed text-ink-mute">
           Забронируйте стол выше — карточка с кодом сохранится в этом браузере,
@@ -80,7 +80,7 @@ function BookingCard({
   return (
     <article
       className={`relative border p-6 transition-opacity ${
-        past ? "border-white/8 bg-night-card/20 opacity-60" : "border-gold/20 bg-night-card/50"
+        past ? "border-white/8 bg-night-card/20 opacity-60" : "border-accent/20 bg-night-card/50"
       }`}
     >
       <div className="flex items-start justify-between gap-4">
@@ -94,7 +94,7 @@ function BookingCard({
             {booking.hallName}
           </span>
         </div>
-        <span className="display-xl shrink-0 text-[1.1rem] tracking-wide text-gold">
+        <span className="display-xl shrink-0 text-[1.1rem] tracking-wide text-accent">
           {booking.code}
         </span>
       </div>

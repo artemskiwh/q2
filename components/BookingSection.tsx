@@ -16,7 +16,7 @@ export function BookingSection() {
         </Suspense>
       </section>
 
-      <section id="my" className="border-t border-gold/12 bg-night-soft/40">
+      <section id="my" className="border-t border-accent/12 bg-night-soft/40">
         <div className="container-page section">
           <SectionHeading
             eyebrow="История"

@@ -1,11 +1,10 @@
 import { Reveal } from "./Reveal";
-import { PlatePlaceholder } from "./Ornament";
 import { withBasePath } from "@/lib/path";
 
 /**
  * Галерея интерьера и подачи.
- * Пока фотографий нет — плитки показывают орнаментальные «тарелки».
- * Достаточно указать путь в `image`, чтобы плитка стала фотографией.
+ * Плитка появляется только тогда, когда для неё указана фотография —
+ * пустых заглушек на странице не остаётся.
  */
 const TILES: { id: string; caption: string; span: string; image?: string }[] = [
   { id: "hall", caption: "Основной зал", span: "md:col-span-2 md:row-span-2" },
@@ -17,23 +16,24 @@ const TILES: { id: string; caption: string; span: string; image?: string }[] = [
   { id: "tea", caption: "Горный чай", span: "" },
 ];
 
+export const galleryHasPhotos = TILES.some((t) => t.image);
+
 export function Gallery() {
+  const tiles = TILES.filter((t) => t.image);
+  if (!tiles.length) return null;
+
   return (
     <div className="mt-14 grid auto-rows-[190px] grid-cols-2 gap-3 md:auto-rows-[210px] md:grid-cols-4">
-      {TILES.map((tile, i) => (
+      {tiles.map((tile, i) => (
         <Reveal key={tile.id} delay={(i % 4) * 90} className={tile.span}>
-          <figure className="group relative h-full overflow-hidden border border-gold/12">
-            {tile.image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={withBasePath(tile.image)}
-                alt={tile.caption}
-                loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            ) : (
-              <PlatePlaceholder size="w-[62%]" />
-            )}
+          <figure className="group relative h-full overflow-hidden border border-white/10">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={withBasePath(tile.image)}
+              alt={tile.caption}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
             <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-night to-transparent px-5 pb-4 pt-10 text-[0.68rem] uppercase tracking-wider2 text-ink/85">
               {tile.caption}
             </figcaption>
