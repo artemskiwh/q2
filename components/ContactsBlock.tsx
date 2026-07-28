@@ -4,7 +4,7 @@ import { restaurant } from "@/lib/restaurant";
 
 export function ContactsBlock() {
   return (
-    <div className="mt-14 grid gap-6 md:grid-cols-3">
+    <div className="grid gap-6 md:grid-cols-3">
       <Reveal>
         <div className="lift flex h-full flex-col border border-white/12 bg-night-card/40 p-8">
           <Icon.Pin className="h-6 w-6 text-accent" />
