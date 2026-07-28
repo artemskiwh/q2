@@ -11,7 +11,6 @@ import {
   isValidPhone,
   makeBookingCode,
   maxDateISO,
-  nextDays,
   timeSlots,
   todayISO,
   type Booking,
@@ -43,7 +42,6 @@ const choice = (active: boolean) =>
 
 export function BookingForm() {
   const params = useSearchParams();
-  const days = useMemo(() => nextDays(14), []);
 
   const [date, setDate] = useState(todayISO());
   const [time, setTime] = useState("");
@@ -129,43 +127,36 @@ export function BookingForm() {
         {/* 01 — дата */}
         <fieldset>
           <Step n={1} title="Дата" />
-          <div className="scrollbar-hide -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
-            {days.map((d) => (
-              <button
-                key={d.iso}
-                type="button"
-                onClick={() => setDate(d.iso)}
-                className={clsx(
-                  "flex w-[76px] shrink-0 flex-col items-center py-3",
-                  choice(date === d.iso),
-                )}
-              >
-                <span className="text-[0.55rem] uppercase tracking-wider2 opacity-70">
-                  {d.weekday}
-                </span>
-                <span className="mt-1.5 text-[1.5rem] font-light leading-none tabular-nums">
-                  {d.day}
-                </span>
-                <span className="mt-1.5 text-[0.58rem] uppercase tracking-wide opacity-70">
-                  {d.month}
-                </span>
-              </button>
-            ))}
-          </div>
+          <div className="relative max-w-sm">
+            <div className="flex items-center gap-4 border border-white/25 bg-white/[0.04] px-5 py-4">
+              <Icon.Calendar className="h-5 w-5 shrink-0 text-ink" />
+              <span className="flex-1 text-[1rem] text-ink">{formatDateRu(date)}</span>
+              <Icon.ChevronDown className="h-4 w-4 shrink-0 text-ink/60" />
+            </div>
 
-          <label className="mt-4 flex flex-wrap items-center gap-3">
-            <span className="text-[0.68rem] uppercase tracking-wider2 text-ink-mute">
-              другая дата
-            </span>
+            {/* Настоящее поле лежит поверх — по клику открывается календарь */}
             <input
               type="date"
               value={date}
               min={todayISO()}
               max={maxDateISO()}
+              aria-label="Дата брони"
               onChange={(e) => e.target.value && setDate(e.target.value)}
-              className="field w-auto py-2 text-sm"
+              onClick={(e) => {
+                const el = e.currentTarget as HTMLInputElement & { showPicker?: () => void };
+                try {
+                  el.showPicker?.();
+                } catch {
+                  /* браузер откроет календарь сам */
+                }
+              }}
+              className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
             />
-          </label>
+          </div>
+
+          <p className="mt-3 text-xs text-ink-mute">
+            Бронируем на ближайшие {restaurant.booking.maxDaysAhead} дней.
+          </p>
         </fieldset>
 
         {/* 02 — время */}
