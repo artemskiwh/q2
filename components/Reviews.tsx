@@ -1,11 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon } from "./Icons";
 import { Reveal } from "./Reveal";
 import { rating, restaurant, reviews, type Review } from "@/lib/restaurant";
 
 const VISIBLE = 4;
+
+/** Цвет кружка-аватара, как в 2ГИС: свой на каждого автора. */
+const AVATAR_COLORS = [
+  "#8a5a34",
+  "#3d7a56",
+  "#3a5f8a",
+  "#7a3a63",
+  "#8a3a3a",
+  "#4a5a7a",
+  "#6d6438",
+  "#3f6f74",
+];
+
+function avatarColor(name: string) {
+  let sum = 0;
+  for (let i = 0; i < name.length; i += 1) sum += name.charCodeAt(i);
+  return AVATAR_COLORS[sum % AVATAR_COLORS.length];
+}
 
 /** Ряд звёзд: закрашенные — белые, остальные — контурные. */
 function Stars({ value = 5, className = "" }: { value?: number; className?: string }) {
@@ -42,18 +60,9 @@ export function Reviews() {
 
           <span className="hidden h-10 w-px bg-white/12 sm:block" />
 
-          <div className="flex flex-1 items-center justify-between gap-4 border-t border-white/10 pt-4 sm:border-t-0 sm:pt-0">
-            <span className="text-sm text-ink-dim">{rating.reviews} отзывов на 2ГИС</span>
-            <a
-              href={restaurant.reviewsUrl}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-wider2 text-ink transition-all hover:gap-3"
-            >
-              Открыть 2ГИС
-              <Icon.Arrow className="h-3.5 w-3.5" />
-            </a>
-          </div>
+          <span className="border-t border-white/10 pt-4 text-sm text-ink-dim sm:border-t-0 sm:pt-0">
+            {rating.reviews} отзывов на 2ГИС
+          </span>
         </div>
       </Reveal>
 
@@ -70,20 +79,60 @@ export function Reviews() {
         <button
           type="button"
           onClick={() => setExpanded(true)}
-          className="btn btn-ghost mt-6 w-full"
+          className="btn btn-ghost mt-4 w-full"
         >
           Показать ещё {reviews.length - VISIBLE}
         </button>
       ) : null}
+
+      {expanded ? (
+        <button
+          type="button"
+          onClick={() => setExpanded(false)}
+          className="btn btn-ghost mt-4 w-full"
+        >
+          Свернуть отзывы
+        </button>
+      ) : null}
+
+      {/* Ссылка на все отзывы */}
+      <a
+        href={restaurant.reviewsUrl}
+        target="_blank"
+        rel="noreferrer noopener"
+        className="btn btn-outline mt-4 w-full"
+      >
+        Все {rating.reviews} отзывов на 2ГИС
+        <Icon.Arrow className="h-4 w-4" />
+      </a>
     </div>
   );
 }
 
 function ReviewCard({ review, first }: { review: Review; first: boolean }) {
+  const textRef = useRef<HTMLParagraphElement>(null);
+  const [open, setOpen] = useState(false);
+  const [clipped, setClipped] = useState(false);
+
+  /* Кнопку показываем только если текст правда не поместился в три строки */
+  useEffect(() => {
+    const el = textRef.current;
+    if (!el) return;
+    const check = () => setClipped(el.scrollHeight - el.clientHeight > 4);
+    check();
+    const observer = new ResizeObserver(check);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <article className={`p-6 md:p-7 ${first ? "" : "border-t border-white/8"}`}>
       <header className="flex items-center gap-3">
-        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/20 bg-white/5 text-[0.72rem] tracking-wide text-ink">
+        <span
+          className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-[0.78rem] font-medium tracking-wide text-white"
+          style={{ backgroundColor: avatarColor(review.name) }}
+          aria-hidden="true"
+        >
           {review.initials}
         </span>
         <span className="min-w-0">
@@ -100,17 +149,23 @@ function ReviewCard({ review, first }: { review: Review; first: boolean }) {
         </span>
       </div>
 
-      <p className="mt-3 text-[0.92rem] leading-relaxed text-ink-dim">{review.text}</p>
+      <p
+        ref={textRef}
+        className={`mt-3 text-[0.92rem] leading-relaxed text-ink-dim ${
+          open ? "" : "line-clamp-3"
+        }`}
+      >
+        {review.text}
+      </p>
 
-      {review.truncated ? (
-        <a
-          href={restaurant.reviewsUrl}
-          target="_blank"
-          rel="noreferrer noopener"
-          className="mt-2 inline-block text-[0.85rem] text-ink underline underline-offset-4 hover:opacity-70"
+      {clipped || open ? (
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className="mt-2 text-[0.85rem] text-ink underline underline-offset-4 transition-opacity hover:opacity-70"
         >
-          Читать целиком
-        </a>
+          {open ? "Свернуть" : "Читать целиком"}
+        </button>
       ) : null}
 
       <div className="mt-4 flex items-center gap-3 text-[0.75rem]">
