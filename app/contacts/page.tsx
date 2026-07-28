@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
+import { MapBlock } from "@/components/MapBlock";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ContactsBlock } from "@/components/ContactsBlock";
 import { Reveal } from "@/components/Reveal";
@@ -47,34 +48,7 @@ export default function ContactsPage() {
       {/* Карта */}
       <section className="container-page pb-14 md:pb-20">
         <Reveal>
-          <a
-            href={restaurant.address.mapUrl}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="group relative grid h-[320px] place-items-center overflow-hidden border border-accent/15 bg-night-card/40 md:h-[420px]"
-          >
-            <div
-              className="absolute inset-0 opacity-[0.14]"
-              style={{
-                backgroundImage:
-                  "linear-gradient(rgba(201,162,90,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(201,162,90,0.5) 1px, transparent 1px)",
-                backgroundSize: "64px 64px",
-              }}
-            />
-            <div className="relative z-10 flex flex-col items-center text-center">
-              <span className="grid h-14 w-14 place-items-center rounded-full border border-accent/40 bg-night/80">
-                <Icon.Pin className="h-6 w-6 text-accent" />
-              </span>
-              <span className="display-xl mt-5 text-[1.6rem] text-ink md:text-[2rem]">
-                {restaurant.address.street}
-              </span>
-              <span className="mt-2 text-sm text-ink-dim">{restaurant.address.city}</span>
-              <span className="mt-6 inline-flex items-center gap-2 text-[0.68rem] uppercase tracking-wider2 text-accent transition-all group-hover:gap-3">
-                Построить маршрут
-                <Icon.Arrow className="h-3.5 w-3.5" />
-              </span>
-            </div>
-          </a>
+          <MapBlock />
         </Reveal>
       </section>
 
