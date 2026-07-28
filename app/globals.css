@@ -336,6 +336,34 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 }
 
+/* Кнопки первого экрана: крупнее, с воздухом, читаются поверх фотографии */
+.btn-hero {
+  min-height: 3.5rem;
+  padding: 1.1rem 2.2rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+}
+.btn-hero.btn-white {
+  box-shadow: 0 14px 38px -16px rgba(0, 0, 0, 0.9);
+}
+.btn-hero.btn-outline,
+.btn-outline.btn-hero.btn-static:hover,
+.btn-outline.btn-hero.btn-static:active,
+.btn-outline.btn-hero.btn-static:focus {
+  border-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(10, 10, 10, 0.34);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+@media (min-width: 768px) {
+  .btn-hero {
+    min-height: 3.75rem;
+    padding: 1.2rem 2.6rem;
+    font-size: 0.8rem;
+  }
+}
+
 /* Кнопка без реакции на наведение и нажатие — вид всегда один */
 .btn-static,
 .btn-static:hover,

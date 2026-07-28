@@ -46,11 +46,17 @@ export function Hero() {
           className="flex w-full max-w-[340px] animate-reveal-up flex-col items-center gap-4 md:w-auto md:max-w-none md:flex-row md:gap-5"
           style={{ animationDelay: "120ms" }}
         >
-          <Link href="/menu" className="btn btn-outline btn-static w-full md:w-[240px]">
+          <Link
+            href="/menu"
+            className="btn btn-outline btn-static btn-hero w-full md:w-[260px]"
+          >
             Открыть меню
           </Link>
-          <Link href="/booking" className="btn btn-white btn-static w-full md:w-[240px]">
-            Забронировать
+          <Link
+            href="/booking"
+            className="btn btn-white btn-static btn-hero w-full md:w-[260px]"
+          >
+            Забронировать стол
           </Link>
         </div>
       </div>
