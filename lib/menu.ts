@@ -1,7 +1,8 @@
 /**
- * Меню ресторана Pakhlava — черновая наполненность.
- * Фотографии добавляются полем `image` (путь от /public, например "/img/menu/khinkali.jpg").
- * Пока фото нет — карточка показывает орнаментальную заглушку в фирменном стиле.
+ * Меню ресторана Pakhlava.
+ * Фотография блюда добавляется полем `image` — путь от /public,
+ * например "/img/menu/lagman.jpg". Пока снимка нет, карточка
+ * показывает ровную плашку того же размера.
  */
 
 export type DishTag = "hit" | "spicy" | "veg" | "new" | "chef";
@@ -45,6 +46,15 @@ export const categories: MenuCategory[] = [
 
 export const dishes: Dish[] = [
   // ——— Закуски ———
+  {
+    id: "cheese-batter",
+    category: "zakuski",
+    name: "Сыр в кляре",
+    description: "Сулугуни в хрустящем кляре, подаём горячим",
+    price: 520,
+    weight: "180 г",
+    image: "/img/menu/cheese-batter.jpg",
+  },
   {
     id: "pkhali",
     category: "zakuski",
@@ -102,6 +112,33 @@ export const dishes: Dish[] = [
 
   // ——— Салаты ———
   {
+    id: "olivie",
+    category: "salads",
+    name: "Оливье",
+    description: "Отварная говядина, картофель, солёный огурец и яйцо, домашний майонез",
+    price: 490,
+    weight: "250 г",
+    image: "/img/menu/olivie.jpg",
+  },
+  {
+    id: "olivie-salmon",
+    category: "salads",
+    name: "Оливье с лососем",
+    description: "Тот же салат, но со слабосолёным лососем и хрустящими чипсами из водорослей",
+    price: 690,
+    weight: "250 г",
+    image: "/img/menu/olivie-salmon.jpg",
+  },
+  {
+    id: "salad-beetroot",
+    category: "salads",
+    name: "Салат со свёклой и яблоком",
+    description: "Печёная свёкла, яблоко, шпинат, грецкий орех и сливочная заправка",
+    price: 590,
+    weight: "240 г",
+    image: "/img/menu/salad-beetroot.jpg",
+  },
+  {
     id: "salad-tbilisi",
     category: "salads",
     name: "Тбилисский с говядиной",
@@ -139,6 +176,15 @@ export const dishes: Dish[] = [
   },
 
   // ——— Супы ———
+  {
+    id: "lagman",
+    category: "soups",
+    name: "Лагман",
+    description: "Вытянутая вручную лапша, говядина, сладкий перец и картофель в наваристом бульоне",
+    price: 690,
+    weight: "400 г",
+    image: "/img/menu/lagman.jpg",
+  },
   {
     id: "kharcho",
     category: "soups",
@@ -220,6 +266,42 @@ export const dishes: Dish[] = [
 
   // ——— Мангал ———
   {
+    id: "shashlik-mushrooms",
+    category: "mangal",
+    name: "Шашлык из шампиньонов",
+    description: "Крупные шампиньоны на углях, лаваш, маринованный лук и томатный соус",
+    price: 590,
+    weight: "220 г",
+    image: "/img/menu/shashlik-mushrooms.jpg",
+  },
+  {
+    id: "shashlik-shrimp",
+    category: "mangal",
+    name: "Шашлык из креветок",
+    description: "Тигровые креветки на углях, лайм и бальзамический соус",
+    price: 890,
+    weight: "180 г",
+    image: "/img/menu/shashlik-shrimp.jpg",
+  },
+  {
+    id: "suluguni-lavash",
+    category: "mangal",
+    name: "Сулугуни на мангале",
+    description: "Сыр в тонком лаваше, обжаренный на углях до румяной корочки",
+    price: 590,
+    weight: "200 г",
+    image: "/img/menu/suluguni-lavash.jpg",
+  },
+  {
+    id: "potato-mangal",
+    category: "mangal",
+    name: "Картофель на мангале",
+    description: "Молодой картофель на шампуре, маринованный лук и томатный соус",
+    price: 450,
+    weight: "250 г",
+    image: "/img/menu/potato-mangal.jpg",
+  },
+  {
     id: "shashlik-lamb",
     category: "mangal",
     name: "Шашлык из бараньей корейки",
@@ -274,9 +356,10 @@ export const dishes: Dish[] = [
     id: "veg-mangal",
     category: "mangal",
     name: "Овощи с мангала",
-    description: "Баклажан, перец, помидор и лук с дымком, кинза и чеснок",
+    description: "Баклажан, перец, помидор, кабачок и шампиньоны с дымком",
     price: 590,
     weight: "300 г",
+    image: "/img/menu/veg-mangal.jpg",
     tags: ["veg"],
   },
   {
@@ -291,12 +374,22 @@ export const dishes: Dish[] = [
 
   // ——— Горячие блюда ———
   {
+    id: "khinkal",
+    category: "hot",
+    name: "Хинкал",
+    description: "Тонкие пласты теста, отварное мясо, томатный и чесночный соусы",
+    price: 690,
+    weight: "400 г",
+    image: "/img/menu/khinkal.jpg",
+  },
+  {
     id: "chanakhi",
     category: "hot",
     name: "Чанахи в глиняном горшочке",
     description: "Баранина, баклажан, картофель и томаты, томлённые в печи два часа",
     price: 990,
     weight: "450 г",
+    image: "/img/menu/chanakhi.jpg",
     tags: ["chef"],
   },
   {
@@ -344,6 +437,15 @@ export const dishes: Dish[] = [
   },
 
   // ——— Тандыр и хачапури ———
+  {
+    id: "pite",
+    category: "bread",
+    name: "Пите",
+    description: "Горячая лепёшка с мясом, помидором, огурцом и красным луком, обжаренная на гриле",
+    price: 690,
+    weight: "350 г",
+    image: "/img/menu/pite.jpg",
+  },
   {
     id: "khachapuri-adjarian",
     category: "bread",
@@ -510,12 +612,12 @@ export const dishes: Dish[] = [
 
 /** Блюда для витрины на главной. */
 export const signatureIds = [
-  "shashlik-lamb",
-  "khinkali-beef",
-  "khachapuri-adjarian",
-  "salad-tbilisi",
   "chanakhi",
-  "baklava",
+  "khinkal",
+  "lagman",
+  "shashlik-shrimp",
+  "olivie",
+  "suluguni-lavash",
 ];
 
 export const signatureDishes = signatureIds
