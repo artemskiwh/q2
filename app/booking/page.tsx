@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/PageHero";
 import { BookingSection } from "@/components/BookingSection";
 
 export const metadata: Metadata = {
@@ -11,10 +10,7 @@ export const metadata: Metadata = {
 export default function BookingPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Онлайн-запись"
-        title="Бронирование стола"
-      />
+      <h1 className="sr-only">Бронирование стола в ресторане Pakhlava</h1>
       <BookingSection />
     </>
   );

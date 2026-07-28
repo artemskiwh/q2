@@ -5,7 +5,7 @@ import { BookingForm } from "./BookingForm";
 
 export function BookingSection() {
   return (
-    <section className="container-page py-14 pb-28 md:py-20 lg:pb-20">
+    <section className="container-page pb-28 pt-[150px] md:pt-[185px] lg:pb-20">
       <Suspense fallback={<FormSkeleton />}>
         <BookingForm />
       </Suspense>

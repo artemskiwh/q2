@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PageHero } from "@/components/PageHero";
 import { MenuView } from "@/components/MenuView";
 import { Icon } from "@/components/Icons";
 import { Rosette } from "@/components/Ornament";
@@ -15,10 +14,7 @@ export const metadata: Metadata = {
 export default function MenuPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Кухня высоких гор"
-        title="Меню"
-      />
+      <h1 className="sr-only">Меню ресторана Pakhlava</h1>
 
       <MenuView />
 

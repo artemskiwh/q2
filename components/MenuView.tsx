@@ -22,6 +22,9 @@ export function MenuView() {
 
   return (
     <>
+      {/* Место под фиксированную шапку */}
+      <div style={{ height: "var(--header-h, 96px)" }} aria-hidden="true" />
+
       {/* Поиск — липнет под шапкой и остаётся хорошо читаемым */}
       <div
         className="sticky z-30 border-b border-white/15 bg-night shadow-[0_18px_40px_-24px_rgba(0,0,0,1)]"
