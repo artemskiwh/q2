@@ -6,8 +6,6 @@ import { DishCard } from "./DishCard";
 import { OrnamentDivider } from "./Ornament";
 import { Reveal } from "./Reveal";
 import { categories, dishes } from "@/lib/menu";
-import { restaurant } from "@/lib/restaurant";
-import { withBasePath } from "@/lib/path";
 
 export function MenuView() {
   const [query, setQuery] = useState("");
@@ -29,23 +27,9 @@ export function MenuView() {
 
       {/* Поиск — липнет под шапкой и остаётся хорошо читаемым */}
       <div
-        className="sticky z-30 overflow-hidden border-b border-white/15 shadow-[0_18px_40px_-24px_rgba(0,0,0,1)]"
+        className="sticky z-30 border-b border-white/15 bg-night-card shadow-[0_18px_40px_-24px_rgba(0,0,0,1)]"
         style={{ top: "var(--header-h, 96px)" }}
       >
-        {/* Фон — та же фотография зала, что и на первом экране */}
-        {restaurant.heroImage ? (
-          <>
-            <span
-              aria-hidden="true"
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${withBasePath(restaurant.heroImage)})` }}
-            />
-            <span aria-hidden="true" className="absolute inset-0 bg-night/80 backdrop-blur-[2px]" />
-          </>
-        ) : (
-          <span aria-hidden="true" className="absolute inset-0 bg-night" />
-        )}
-
         <div className="container-page relative py-4">
           <div className="relative mx-auto max-w-xl">
             <Icon.Search className="pointer-events-none absolute left-4 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-ink" />

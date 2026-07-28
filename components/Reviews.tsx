@@ -45,29 +45,8 @@ export function Reviews() {
 
   return (
     <div className="mx-auto mt-12 max-w-[760px]">
-      {/* Шапка с оценкой — как карточка заведения в 2ГИС */}
-      <Reveal>
-        <div className="flex flex-col gap-5 border border-white/12 p-6 sm:flex-row sm:items-center sm:gap-8 md:p-7">
-          <div className="flex items-center gap-4">
-            <span className="text-[3rem] font-light leading-none tabular-nums text-ink">
-              {String(rating.score).replace(".", ",")}
-            </span>
-            <span className="flex flex-col gap-1.5">
-              <Stars value={5} />
-              <span className="text-[0.72rem] text-ink-mute">{rating.scores} оценок</span>
-            </span>
-          </div>
-
-          <span className="hidden h-10 w-px bg-white/12 sm:block" />
-
-          <span className="border-t border-white/10 pt-4 text-sm text-ink-dim sm:border-t-0 sm:pt-0">
-            {rating.reviews} отзывов на 2ГИС
-          </span>
-        </div>
-      </Reveal>
-
       {/* Лента отзывов */}
-      <div className="mt-4 border border-white/12">
+      <div className="border border-white/12">
         {shown.map((r, i) => (
           <Reveal key={r.name + r.date} delay={Math.min(i, 3) * 90}>
             <ReviewCard review={r} first={i === 0} />
