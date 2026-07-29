@@ -16,8 +16,8 @@ const NAV_COLUMNS = [
     title: "Гостям",
     links: [
       { href: "/booking", label: "Забронировать стол" },
-      { href: "/menu#mangal", label: "Мангал" },
-      { href: "/menu#desserts", label: "Десерты" },
+      { href: "/menu#mangal", label: "Мангал и гриль" },
+      { href: "/menu#soups", label: "Супы" },
     ],
   },
 ];
