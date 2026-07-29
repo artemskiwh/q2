@@ -13,19 +13,35 @@ import {
   maxDateISO,
   timeSlots,
   todayISO,
+  toISODate,
   type Booking,
 } from "@/lib/booking";
 import { restaurant } from "@/lib/restaurant";
 
-/** Заголовок шага формы: номер, название и линия. */
-function Step({ n, title, hint }: { n: number; title: string; hint?: string }) {
+/** Заголовок шага: номер в кружке, название и галочка, когда шаг заполнен. */
+function Step({
+  n,
+  title,
+  hint,
+  done,
+}: {
+  n: number;
+  title: string;
+  hint?: string;
+  done?: boolean;
+}) {
   return (
-    <div className="mb-5 flex items-baseline gap-4">
-      <span className="text-[0.7rem] tabular-nums text-ink-mute">
-        {String(n).padStart(2, "0")}
+    <div className="mb-5 flex items-center gap-3">
+      <span
+        className={clsx(
+          "grid h-7 w-7 shrink-0 place-items-center rounded-full border text-[0.66rem] tabular-nums transition-colors duration-300",
+          done ? "border-white bg-white text-night" : "border-white/25 text-ink-mute",
+        )}
+      >
+        {done ? <Icon.Check className="h-3.5 w-3.5" /> : n}
       </span>
-      <span className="text-[0.72rem] uppercase tracking-wider2 text-ink">{title}</span>
-      {hint ? <span className="text-[0.72rem] text-ink-mute">{hint}</span> : null}
+      <span className="text-[0.74rem] uppercase tracking-wider2 text-ink">{title}</span>
+      {hint ? <span className="text-[0.74rem] text-ink-mute">{hint}</span> : null}
       <span className="h-px flex-1 bg-white/10" />
     </div>
   );
@@ -39,6 +55,18 @@ const choice = (active: boolean) =>
       ? "border-white bg-white text-night"
       : "border-white/15 text-ink-dim hover:border-white/50 hover:text-ink",
   );
+
+/** Подсказка об ошибке под шагом. */
+function Hint({ text }: { text: string }) {
+  return (
+    <p className="mt-3 flex items-center gap-2 text-[0.82rem] text-ink" role="alert">
+      <span className="grid h-4 w-4 shrink-0 place-items-center rounded-full border border-white/60 text-[0.6rem]">
+        !
+      </span>
+      {text}
+    </p>
+  );
+}
 
 export function BookingForm() {
   const params = useSearchParams();
@@ -55,6 +83,20 @@ export function BookingForm() {
   const [result, setResult] = useState<Booking | null>(null);
 
   const slots = useMemo(() => timeSlots(date), [date]);
+
+  /* Слоты делим на день и вечер — так их проще разглядеть */
+  const { day, evening } = useMemo(() => {
+    const day: string[] = [];
+    const evening: string[] = [];
+    slots.forEach((s) => (Number(s.slice(0, 2)) < 17 ? day : evening).push(s));
+    return { day, evening };
+  }, [slots]);
+
+  const tomorrow = useMemo(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    return toISODate(d);
+  }, []);
 
   /* Предзаполнение из адресной строки */
   useEffect(() => {
@@ -78,15 +120,15 @@ export function BookingForm() {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    setTouched({ name: true, phone: true });
+    setTouched({ name: true, phone: true, time: true });
 
     if (!time) {
-      setError("Выберите время — свободные слоты в шаге 02.");
+      setError("Выберите время");
       document.getElementById("step-time")?.scrollIntoView({ block: "center" });
       return;
     }
     if (!nameValid || !phoneValid) {
-      setError("Оставьте имя и телефон — по ним подтвердим бронь.");
+      setError("Оставьте имя и телефон — по ним подтвердим бронь");
       document.getElementById("step-contacts")?.scrollIntoView({ block: "center" });
       return;
     }
@@ -116,187 +158,243 @@ export function BookingForm() {
           setPhone("");
           setComment("");
           setTouched({});
+          setError("");
         }}
       />
     );
   }
 
+  const guestWord = guests === 1 ? "гость" : guests < 5 ? "гостя" : "гостей";
+
   return (
-    <form onSubmit={submit} className="grid gap-12 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-16">
-      <div className="min-w-0 space-y-12">
-        {/* 01 — дата */}
-        <fieldset>
-          <Step n={1} title="Дата" />
-          <div className="relative max-w-sm">
-            <div className="flex items-center gap-4 border border-white/25 bg-white/[0.04] px-5 py-4">
-              <Icon.Calendar className="h-5 w-5 shrink-0 text-ink" />
-              <span className="flex-1 text-[1rem] text-ink">{formatDateRu(date)}</span>
-              <Icon.ChevronDown className="h-4 w-4 shrink-0 text-ink/60" />
-            </div>
+    <form
+      onSubmit={submit}
+      className="grid gap-10 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:gap-12"
+    >
+      <div className="min-w-0 border border-white/12 bg-night-card/40 p-6 md:p-9">
+        <div className="space-y-11">
+          {/* 01 — дата */}
+          <fieldset>
+            <Step n={1} title="Дата" done />
 
-            {/* Настоящее поле лежит поверх — по клику открывается календарь */}
-            <input
-              type="date"
-              value={date}
-              min={todayISO()}
-              max={maxDateISO()}
-              aria-label="Дата брони"
-              onChange={(e) => e.target.value && setDate(e.target.value)}
-              onClick={(e) => {
-                const el = e.currentTarget as HTMLInputElement & { showPicker?: () => void };
-                try {
-                  el.showPicker?.();
-                } catch {
-                  /* браузер откроет календарь сам */
-                }
-              }}
-              className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-            />
-          </div>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setDate(todayISO())}
+                className={clsx("px-5 py-2.5 text-sm", choice(date === todayISO()))}
+              >
+                Сегодня
+              </button>
+              <button
+                type="button"
+                onClick={() => setDate(tomorrow)}
+                className={clsx("px-5 py-2.5 text-sm", choice(date === tomorrow))}
+              >
+                Завтра
+              </button>
 
-          <p className="mt-3 text-xs text-ink-mute">
-            Бронируем на ближайшие {restaurant.booking.maxDaysAhead} дней.
-          </p>
-        </fieldset>
-
-        {/* 02 — время */}
-        <fieldset id="step-time">
-          <Step n={2} title="Время" hint={formatDateRu(date)} />
-          {slots.length ? (
-            <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 lg:grid-cols-8">
-              {slots.map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  onClick={() => {
-                    setTime(s);
-                    setError("");
-                  }}
-                  className={clsx("py-2.5 text-sm tabular-nums", choice(time === s))}
+              <div className="relative min-w-[220px] flex-1">
+                <div
+                  className={clsx(
+                    "flex h-full items-center gap-3 border px-4 py-2.5",
+                    date !== todayISO() && date !== tomorrow
+                      ? "border-white bg-white text-night"
+                      : "border-white/15 text-ink-dim",
+                  )}
                 >
-                  {s}
-                </button>
-              ))}
-            </div>
-          ) : (
-            <p className="border border-white/12 p-5 text-sm text-ink-dim">
-              На сегодня онлайн-бронь закрыта. Выберите завтрашний день или позвоните
-              — часто мы находим стол и в последний момент.
-            </p>
-          )}
-        </fieldset>
+                  <Icon.Calendar className="h-4 w-4 shrink-0" />
+                  <span className="flex-1 text-sm">{formatDateRu(date)}</span>
+                  <Icon.ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
+                </div>
 
-        {/* 03 — гости */}
-        <fieldset>
-          <Step n={3} title="Гости" />
-          <div className="flex flex-wrap gap-2">
-            {Array.from({ length: restaurant.booking.maxGuestsOnline }, (_, i) => i + 1).map(
-              (n) => (
+                <input
+                  type="date"
+                  value={date}
+                  min={todayISO()}
+                  max={maxDateISO()}
+                  aria-label="Другая дата"
+                  onChange={(e) => e.target.value && setDate(e.target.value)}
+                  onClick={(e) => {
+                    const el = e.currentTarget as HTMLInputElement & {
+                      showPicker?: () => void;
+                    };
+                    try {
+                      el.showPicker?.();
+                    } catch {
+                      /* браузер откроет календарь сам */
+                    }
+                  }}
+                  className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                />
+              </div>
+            </div>
+          </fieldset>
+
+          {/* 02 — время */}
+          <fieldset id="step-time">
+            <Step n={2} title="Время" done={Boolean(time)} />
+
+            {slots.length ? (
+              <div className="space-y-5">
+                {[
+                  ["Днём", day],
+                  ["Вечером", evening],
+                ].map(([label, list]) =>
+                  (list as string[]).length ? (
+                    <div key={label as string}>
+                      <p className="mb-2.5 text-[0.68rem] uppercase tracking-wider2 text-ink-mute">
+                        {label as string}
+                      </p>
+                      <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 lg:grid-cols-7">
+                        {(list as string[]).map((s) => (
+                          <button
+                            key={s}
+                            type="button"
+                            onClick={() => {
+                              setTime(s);
+                              setError("");
+                            }}
+                            className={clsx("py-2.5 text-sm tabular-nums", choice(time === s))}
+                          >
+                            {s}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null,
+                )}
+              </div>
+            ) : (
+              <p className="border border-white/12 p-5 text-sm text-ink-dim">
+                На сегодня онлайн-бронь закрыта. Выберите завтрашний день или позвоните
+                — часто мы находим стол и в последний момент.
+              </p>
+            )}
+
+            {touched.time && !time ? <Hint text="Выберите время" /> : null}
+          </fieldset>
+
+          {/* 03 — гости */}
+          <fieldset>
+            <Step n={3} title="Гости" hint={`${guests} ${guestWord}`} done />
+            <div className="flex flex-wrap gap-2">
+              {Array.from(
+                { length: restaurant.booking.maxGuestsOnline },
+                (_, i) => i + 1,
+              ).map((n) => (
                 <button
                   key={n}
                   type="button"
                   onClick={() => setGuests(n)}
-                  className={clsx("h-11 w-11 text-sm tabular-nums", choice(guests === n))}
+                  className={clsx("h-12 w-12 text-sm tabular-nums", choice(guests === n))}
                 >
                   {n}
                 </button>
-              ),
-            )}
-          </div>
-          <p className="mt-3 text-xs text-ink-mute">
-            Компанию больше {restaurant.booking.maxGuestsOnline} гостей соберём отдельно —{" "}
-            <a href={`tel:${restaurant.phoneHref}`} className="text-ink underline underline-offset-4">
-              позвоните нам
-            </a>
-            .
-          </p>
-        </fieldset>
-
-        {/* 04 — контакты */}
-        <fieldset id="step-contacts">
-          <Step n={4} title="Ваши данные" />
-          <div className="grid gap-5 sm:grid-cols-2">
-            <div>
-              <label className="label" htmlFor="bf-name">
-                Имя
-              </label>
-              <input
-                id="bf-name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                onBlur={() => setTouched((t) => ({ ...t, name: true }))}
-                placeholder="Как к вам обращаться"
-                autoComplete="name"
-                className={clsx("field", touched.name && !nameValid && "field-invalid")}
-              />
-              {touched.name && !nameValid ? (
-                <p className="mt-2 text-xs text-ink-dim">Напишите имя целиком</p>
-              ) : null}
+              ))}
             </div>
+            <p className="mt-3 text-xs text-ink-mute">
+              Компанию больше {restaurant.booking.maxGuestsOnline} гостей соберём отдельно —{" "}
+              <a
+                href={`tel:${restaurant.phoneHref}`}
+                className="text-ink underline underline-offset-4"
+              >
+                позвоните нам
+              </a>
+              .
+            </p>
+          </fieldset>
 
-            <div>
-              <label className="label" htmlFor="bf-phone">
-                Телефон
-              </label>
-              <input
-                id="bf-phone"
-                value={phone}
-                inputMode="tel"
-                autoComplete="tel"
-                onChange={(e) => setPhone(formatPhone(e.target.value))}
-                onFocus={() => !phone && setPhone("+7 (")}
-                onBlur={() => setTouched((t) => ({ ...t, phone: true }))}
-                placeholder="+7 (___) ___-__-__"
-                className={clsx("field", touched.phone && !phoneValid && "field-invalid")}
-              />
-              {touched.phone && !phoneValid ? (
-                <p className="mt-2 text-xs text-ink-dim">Нужны все 11 цифр номера</p>
-              ) : null}
+          {/* 04 — контакты */}
+          <fieldset id="step-contacts">
+            <Step n={4} title="Ваши данные" done={nameValid && phoneValid} />
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label className="label" htmlFor="bf-name">
+                  Имя
+                </label>
+                <input
+                  id="bf-name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  onBlur={() => setTouched((t) => ({ ...t, name: true }))}
+                  placeholder="Как к вам обращаться"
+                  autoComplete="name"
+                  className={clsx("field", touched.name && !nameValid && "field-invalid")}
+                />
+                {touched.name && !nameValid ? (
+                  <p className="mt-2 text-xs text-ink-dim">Напишите имя целиком</p>
+                ) : null}
+              </div>
+
+              <div>
+                <label className="label" htmlFor="bf-phone">
+                  Телефон
+                </label>
+                <input
+                  id="bf-phone"
+                  value={phone}
+                  inputMode="tel"
+                  autoComplete="tel"
+                  onChange={(e) => setPhone(formatPhone(e.target.value))}
+                  onFocus={() => !phone && setPhone("+7 (")}
+                  onBlur={() => setTouched((t) => ({ ...t, phone: true }))}
+                  placeholder="+7 (___) ___-__-__"
+                  className={clsx("field", touched.phone && !phoneValid && "field-invalid")}
+                />
+                {touched.phone && !phoneValid ? (
+                  <p className="mt-2 text-xs text-ink-dim">Нужны все 11 цифр номера</p>
+                ) : null}
+              </div>
             </div>
-          </div>
-        </fieldset>
+          </fieldset>
 
-        {/* 05 — пожелания */}
-        <fieldset>
-          <Step n={5} title="Пожелания" hint="необязательно" />
-          <textarea
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            rows={3}
-            maxLength={500}
-            placeholder="Стол у окна, детский стул, торт к десерту, аллергии…"
-            aria-label="Пожелания"
-            className="field resize-none"
-          />
-        </fieldset>
+          {/* 05 — пожелания */}
+          <fieldset>
+            <Step n={5} title="Пожелания" hint="необязательно" done={Boolean(comment.trim())} />
+            <textarea
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              rows={3}
+              maxLength={500}
+              placeholder="Стол у окна, детский стул, торт к десерту, аллергии…"
+              aria-label="Пожелания"
+              className="field resize-none"
+            />
+          </fieldset>
+        </div>
       </div>
 
       {/* Сводка */}
       <aside className="min-w-0 lg:sticky lg:top-[130px] lg:self-start">
-        <div className="border border-white/15 p-7">
+        <div className="border border-white/20 bg-night-card/60 p-7">
           <span className="text-[0.68rem] uppercase tracking-wider2 text-ink-mute">
             Ваша бронь
           </span>
 
+          <p className="display-xl mt-4 text-[1.6rem] leading-tight text-ink">
+            {formatDateRu(date, false)}
+            {time ? <span className="text-ink">, {time}</span> : null}
+          </p>
+          <p className="mt-1.5 text-[0.85rem] text-ink-dim">
+            {guests} {guestWord}
+            {time ? "" : " · время не выбрано"}
+          </p>
+
+          <OrnamentDivider className="mt-6" />
+
           <dl className="mt-6 space-y-3.5 text-sm">
-            <Row label="Дата" value={formatDateRu(date)} />
-            <Row label="Время" value={time || "не выбрано"} muted={!time} />
-            <Row label="Гостей" value={String(guests)} />
             <Row label="Имя" value={name || "—"} muted={!name} />
             <Row label="Телефон" value={phone || "—"} muted={!phone} />
           </dl>
 
-          <OrnamentDivider className="mt-6" />
-
-          <button type="submit" className="btn btn-white mt-6 w-full">
+          <button
+            type="submit"
+            className={clsx("btn btn-white mt-7 w-full", !ready && "opacity-90")}
+          >
             Забронировать стол
           </button>
 
-          {error ? (
-            <p className="mt-4 border border-white/40 bg-white/5 px-4 py-3 text-sm" role="alert">
-              {error}
-            </p>
-          ) : null}
+          {error ? <Hint text={error} /> : null}
 
           <ul className="mt-6 space-y-2.5 text-[0.78rem] leading-relaxed text-ink-mute">
             <li>Подтверждаем звонком в течение 15 минут.</li>
@@ -315,16 +413,19 @@ export function BookingForm() {
       </aside>
 
       {/* Мобильная панель брони — всегда под рукой */}
-      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-white/12 bg-night/95 px-5 py-3 backdrop-blur-xl lg:hidden">
-        <div className="flex items-center gap-4">
+      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-white/12 bg-night/95 px-4 py-3 backdrop-blur-xl lg:hidden">
+        <div className="flex items-center gap-3">
           <div className="min-w-0 flex-1">
-            <p className="truncate text-[0.8rem] text-ink">
+            <p className="truncate text-[0.85rem] text-ink">
               {formatDateRu(date, false)}
-              {time ? ` · ${time}` : ""} · {guests}{" "}
-              {guests === 1 ? "гость" : guests < 5 ? "гостя" : "гостей"}
+              {time ? ` · ${time}` : ""}
+            </p>
+            <p className="truncate text-[0.72rem] text-ink-mute">
+              {guests} {guestWord}
+              {time ? "" : " · выберите время"}
             </p>
           </div>
-          <button type="submit" className={clsx("btn btn-white px-6", !ready && "opacity-70")}>
+          <button type="submit" className="btn btn-white shrink-0 px-6 py-3.5">
             Забронировать
           </button>
         </div>
@@ -337,7 +438,9 @@ function Row({ label, value, muted }: { label: string; value: string; muted?: bo
   return (
     <div className="flex items-baseline justify-between gap-4 border-b border-white/8 pb-3 last:border-b-0">
       <dt className="text-[0.68rem] uppercase tracking-wider2 text-ink-mute">{label}</dt>
-      <dd className={clsx("text-right", muted ? "text-ink-mute" : "text-ink")}>{value}</dd>
+      <dd className={clsx("truncate text-right", muted ? "text-ink-mute" : "text-ink")}>
+        {value}
+      </dd>
     </div>
   );
 }
@@ -388,10 +491,10 @@ function BookingSuccess({ booking, onReset }: { booking: Booking; onReset: () =>
   };
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <div className="border border-white/15 p-8 text-center md:p-12">
-        <div className="mx-auto grid h-14 w-14 place-items-center rounded-full border border-white/40">
-          <Icon.Check className="h-6 w-6" />
+    <div className="mx-auto max-w-2xl animate-reveal-up">
+      <div className="border border-white/20 bg-night-card/50 p-8 text-center md:p-12">
+        <div className="mx-auto grid h-16 w-16 place-items-center rounded-full border border-white/40">
+          <Icon.Check className="h-7 w-7" />
         </div>
 
         <h2 className="display-xl mt-7 text-[1.9rem] text-ink md:text-[2.4rem]">
@@ -407,15 +510,19 @@ function BookingSuccess({ booking, onReset }: { booking: Booking; onReset: () =>
         <button
           type="button"
           onClick={copy}
-          className="mx-auto mt-8 flex items-center gap-4 border border-white/25 px-6 py-4 transition-colors hover:border-white/60"
+          className="mx-auto mt-8 flex items-center gap-4 border border-white/25 px-7 py-4 transition-colors hover:border-white/60"
         >
           <span className="text-left">
             <span className="block text-[0.6rem] uppercase tracking-wider2 text-ink-mute">
               Код брони
             </span>
-            <span className="text-[1.4rem] tracking-wider text-ink">{booking.code}</span>
+            <span className="text-[1.5rem] tracking-wider text-ink">{booking.code}</span>
           </span>
-          {copied ? <Icon.Check className="h-4 w-4" /> : <Icon.Copy className="h-4 w-4 text-ink-mute" />}
+          {copied ? (
+            <Icon.Check className="h-4 w-4" />
+          ) : (
+            <Icon.Copy className="h-4 w-4 text-ink-mute" />
+          )}
         </button>
 
         <dl className="mt-8 grid gap-px overflow-hidden border border-white/10 bg-white/10 text-left sm:grid-cols-2">
