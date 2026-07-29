@@ -19,9 +19,9 @@ export default function HomePage() {
           title="Что заказывают чаще всего"
         />
 
-        <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 md:mt-14 lg:grid-cols-3">
           {signatureDishes.map((dish, i) => (
-            <Reveal key={dish.id} delay={(i % 3) * 120} variant="zoom">
+            <Reveal key={dish.id} className="h-full" delay={(i % 2) * 120} variant="zoom">
               <DishCard dish={dish} />
             </Reveal>
           ))}

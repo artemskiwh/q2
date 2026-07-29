@@ -13,7 +13,6 @@ import {
   maxDateISO,
   timeSlots,
   todayISO,
-  toISODate,
   type Booking,
 } from "@/lib/booking";
 import { restaurant } from "@/lib/restaurant";
@@ -91,12 +90,6 @@ export function BookingForm() {
     slots.forEach((s) => (Number(s.slice(0, 2)) < 17 ? day : evening).push(s));
     return { day, evening };
   }, [slots]);
-
-  const tomorrow = useMemo(() => {
-    const d = new Date();
-    d.setDate(d.getDate() + 1);
-    return toISODate(d);
-  }, []);
 
   /* Предзаполнение из адресной строки */
   useEffect(() => {
@@ -177,56 +170,44 @@ export function BookingForm() {
           <fieldset>
             <Step n={1} title="Дата" done />
 
-            <div className="flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={() => setDate(todayISO())}
-                className={clsx("px-5 py-2.5 text-sm", choice(date === todayISO()))}
-              >
-                Сегодня
-              </button>
-              <button
-                type="button"
-                onClick={() => setDate(tomorrow)}
-                className={clsx("px-5 py-2.5 text-sm", choice(date === tomorrow))}
-              >
-                Завтра
-              </button>
-
-              <div className="relative min-w-[220px] flex-1">
-                <div
-                  className={clsx(
-                    "flex h-full items-center gap-3 border px-4 py-2.5",
-                    date !== todayISO() && date !== tomorrow
-                      ? "border-white bg-white text-night"
-                      : "border-white/15 text-ink-dim",
-                  )}
-                >
-                  <Icon.Calendar className="h-4 w-4 shrink-0" />
-                  <span className="flex-1 text-sm">{formatDateRu(date)}</span>
-                  <Icon.ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
-                </div>
-
-                <input
-                  type="date"
-                  value={date}
-                  min={todayISO()}
-                  max={maxDateISO()}
-                  aria-label="Другая дата"
-                  onChange={(e) => e.target.value && setDate(e.target.value)}
-                  onClick={(e) => {
-                    const el = e.currentTarget as HTMLInputElement & {
-                      showPicker?: () => void;
-                    };
-                    try {
-                      el.showPicker?.();
-                    } catch {
-                      /* браузер откроет календарь сам */
-                    }
-                  }}
-                  className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-                />
+            <div className="group/date relative">
+              <div className="flex items-center gap-4 border border-white/20 bg-white/[0.04] px-5 py-4 transition-colors group-hover/date:border-white/45">
+                <span className="grid h-10 w-10 shrink-0 place-items-center border border-white/20 text-ink">
+                  <Icon.Calendar className="h-[18px] w-[18px]" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[0.66rem] uppercase tracking-wider2 text-ink-mute">
+                    Дата визита
+                  </span>
+                  <span className="mt-1 block truncate text-[1.05rem] text-ink">
+                    {formatDateRu(date)}
+                  </span>
+                </span>
+                <span className="hidden shrink-0 text-[0.72rem] uppercase tracking-wider2 text-ink-mute sm:block">
+                  Изменить
+                </span>
+                <Icon.ChevronDown className="h-4 w-4 shrink-0 text-ink-mute" />
               </div>
+
+              <input
+                type="date"
+                value={date}
+                min={todayISO()}
+                max={maxDateISO()}
+                aria-label="Дата визита"
+                onChange={(e) => e.target.value && setDate(e.target.value)}
+                onClick={(e) => {
+                  const el = e.currentTarget as HTMLInputElement & {
+                    showPicker?: () => void;
+                  };
+                  try {
+                    el.showPicker?.();
+                  } catch {
+                    /* браузер откроет календарь сам */
+                  }
+                }}
+                className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+              />
             </div>
           </fieldset>
 

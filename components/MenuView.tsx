@@ -3,9 +3,19 @@
 import { useMemo, useState } from "react";
 import { Icon } from "./Icons";
 import { DishCard } from "./DishCard";
-import { OrnamentDivider } from "./Ornament";
+import { OrnamentDivider, Rosette } from "./Ornament";
 import { Reveal } from "./Reveal";
 import { categories, dishes } from "@/lib/menu";
+
+/** «41 блюдо», «43 блюда», «45 блюд». */
+function dishWord(n: number) {
+  const last = n % 10;
+  const twoLast = n % 100;
+  if (twoLast >= 11 && twoLast <= 14) return "блюд";
+  if (last === 1) return "блюдо";
+  if (last >= 2 && last <= 4) return "блюда";
+  return "блюд";
+}
 
 export function MenuView() {
   const [query, setQuery] = useState("");
@@ -24,6 +34,28 @@ export function MenuView() {
     <>
       {/* Место под фиксированную шапку */}
       <div style={{ height: "var(--header-h, 96px)" }} aria-hidden="true" />
+
+      {/* Заголовок страницы */}
+      <div className="container-page pb-10 pt-12 md:pb-14 md:pt-20">
+        <Reveal className="flex flex-col items-center text-center">
+          <Rosette className="h-8 w-8 text-ink/70 md:h-10 md:w-10" />
+
+          <h1 className="display-xl mt-5 text-[2.4rem] leading-none text-ink md:mt-6 md:text-[4rem]">
+            Меню
+          </h1>
+
+          <p className="mt-4 max-w-md text-[0.9rem] leading-relaxed text-ink-dim md:mt-6 md:max-w-lg md:text-[1rem]">
+            Мангал на живых углях, казан и тандыр. Всё готовим сами — от теста
+            для лепёшек до соусов.
+          </p>
+
+          <p className="mt-5 text-[0.68rem] uppercase tracking-wider2 text-ink-mute md:mt-6 md:text-[0.72rem]">
+            {dishes.length} {dishWord(dishes.length)} · {categories.length} разделов
+          </p>
+
+          <OrnamentDivider className="rule-draw mt-7 max-w-[360px] md:mt-9" />
+        </Reveal>
+      </div>
 
       {/* Поиск — липнет под шапкой и остаётся хорошо читаемым */}
       <div
@@ -55,16 +87,16 @@ export function MenuView() {
         </div>
       </div>
 
-      <div className="container-page py-14 md:py-20">
+      <div className="container-page pb-16 pt-10 md:pb-24 md:pt-14">
         {filtering ? (
           <div>
             <p className="text-[0.7rem] uppercase tracking-wider2 text-ink-mute">
               Найдено блюд: {filtered.length}
             </p>
             {filtered.length ? (
-              <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
                 {filtered.map((d, i) => (
-                  <Reveal key={d.id} delay={(i % 3) * 90} variant="zoom">
+                  <Reveal key={d.id} className="h-full" delay={(i % 2) * 90} variant="zoom">
                     <DishCard dish={d} />
                   </Reveal>
                 ))}
@@ -94,9 +126,9 @@ export function MenuView() {
                     <OrnamentDivider className="rule-draw mt-6 max-w-[320px]" />
                   </Reveal>
 
-                  <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 md:mt-10 lg:grid-cols-3">
                     {items.map((d, i) => (
-                      <Reveal key={d.id} delay={(i % 3) * 110} variant="zoom">
+                      <Reveal key={d.id} className="h-full" delay={(i % 2) * 110} variant="zoom">
                         <DishCard dish={d} />
                       </Reveal>
                     ))}

@@ -14,8 +14,6 @@ export const metadata: Metadata = {
 export default function MenuPage() {
   return (
     <>
-      <h1 className="sr-only">Меню ресторана Pakhlava</h1>
-
       <MenuView />
 
       <section className="border-t border-accent/12 bg-night-soft/50">
