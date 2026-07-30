@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 export default function BookingPage() {
   return (
     <>
-      <h1 className="sr-only">Бронирование стола в ресторане Pakhlava</h1>
       <BookingSection />
     </>
   );

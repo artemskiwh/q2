@@ -13,7 +13,7 @@ export function PageHero({
   children?: React.ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden border-b border-accent/12 pb-16 pt-[140px] md:pb-20 md:pt-[180px]">
+    <section className="relative overflow-hidden border-b border-accent/10 pb-16 pt-[140px] md:pb-20 md:pt-[180px]">
       <div
         className="pointer-events-none absolute inset-0 -z-10"
         style={{

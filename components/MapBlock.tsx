@@ -7,7 +7,7 @@ const MAP_SRC = `https://www.google.com/maps?q=${lat},${lon}&hl=ru&z=17&output=e
 
 export function MapBlock({ className = "" }: { className?: string }) {
   return (
-    <div className={`relative overflow-hidden border border-white/12 ${className}`}>
+    <div className={`relative overflow-hidden border border-white/10 ${className}`}>
       <iframe
         src={MAP_SRC}
         title={`Ресторан Pakhlava на карте: ${restaurant.address.street}, ${restaurant.address.city}`}

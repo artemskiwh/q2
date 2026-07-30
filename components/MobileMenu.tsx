@@ -73,7 +73,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
         aria-modal="true"
         aria-label="Меню сайта"
         className={clsx(
-          "absolute inset-y-0 right-0 flex w-[min(92vw,430px)] flex-col border-l border-white/12 transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "absolute inset-y-0 right-0 flex w-[min(92vw,430px)] flex-col border-l border-white/10 transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
           open ? "translate-x-0" : "translate-x-full",
         )}
         style={{
@@ -111,7 +111,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                 href={item.href}
                 onClick={onClose}
                 className={clsx(
-                  "group flex items-center gap-4 border-b border-white/8 py-5 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                  "group flex items-center gap-4 border-b border-white/10 py-5 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
                   open ? "translate-x-0 opacity-100" : "translate-x-6 opacity-0",
                 )}
                 style={{ transitionDelay: open ? `${140 + i * 70}ms` : "0ms" }}

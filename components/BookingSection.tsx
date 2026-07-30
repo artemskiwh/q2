@@ -2,10 +2,19 @@
 
 import { Suspense } from "react";
 import { BookingForm } from "./BookingForm";
+import { OrnamentDivider } from "./Ornament";
+import { Reveal } from "./Reveal";
 
 export function BookingSection() {
   return (
-    <section className="container-page pb-28 pt-[150px] md:pt-[185px] lg:pb-20">
+    <section className="container-page pb-28 pt-[130px] md:pt-[165px] lg:pb-20">
+      <Reveal className="mb-12 flex flex-col items-center text-center md:mb-16">
+        <h1 className="display-xl text-[2.2rem] leading-none text-ink md:text-[3.4rem]">
+          Бронирование стола
+        </h1>
+        <OrnamentDivider className="rule-draw mt-6 max-w-[360px] md:mt-8" />
+      </Reveal>
+
       <Suspense fallback={<FormSkeleton />}>
         <BookingForm />
       </Suspense>

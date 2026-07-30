@@ -98,7 +98,7 @@ export default function AboutPage() {
           text="Ресторан начинается задолго до того, как в зале зажигают свет."
         />
 
-        <div className="mt-14 grid gap-px overflow-hidden border border-accent/12 bg-accent/12 md:grid-cols-4">
+        <div className="mt-14 grid gap-px overflow-hidden border border-accent/10 bg-accent/10 md:grid-cols-4">
           {CRAFT.map((c, i) => (
             <Reveal key={c.time} delay={i * 100}>
               <div className="group h-full bg-night p-8 transition-colors duration-500 hover:bg-night-card">
@@ -114,13 +114,13 @@ export default function AboutPage() {
       </section>
 
       {/* Принципы */}
-      <section className="border-y border-accent/12 bg-night-soft/50">
+      <section className="border-y border-accent/10 bg-night-soft/50">
         <div className="section container-page">
           <SectionHeading eyebrow="Принципы" title="Четыре вещи, на которых держится кухня" />
           <div className="mt-14 grid gap-6 md:grid-cols-2">
             {values.map((v, i) => (
               <Reveal key={v.title} delay={(i % 2) * 110}>
-                <div className="flex h-full gap-5 border border-accent/12 bg-night-card/40 p-7">
+                <div className="flex h-full gap-5 border border-accent/10 bg-night-card/40 p-7">
                   <Rosette className="h-7 w-7 shrink-0 text-accent" />
                   <div>
                     <h3 className="display-xl text-[1.4rem] text-ink">{v.title}</h3>
@@ -152,7 +152,7 @@ export default function AboutPage() {
       ) : null}
 
       {/* Призыв */}
-      <section className="border-t border-accent/12 bg-night-soft/40">
+      <section className="border-t border-accent/10 bg-night-soft/40">
         <div className="container-page flex flex-col items-center py-20 text-center">
           <Reveal className="flex flex-col items-center">
             <Rosette className="h-9 w-9 text-accent" />

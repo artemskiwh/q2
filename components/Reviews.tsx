@@ -44,51 +44,42 @@ export function Reviews() {
   const shown = expanded ? reviews : reviews.slice(0, VISIBLE);
 
   return (
-    <div className="mx-auto mt-12 max-w-[760px]">
-      {/* Лента отзывов */}
-      <div className="border border-white/12">
+    <div className="mx-auto mt-12 max-w-5xl">
+      {/* Лента отзывов: одна колонка на телефоне, две на широком экране */}
+      <div className="grid gap-3 md:grid-cols-2 md:gap-4">
         {shown.map((r, i) => (
-          <Reveal key={r.name + r.date} delay={Math.min(i, 3) * 90}>
-            <ReviewCard review={r} first={i === 0} />
+          <Reveal key={r.name + r.date} className="h-full" delay={(i % 2) * 90}>
+            <ReviewCard review={r} />
           </Reveal>
         ))}
       </div>
 
-      {!expanded && reviews.length > VISIBLE ? (
-        <button
-          type="button"
-          onClick={() => setExpanded(true)}
-          className="btn btn-ghost mt-4 w-full"
-        >
-          Показать ещё {reviews.length - VISIBLE}
-        </button>
-      ) : null}
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row md:mt-5">
+        {reviews.length > VISIBLE ? (
+          <button
+            type="button"
+            onClick={() => setExpanded((v) => !v)}
+            className="btn btn-ghost flex-1"
+          >
+            {expanded ? "Свернуть отзывы" : `Показать ещё ${reviews.length - VISIBLE}`}
+          </button>
+        ) : null}
 
-      {expanded ? (
-        <button
-          type="button"
-          onClick={() => setExpanded(false)}
-          className="btn btn-ghost mt-4 w-full"
+        <a
+          href={restaurant.reviewsUrl}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="btn btn-outline flex-1"
         >
-          Свернуть отзывы
-        </button>
-      ) : null}
-
-      {/* Ссылка на все отзывы */}
-      <a
-        href={restaurant.reviewsUrl}
-        target="_blank"
-        rel="noreferrer noopener"
-        className="btn btn-outline mt-4 w-full"
-      >
-        Все {rating.reviews} отзывов на 2ГИС
-        <Icon.Arrow className="h-4 w-4" />
-      </a>
+          Все {rating.reviews} отзывов на 2ГИС
+          <Icon.Arrow className="h-4 w-4" />
+        </a>
+      </div>
     </div>
   );
 }
 
-function ReviewCard({ review, first }: { review: Review; first: boolean }) {
+function ReviewCard({ review }: { review: Review }) {
   const textRef = useRef<HTMLParagraphElement>(null);
   const [open, setOpen] = useState(false);
   const [clipped, setClipped] = useState(false);
@@ -105,7 +96,7 @@ function ReviewCard({ review, first }: { review: Review; first: boolean }) {
   }, []);
 
   return (
-    <article className={`p-6 md:p-7 ${first ? "" : "border-t border-white/8"}`}>
+    <article className="flex h-full flex-col border border-white/10 bg-night-card/30 p-5 transition-colors hover:border-white/25 md:p-7">
       <header className="flex items-center gap-3">
         <span
           className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-[0.78rem] font-medium tracking-wide text-white"
@@ -128,26 +119,28 @@ function ReviewCard({ review, first }: { review: Review; first: boolean }) {
         </span>
       </div>
 
-      <p
-        ref={textRef}
-        className={`mt-3 text-[0.92rem] leading-relaxed text-ink-dim ${
-          open ? "" : "line-clamp-3"
-        }`}
-      >
-        {review.text}
-      </p>
-
-      {clipped || open ? (
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className="mt-2 text-[0.85rem] text-ink underline underline-offset-4 transition-opacity hover:opacity-70"
+      <div className="mb-5">
+        <p
+          ref={textRef}
+          className={`mt-3 text-[0.9rem] leading-relaxed text-ink-dim md:text-[0.92rem] ${
+            open ? "" : "line-clamp-4"
+          }`}
         >
-          {open ? "Свернуть" : "Читать целиком"}
-        </button>
-      ) : null}
+          {review.text}
+        </p>
 
-      <div className="mt-4 flex items-center gap-3 text-[0.75rem]">
+        {clipped || open ? (
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="mt-2 text-[0.85rem] text-ink underline underline-offset-4 transition-opacity hover:opacity-70"
+          >
+            {open ? "Свернуть" : "Читать целиком"}
+          </button>
+        ) : null}
+      </div>
+
+      <div className="mt-auto flex items-center gap-3 border-t border-white/10 pt-4 text-[0.72rem] md:text-[0.75rem]">
         <Icon.Check className="h-3.5 w-3.5 shrink-0 text-ink/70" />
         <span className="text-ink-mute">{review.visits}</span>
         <span className="h-3 w-px bg-white/15" />

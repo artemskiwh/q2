@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Icon } from "./Icons";
 import { DishCard } from "./DishCard";
-import { OrnamentDivider, Rosette } from "./Ornament";
+import { OrnamentDivider } from "./Ornament";
 import { Reveal } from "./Reveal";
 import { categories, dishes } from "@/lib/menu";
 
@@ -38,19 +38,13 @@ export function MenuView() {
       {/* Заголовок страницы */}
       <div className="container-page pb-10 pt-12 md:pb-14 md:pt-20">
         <Reveal className="flex flex-col items-center text-center">
-          <Rosette className="h-8 w-8 text-ink/70 md:h-10 md:w-10" />
-
-          <h1 className="display-xl mt-5 text-[2.4rem] leading-none text-ink md:mt-6 md:text-[4rem]">
+          <h1 className="display-xl text-[2.6rem] leading-none text-ink md:text-[4.2rem]">
             Меню
           </h1>
 
-          <p className="mt-4 max-w-md text-[0.9rem] leading-relaxed text-ink-dim md:mt-6 md:max-w-lg md:text-[1rem]">
+          <p className="mt-5 max-w-md text-[0.9rem] leading-relaxed text-ink-dim md:mt-7 md:max-w-lg md:text-[1rem]">
             Мангал на живых углях, казан и тандыр. Всё готовим сами — от теста
             для лепёшек до соусов.
-          </p>
-
-          <p className="mt-5 text-[0.68rem] uppercase tracking-wider2 text-ink-mute md:mt-6 md:text-[0.72rem]">
-            {dishes.length} {dishWord(dishes.length)} · {categories.length} разделов
           </p>
 
           <OrnamentDivider className="rule-draw mt-7 max-w-[360px] md:mt-9" />
@@ -91,7 +85,7 @@ export function MenuView() {
         {filtering ? (
           <div>
             <p className="text-[0.7rem] uppercase tracking-wider2 text-ink-mute">
-              Найдено блюд: {filtered.length}
+              Найдено: {filtered.length} {dishWord(filtered.length)}
             </p>
             {filtered.length ? (
               <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
@@ -112,18 +106,26 @@ export function MenuView() {
             )}
           </div>
         ) : (
-          <div className="space-y-20 md:space-y-28">
-            {categories.map((c) => {
+          <div className="space-y-16 md:space-y-24">
+            {categories.map((c, ci) => {
               const items = dishes.filter((d) => d.category === c.id);
               if (!items.length) return null;
               return (
                 <section key={c.id} id={c.id} className="scroll-mt-[calc(var(--header-h,96px)+90px)]">
-                  <Reveal className="flex flex-col items-center text-center">
-                    <h2 className="display-xl text-[1.9rem] text-ink md:text-[2.6rem]">
-                      {c.name}
-                    </h2>
-                    <p className="mt-3 text-[0.85rem] text-ink-mute">{c.subtitle}</p>
-                    <OrnamentDivider className="rule-draw mt-6 max-w-[320px]" />
+                  <Reveal>
+                    <div className="rule-draw h-px w-full bg-white/10" />
+                    <div className="mt-5 flex flex-wrap items-baseline gap-x-5 gap-y-1 md:mt-6">
+                      <span className="text-[0.72rem] tabular-nums tracking-wider2 text-ink-mute">
+                        {String(ci + 1).padStart(2, "0")}
+                      </span>
+                      <h2 className="display-xl text-[1.7rem] text-ink md:text-[2.4rem]">
+                        {c.name}
+                      </h2>
+                      <span className="hidden h-px flex-1 bg-white/10 md:block" />
+                      <p className="w-full text-[0.82rem] text-ink-mute md:w-auto md:text-[0.85rem]">
+                        {c.subtitle}
+                      </p>
+                    </div>
                   </Reveal>
 
                   <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 md:mt-10 lg:grid-cols-3">

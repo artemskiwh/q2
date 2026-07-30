@@ -164,7 +164,7 @@ export function BookingForm() {
       onSubmit={submit}
       className="grid gap-10 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:gap-12"
     >
-      <div className="min-w-0 border border-white/12 bg-night-card/40 p-6 md:p-9">
+      <div className="min-w-0 border border-white/10 bg-night-card/40 p-6 md:p-9">
         <div className="space-y-11">
           {/* 01 — дата */}
           <fieldset>
@@ -246,7 +246,7 @@ export function BookingForm() {
                 )}
               </div>
             ) : (
-              <p className="border border-white/12 p-5 text-sm text-ink-dim">
+              <p className="border border-white/10 p-5 text-sm text-ink-dim">
                 На сегодня онлайн-бронь закрыта. Выберите завтрашний день или позвоните
                 — часто мы находим стол и в последний момент.
               </p>
@@ -394,7 +394,7 @@ export function BookingForm() {
       </aside>
 
       {/* Мобильная панель брони — всегда под рукой */}
-      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-white/12 bg-night/95 px-4 py-3 backdrop-blur-xl lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-white/10 bg-night/95 px-4 py-3 backdrop-blur-xl lg:hidden">
         <div className="flex items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="truncate text-[0.85rem] text-ink">
@@ -417,7 +417,7 @@ export function BookingForm() {
 
 function Row({ label, value, muted }: { label: string; value: string; muted?: boolean }) {
   return (
-    <div className="flex items-baseline justify-between gap-4 border-b border-white/8 pb-3 last:border-b-0">
+    <div className="flex items-baseline justify-between gap-4 border-b border-white/10 pb-3 last:border-b-0">
       <dt className="text-[0.68rem] uppercase tracking-wider2 text-ink-mute">{label}</dt>
       <dd className={clsx("truncate text-right", muted ? "text-ink-mute" : "text-ink")}>
         {value}

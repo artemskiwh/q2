@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { withBasePath } from "@/lib/path";
+import { Icon } from "./Icons";
 import { formatPrice, type Dish } from "@/lib/menu";
 
 /**
@@ -26,21 +28,44 @@ function DishPhoto({ dish }: { dish: Dish }) {
   );
 }
 
+const CARD =
+  "lift group flex h-full flex-col overflow-hidden border border-white/10 bg-night-card/40 hover:border-white/30 hover:bg-night-card/70";
+
 /**
  * Карточка блюда: фотография сверху, ниже название, описание и цена.
- * Одинаковая на телефоне и на широком экране — меняются только
+ * Одна и та же вёрстка на телефоне и на широком экране — меняются только
  * кегль и отступы, чтобы в строку помещались две карточки.
+ *
+ * `rank` рисует номер в углу снимка (витрина на главной),
+ * `href` делает карточку ссылкой на раздел меню.
  */
-export function DishCard({ dish }: { dish: Dish }) {
-  return (
-    <article className="lift group flex h-full flex-col overflow-hidden border border-white/10 bg-night-card/40 hover:border-white/30 hover:bg-night-card/70">
+export function DishCard({
+  dish,
+  rank,
+  href,
+}: {
+  dish: Dish;
+  rank?: number;
+  href?: string;
+}) {
+  const inner = (
+    <>
       <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden">
         <DishPhoto dish={dish} />
+
+        {rank ? (
+          <span className="absolute left-0 top-0 bg-night/70 px-2.5 py-1 text-[0.62rem] tabular-nums tracking-wider2 text-ink backdrop-blur-sm md:px-3 md:py-1.5 md:text-[0.66rem]">
+            {String(rank).padStart(2, "0")}
+          </span>
+        ) : null}
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col p-3.5 sm:p-5 md:p-6">
-        <h3 className="display-xl text-[0.92rem] leading-snug text-ink transition-colors sm:text-[1.1rem] md:text-[1.3rem]">
-          {dish.name}
+        <h3 className="display-xl flex items-start gap-2 text-[0.92rem] leading-snug text-ink transition-colors sm:text-[1.1rem] md:text-[1.3rem]">
+          <span className="min-w-0 flex-1">{dish.name}</span>
+          {href ? (
+            <Icon.Arrow className="mt-1 hidden h-4 w-4 shrink-0 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-70 md:block" />
+          ) : null}
         </h3>
 
         <p className="mt-2 line-clamp-3 text-[0.76rem] leading-relaxed text-ink-dim sm:line-clamp-none sm:text-[0.84rem] md:mt-3 md:text-[0.88rem]">
@@ -56,6 +81,16 @@ export function DishCard({ dish }: { dish: Dish }) {
           </span>
         </div>
       </div>
-    </article>
+    </>
   );
+
+  if (href) {
+    return (
+      <Link href={href} className={CARD}>
+        {inner}
+      </Link>
+    );
+  }
+
+  return <article className={CARD}>{inner}</article>;
 }

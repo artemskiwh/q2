@@ -16,7 +16,7 @@ export default function MenuPage() {
     <>
       <MenuView />
 
-      <section className="border-t border-accent/12 bg-night-soft/50">
+      <section className="border-t border-accent/10 bg-night-soft/50">
         <div className="container-page flex flex-col items-center py-20 text-center">
           <Reveal className="flex flex-col items-center">
             <Rosette className="h-9 w-9 text-accent" />
