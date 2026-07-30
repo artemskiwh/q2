@@ -60,23 +60,23 @@ export function DishCard({
         ) : null}
       </div>
 
-      <div className="flex min-w-0 flex-1 flex-col p-3 sm:p-5 md:p-6">
-        <h3 className="display-xl flex items-start gap-2 text-[0.82rem] leading-tight text-ink transition-colors sm:text-[1.1rem] sm:leading-snug md:text-[1.3rem]">
+      <div className="flex min-w-0 flex-1 flex-col p-3.5 sm:p-5 md:p-6">
+        <h3 className="display-xl flex items-start gap-2 text-[0.92rem] leading-snug text-ink transition-colors sm:text-[1.1rem] md:text-[1.3rem]">
           <span className="min-w-0 flex-1">{dish.name}</span>
           {href ? (
             <Icon.Arrow className="mt-1 hidden h-4 w-4 shrink-0 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-70 md:block" />
           ) : null}
         </h3>
 
-        <p className="mt-1.5 line-clamp-2 text-[0.7rem] leading-snug text-ink-dim sm:mt-2 sm:line-clamp-none sm:text-[0.84rem] sm:leading-relaxed md:mt-3 md:text-[0.88rem]">
+        <p className="mt-2 line-clamp-3 text-[0.76rem] leading-relaxed text-ink-dim sm:line-clamp-none sm:text-[0.84rem] md:mt-3 md:text-[0.88rem]">
           {dish.description}
         </p>
 
-        <div className="mt-auto flex items-baseline justify-between gap-3 border-t border-white/10 pt-2.5 sm:pt-3 md:pt-4">
-          <span className="text-[0.6rem] uppercase tracking-wider2 text-ink-mute md:text-[0.66rem]">
+        <div className="mt-auto flex items-baseline justify-between gap-3 border-t border-white/10 pt-3 md:pt-4">
+          <span className="text-[0.62rem] uppercase tracking-wider2 text-ink-mute md:text-[0.66rem]">
             {dish.weight}
           </span>
-          <span className="text-[0.85rem] font-medium tabular-nums text-ink sm:text-[1rem] md:text-[1.05rem]">
+          <span className="text-[0.92rem] font-medium tabular-nums text-ink sm:text-[1rem] md:text-[1.05rem]">
             {formatPrice(dish.price)}
           </span>
         </div>
