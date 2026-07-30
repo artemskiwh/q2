@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import clsx from "clsx";
 import { Icon } from "./Icons";
 import { DishCard } from "./DishCard";
 import { OrnamentDivider } from "./Ornament";
@@ -19,6 +20,7 @@ function dishWord(n: number) {
 
 export function MenuView() {
   const [query, setQuery] = useState("");
+  const [focused, setFocused] = useState(false);
   const filtering = query.trim().length > 0;
 
   const filtered = useMemo(() => {
@@ -36,47 +38,58 @@ export function MenuView() {
       <div style={{ height: "var(--header-h, 96px)" }} aria-hidden="true" />
 
       {/* Заголовок страницы */}
-      <div className="container-page pb-10 pt-12 md:pb-14 md:pt-20">
+      <div className="container-page pb-9 pt-12 md:pb-12 md:pt-20">
         <Reveal className="flex flex-col items-center text-center">
-          <h1 className="display-xl text-[2.6rem] leading-none text-ink md:text-[4.2rem]">
+          <h1 className="display-xl text-[2rem] leading-none text-ink md:text-[3rem]">
             Меню
           </h1>
 
-          <p className="mt-5 max-w-md text-[0.9rem] leading-relaxed text-ink-dim md:mt-7 md:max-w-lg md:text-[1rem]">
-            Мангал на живых углях, казан и тандыр. Всё готовим сами — от теста
-            для лепёшек до соусов.
-          </p>
-
-          <OrnamentDivider className="rule-draw mt-7 max-w-[360px] md:mt-9" />
+          <OrnamentDivider className="rule-draw mt-6 max-w-[360px] md:mt-8" />
         </Reveal>
       </div>
 
-      {/* Поиск — липнет под шапкой и остаётся хорошо читаемым */}
+      {/* Поиск — липнет под шапкой, фон тот же, что у страницы */}
       <div
-        className="sticky z-30 border-b border-white/15 bg-night-card shadow-[0_18px_40px_-24px_rgba(0,0,0,1)]"
+        className="sticky z-30 border-b border-white/10 bg-night/85 backdrop-blur-xl"
         style={{ top: "var(--header-h, 96px)" }}
       >
-        <div className="container-page relative py-4">
-          <div className="relative mx-auto max-w-xl">
-            <Icon.Search className="pointer-events-none absolute left-4 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-ink" />
+        <div className="container-page py-3.5 md:py-4">
+          <div
+            className={clsx(
+              "group relative mx-auto flex max-w-xl items-center border transition-colors duration-300",
+              focused ? "border-white/70 bg-white/[0.07]" : "border-white/20 bg-white/[0.03]",
+            )}
+          >
+            <Icon.Search
+              className={clsx(
+                "pointer-events-none ml-4 h-[18px] w-[18px] shrink-0 transition-colors duration-300",
+                focused ? "text-ink" : "text-ink-mute",
+              )}
+            />
             <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
               placeholder="Найти блюдо"
               aria-label="Поиск по меню"
-              className="w-full border border-white/35 bg-white/[0.06] py-3 pl-12 pr-11 text-[0.95rem] text-ink transition-colors placeholder:text-white/55 focus:border-white focus:bg-white/[0.1] focus:outline-none"
+              className="w-full bg-transparent py-3.5 pl-3.5 pr-3 text-[0.95rem] text-ink placeholder:text-ink-mute focus:outline-none"
             />
             {filtering ? (
               <button
                 type="button"
                 onClick={() => setQuery("")}
                 aria-label="Очистить поиск"
-                className="absolute right-3 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center text-ink/70 transition-colors hover:text-ink"
+                className="mr-2 grid h-8 w-8 shrink-0 place-items-center text-ink-mute transition-colors hover:text-ink"
               >
                 <Icon.Close className="h-4 w-4" />
               </button>
-            ) : null}
+            ) : (
+              <span className="mr-4 hidden shrink-0 text-[0.68rem] uppercase tracking-wider2 text-ink-mute sm:block">
+                {dishes.length} {dishWord(dishes.length)}
+              </span>
+            )}
           </div>
         </div>
       </div>
@@ -97,7 +110,7 @@ export function MenuView() {
               </div>
             ) : (
               <div className="flex flex-col items-center py-24 text-center">
-                <p className="display-xl text-[1.6rem] text-ink">Такого блюда у нас нет</p>
+                <p className="display-xl text-[1.4rem] text-ink">Такого блюда у нас нет</p>
                 <p className="mt-3 max-w-sm text-sm text-ink-dim">
                   Попробуйте другой запрос — или спросите официанта, шеф часто
                   готовит вне меню.
@@ -118,7 +131,7 @@ export function MenuView() {
                       <span className="text-[0.72rem] tabular-nums tracking-wider2 text-ink-mute">
                         {String(ci + 1).padStart(2, "0")}
                       </span>
-                      <h2 className="display-xl text-[1.7rem] text-ink md:text-[2.4rem]">
+                      <h2 className="display-xl text-[1.45rem] text-ink md:text-[1.95rem]">
                         {c.name}
                       </h2>
                       <span className="hidden h-px flex-1 bg-white/10 md:block" />

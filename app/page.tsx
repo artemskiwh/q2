@@ -36,7 +36,7 @@ export default function HomePage() {
               <span className="block text-[0.66rem] uppercase tracking-wider2 text-ink-mute">
                 Все разделы
               </span>
-              <span className="display-xl mt-1 block text-[1.2rem] text-ink md:text-[1.6rem]">
+              <span className="display-xl mt-1 block text-[1.1rem] text-ink md:text-[1.4rem]">
                 Смотреть всё меню
               </span>
             </span>

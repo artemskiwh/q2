@@ -24,7 +24,7 @@ export function PageHero({
 
       <div className="container-page flex flex-col items-center text-center">
         <span className="eyebrow animate-fade-in">{eyebrow}</span>
-        <h1 className="display-xl mt-5 animate-reveal-up text-[2.4rem] text-ink md:text-[3.6rem]">
+        <h1 className="display-xl mt-5 animate-reveal-up text-[2rem] text-ink md:text-[2.8rem]">
           {title}
         </h1>
         <OrnamentDivider className="mt-7 max-w-[360px]" />

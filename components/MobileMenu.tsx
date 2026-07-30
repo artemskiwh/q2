@@ -127,7 +127,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
 
                 <span
                   className={clsx(
-                    "display-xl flex-1 text-[1.5rem] transition-colors",
+                    "display-xl flex-1 text-[1.35rem] transition-colors",
                     active ? "text-ink" : "text-ink/80 group-hover:text-ink",
                   )}
                 >

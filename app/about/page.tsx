@@ -52,7 +52,7 @@ export default function AboutPage() {
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           <Reveal>
             <span className="eyebrow">История</span>
-            <h2 className="display-xl mt-5 text-[2rem] text-ink md:text-[2.8rem]">
+            <h2 className="display-xl mt-5 text-[1.7rem] text-ink md:text-[2.2rem]">
               Началось с пахлавы
             </h2>
             <div className="mt-7 space-y-5 text-[0.98rem] leading-relaxed text-ink-dim">
@@ -77,7 +77,7 @@ export default function AboutPage() {
             <div className="relative grid aspect-square place-items-center overflow-hidden border border-accent/15 bg-night-card/40">
               <div className="relative z-10 flex flex-col items-center px-10 text-center">
                 <Rosette className="h-9 w-9 text-accent" />
-                <p className="display-xl mt-6 text-[1.7rem] leading-snug text-ink md:text-[2.1rem]">
+                <p className="display-xl mt-6 text-[1.5rem] leading-snug text-ink md:text-[1.85rem]">
                   «Стол должен быть щедрым,
                   <br />а вечер — долгим»
                 </p>
@@ -156,7 +156,7 @@ export default function AboutPage() {
         <div className="container-page flex flex-col items-center py-20 text-center">
           <Reveal className="flex flex-col items-center">
             <Rosette className="h-9 w-9 text-accent" />
-            <h2 className="display-xl mt-6 text-[1.9rem] text-ink md:text-[2.5rem]">
+            <h2 className="display-xl mt-6 text-[1.6rem] text-ink md:text-[2rem]">
               Приходите на ужин
             </h2>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">

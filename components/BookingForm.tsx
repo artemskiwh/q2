@@ -352,7 +352,7 @@ export function BookingForm() {
             Ваша бронь
           </span>
 
-          <p className="display-xl mt-4 text-[1.6rem] leading-tight text-ink">
+          <p className="display-xl mt-4 text-[1.4rem] leading-tight text-ink">
             {formatDateRu(date, false)}
             {time ? <span className="text-ink">, {time}</span> : null}
           </p>
@@ -478,7 +478,7 @@ function BookingSuccess({ booking, onReset }: { booking: Booking; onReset: () =>
           <Icon.Check className="h-7 w-7" />
         </div>
 
-        <h2 className="display-xl mt-7 text-[1.9rem] text-ink md:text-[2.4rem]">
+        <h2 className="display-xl mt-7 text-[1.6rem] text-ink md:text-[2rem]">
           Стол забронирован
         </h2>
         <p className="mt-4 text-[0.95rem] leading-relaxed text-ink-dim">

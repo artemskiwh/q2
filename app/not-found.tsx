@@ -6,10 +6,10 @@ export default function NotFound() {
     <section className="relative grid min-h-[80svh] place-items-center overflow-hidden px-5 py-32">
       <div className="relative flex flex-col items-center text-center">
         <Rosette className="h-10 w-10 text-accent" />
-        <span className="display-xl mt-8 text-[4.5rem] leading-none text-ink md:text-[6rem]">
+        <span className="display-xl mt-8 text-[3.4rem] leading-none text-ink md:text-[4.4rem]">
           404
         </span>
-        <h1 className="display-xl mt-4 text-[1.9rem] text-ink md:text-[2.4rem]">
+        <h1 className="display-xl mt-4 text-[1.6rem] text-ink md:text-[2rem]">
           Такого блюда нет в меню
         </h1>
         <OrnamentDivider className="mt-7 max-w-[320px]" />
