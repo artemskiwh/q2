@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { withBasePath } from "@/lib/path";
-import { Icon } from "./Icons";
 import { formatPrice, type Dish } from "@/lib/menu";
 
 /**
@@ -15,7 +14,7 @@ function DishPhoto({ dish }: { dish: Dish }) {
         src={withBasePath(dish.image)}
         alt={dish.name}
         loading="lazy"
-        className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
+        className="h-full w-full object-cover"
       />
     );
   }
@@ -28,8 +27,9 @@ function DishPhoto({ dish }: { dish: Dish }) {
   );
 }
 
+/** Карточка не меняет вид ни при наведении, ни при нажатии. */
 const CARD =
-  "lift group flex h-full flex-col overflow-hidden border border-white/10 bg-night-card/40 hover:border-white/30 hover:bg-night-card/70";
+  "card-static flex h-full flex-col overflow-hidden border border-white/10 bg-night-card/40";
 
 /**
  * Карточка блюда: фотография сверху, ниже название, описание и цена.
@@ -61,11 +61,8 @@ export function DishCard({
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col p-3.5 sm:p-5 md:p-6">
-        <h3 className="display-xl flex items-start gap-2 text-[0.92rem] leading-snug text-ink transition-colors sm:text-[1.1rem] md:text-[1.3rem]">
-          <span className="min-w-0 flex-1">{dish.name}</span>
-          {href ? (
-            <Icon.Arrow className="mt-1 hidden h-4 w-4 shrink-0 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-70 md:block" />
-          ) : null}
+        <h3 className="display-xl text-[0.92rem] leading-snug text-ink sm:text-[1.1rem] md:text-[1.3rem]">
+          {dish.name}
         </h3>
 
         <p className="mt-2 text-[0.76rem] leading-relaxed text-ink-dim sm:text-[0.84rem] md:mt-3 md:text-[0.88rem]">

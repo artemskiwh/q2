@@ -364,6 +364,22 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 }
 
+/* Карточка блюда: вид не меняется ни при наведении, ни при нажатии */
+.card-static {
+  -webkit-tap-highlight-color: transparent;
+  transition: none;
+}
+.card-static:hover,
+.card-static:focus,
+.card-static:active,
+.card-static:focus-visible {
+  transform: none;
+  filter: none;
+  opacity: 1;
+  border-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(21, 21, 21, 0.4);
+}
+
 /* Кнопка без реакции на наведение и нажатие — вид всегда один */
 .btn-static,
 .btn-static:hover,
