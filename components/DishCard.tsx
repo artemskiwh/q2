@@ -68,7 +68,7 @@ export function DishCard({
           ) : null}
         </h3>
 
-        <p className="mt-2 line-clamp-3 text-[0.76rem] leading-relaxed text-ink-dim sm:line-clamp-none sm:text-[0.84rem] md:mt-3 md:text-[0.88rem]">
+        <p className="mt-2 text-[0.76rem] leading-relaxed text-ink-dim sm:text-[0.84rem] md:mt-3 md:text-[0.88rem]">
           {dish.description}
         </p>
 
