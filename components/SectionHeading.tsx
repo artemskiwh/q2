@@ -19,7 +19,9 @@ export function SectionHeading({
   return (
     <Reveal className={centered ? "flex flex-col items-center text-center" : "flex flex-col"}>
       {eyebrow ? <span className="eyebrow">{eyebrow}</span> : null}
-      <h2 className="display-xl mt-4 text-[1.7rem] text-ink md:text-[2.3rem]">{title}</h2>
+      <h2 className="display-xl mt-4 text-balance text-[1.6rem] leading-tight text-ink md:text-[2.2rem]">
+        {title}
+      </h2>
       {divider ? (
         <OrnamentDivider
           className={`rule-draw ${

@@ -34,13 +34,10 @@ export function MenuView() {
 
   return (
     <>
-      {/* Место под фиксированную шапку */}
-      <div style={{ height: "var(--header-h, 96px)" }} aria-hidden="true" />
-
-      {/* Заголовок страницы */}
-      <div className="container-page pb-9 pt-12 md:pb-12 md:pt-20">
+      {/* Заголовок страницы — та же высота, что на странице бронирования */}
+      <div className="container-page pb-10 pt-[130px] md:pb-14 md:pt-[165px]">
         <Reveal className="flex flex-col items-center text-center">
-          <h1 className="display-xl text-[2rem] leading-none text-ink md:text-[3rem]">
+          <h1 className="display-xl text-[1.8rem] leading-none text-ink md:text-[2.6rem]">
             Меню
           </h1>
 

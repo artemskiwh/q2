@@ -3,7 +3,6 @@ import { Hero } from "@/components/Hero";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { DishCard } from "@/components/DishCard";
-import { Reviews } from "@/components/Reviews";
 import { Icon } from "@/components/Icons";
 import { signatureDishes } from "@/lib/menu";
 
@@ -45,12 +44,6 @@ export default function HomePage() {
             </span>
           </Link>
         </Reveal>
-      </section>
-
-      {/* Отзывы */}
-      <section className="section container-page border-t border-white/10">
-        <SectionHeading eyebrow="Гости" title="Отзывы на 2ГИС" />
-        <Reviews />
       </section>
     </>
   );
